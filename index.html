@@ -3,139 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@raviyunanto</title>
-
-    <link rel="icon" type="image/png" href="icon.png">
-    
+    <title id="page-title">Loading...</title>
+    <link id="favicon" rel="icon" type="image/jpeg" href=""> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        /* === BAGIAN CSS UTAMA === */
+        /* === CSS UTAMA (DESAIN) === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #000000 30%, #43300b 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #e0e0e0;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #e0e0e0;
         }
-
-        .container {
-            width: 100%;
-            max-width: 450px;
-            padding: 40px 25px;
-            text-align: center;
-        }
-
-        /* Wrapper Foto Profil */
-        .profile-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
+        .container { width: 100%; max-width: 450px; padding: 40px 25px; text-align: center; }
+        
+        .profile-wrapper { position: relative; display: inline-block; margin-bottom: 20px; }
         .profile-img {
-            width: 110px; height: 110px;
-            border-radius: 50%; object-fit: cover;
-            border: 3px solid #cfa258; 
-            box-shadow: 0 0 25px rgba(207, 162, 88, 0.2);
-            display: block;
+            width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
+            border: 3px solid #cfa258; box-shadow: 0 0 25px rgba(207, 162, 88, 0.2); display: block;
         }
-
-        /* Indikator Status (Open to Work) */
+        
         .status-dot {
-            position: absolute; bottom: 5px; right: 5px;
-            width: 22px; height: 22px;
-            background-color: #2ecc71;
-            border: 3px solid #000; border-radius: 50%;
-            box-shadow: 0 0 10px #2ecc71;
-            animation: pulse-green 2s infinite;
+            position: absolute; bottom: 5px; right: 5px; width: 22px; height: 22px;
+            background-color: #2ecc71; border: 3px solid #000; border-radius: 50%;
+            box-shadow: 0 0 10px #2ecc71; animation: pulse-green 2s infinite; display: none; /* Default mati */
         }
-
         @keyframes pulse-green {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
 
-        h1 {
-            font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 5px; letter-spacing: 1px;
-        }
+        h1 { font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 5px; letter-spacing: 1px; }
+        p { font-size: 15px; color: #cccccc; margin-bottom: 15px; font-weight: 300; min-height: 24px; }
 
-        /* Teks Typing (Bio) */
-        p {
-            font-size: 15px; color: #cccccc; margin-bottom: 15px; font-weight: 300; min-height: 24px;
-        }
-
-        /* === TOMBOL SHARE KECIL === */
         .share-btn-mini {
-            background: transparent;
-            border: 1px solid rgba(207, 162, 88, 0.5);
-            color: #cfa258;
-            padding: 6px 15px;
-            font-size: 11px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-bottom: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: transparent; border: 1px solid rgba(207, 162, 88, 0.5); color: #cfa258;
+            padding: 6px 15px; font-size: 11px; border-radius: 20px; cursor: pointer;
+            margin-bottom: 30px; display: inline-flex; align-items: center; gap: 6px;
+            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;
         }
+        .share-btn-mini:hover { background: rgba(207, 162, 88, 0.2); border-color: #cfa258; transform: scale(1.05); }
 
-        .share-btn-mini:hover {
-            background: rgba(207, 162, 88, 0.2);
-            border-color: #cfa258;
-            transform: scale(1.05);
-        }
-
-        /* Tombol Link Utama */
+        .link-container { display: flex; flex-direction: column; gap: 16px; }
         .link-item {
-            display: block;
-            background: rgba(255, 255, 255, 0.05);
-            color: #f0f0f0;
-            border: 1px solid rgba(207, 162, 88, 0.3);
-            padding: 16px; margin-bottom: 16px;
-            border-radius: 50px; text-decoration: none; font-weight: 500;
-            transition: all 0.3s ease; backdrop-filter: blur(5px);
+            display: block; background: rgba(255, 255, 255, 0.05); color: #f0f0f0;
+            border: 1px solid rgba(207, 162, 88, 0.3); padding: 16px; border-radius: 50px;
+            text-decoration: none; font-weight: 500; transition: all 0.3s ease; backdrop-filter: blur(5px);
         }
-
         .link-item:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(90deg, #cfa258, #e6c584);
-            color: #000000; border-color: #cfa258;
-            box-shadow: 0 10px 20px rgba(207, 162, 88, 0.2);
+            transform: translateY(-3px); background: linear-gradient(90deg, #cfa258, #e6c584);
+            color: #000000; border-color: #cfa258; box-shadow: 0 10px 20px rgba(207, 162, 88, 0.2);
         }
+        /* Style Khusus (Save Contact) */
+        .link-special { border-color: #fff !important; background: rgba(255,255,255,0.1) !important; }
 
         .footer { margin-top: 40px; font-size: 13px; color: rgba(207, 162, 88, 0.5); }
 
-        /* === TOMBOL MUSIK MELAYANG === */
+        /* Floating Button */
         .floating-btn {
-            position: fixed; right: 20px; bottom: 20px;
-            width: 50px; height: 50px; border-radius: 50%;
-            background: rgba(20, 20, 20, 0.9);
-            border: 2px solid #cfa258; color: #cfa258;
-            font-size: 20px; cursor: pointer; z-index: 100;
-            display: none; transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: fixed; right: 20px; bottom: 20px; width: 50px; height: 50px;
+            border-radius: 50%; background: rgba(20, 20, 20, 0.9); border: 2px solid #cfa258;
+            color: #cfa258; font-size: 20px; cursor: pointer; z-index: 100;
+            display: none; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         .floating-btn:hover { background: #cfa258; color: #000; transform: scale(1.1); }
-        
-        /* === OVERLAY === */
+
+        /* Overlay */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000; z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
+            background-color: #000; z-index: 9999; display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: opacity 0.8s ease;
         }
         .overlay-content { text-align: center; color: #cfa258; animation: pulse 2s infinite; }
         .overlay-content h2 { font-size: 2rem; margin-bottom: 10px; }
         .overlay-content p { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
-
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
     </style>
 </head>
@@ -148,42 +90,60 @@
         </div>
     </div>
 
-    <audio id="bg-music" loop>
-        <source src="one.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bg-music" loop></audio>
 
     <button id="music-btn" class="floating-btn">🔊</button>
 
     <div class="container">
         <div class="profile-wrapper">
-            <img src="dp.jpg" alt="Foto Profil" class="profile-img">
-            <div class="status-dot" title="Open for Work"></div>
+            <img id="profile-img" src="" alt="Foto Profil" class="profile-img">
+            <div id="status-dot" class="status-dot" title="Open for Work"></div>
         </div>
         
-        <h1>@raviyunanto</h1>
+        <h1 id="profile-name"></h1>
         <p><span id="typing-text"></span><span class="cursor">|</span></p>
 
-        <button id="share-profile-btn" class="share-btn-mini">
-            🔗 Share Profile
-        </button>
+        <button id="share-profile-btn" class="share-btn-mini">🔗 Share Profile</button>
 
-        <a href="contact.vcf" class="link-item" style="border-color: #fff; background: rgba(255,255,255,0.1);">
-            📇 Save My Contact
-        </a>
-        <a href="https://wa.me/6281255655101" class="link-item" target="_blank">💬 WhatsApp</a>
-        <a href="https://instagram.com/raviyunanto" class="link-item" target="_blank">📸 Instagram</a>
-        <a href="mailto:ravi.yunanto@gmail.com" class="link-item">📩 Email Me</a>
+        <div id="link-container" class="link-container"></div>
 
-        <div class="footer">
-            &copy; 2025. All Rights Reserved.
-        </div>
+        <div id="footer-text" class="footer"></div>
     </div>
 
+    <script src="config.js"></script>
+
     <script>
-        // Typing Effect
+        // 1. INPUT DATA DARI CONFIG.JS KE HTML
+        document.title = CONFIG.name;
+        document.getElementById('page-title').textContent = CONFIG.name;
+        document.getElementById('profile-img').src = CONFIG.profileImage;
+        document.getElementById('favicon').href = CONFIG.profileImage; // Favicon ikut foto profil
+        document.getElementById('profile-name').textContent = CONFIG.name;
+        document.getElementById('bg-music').src = CONFIG.musicFile;
+        document.getElementById('footer-text').textContent = CONFIG.copyright;
+
+        // Cek Status Open to Work
+        if (CONFIG.isOpenToWork) {
+            document.getElementById('status-dot').style.display = 'block';
+        }
+
+        // Generate Link Otomatis
+        const linkContainer = document.getElementById('link-container');
+        CONFIG.links.forEach(link => {
+            const a = document.createElement('a');
+            a.href = link.url;
+            a.textContent = link.text;
+            a.className = 'link-item';
+            if (link.url.startsWith('http')) a.target = '_blank'; // Buka tab baru kalo link web
+            if (link.special) a.classList.add('link-special'); // Style khusus
+            linkContainer.appendChild(a);
+        });
+
+        // 2. LOGIKA TYPING EFFECT
         const textElement = document.getElementById('typing-text');
-        const texts = ["Videographer", "Photographer", "Designer"]; 
+        const texts = CONFIG.typingTexts;
         let count = 0; let index = 0; let currentText = ""; let letter = "";
+        
         (function type() {
             if (count === texts.length) { count = 0; }
             currentText = texts[count];
@@ -194,7 +154,7 @@
             } else { setTimeout(type, 100); }
         }());
 
-        // Music & UI Logic
+        // 3. LOGIKA MUSIK & OVERLAY
         const overlay = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
@@ -216,19 +176,17 @@
             else { audio.play(); musicBtn.innerHTML = '🔊'; isPlaying = true; }
         });
 
-        // SHARE BUTTON LOGIC
+        // 4. SHARE BUTTON LOGIC
         const shareBtn = document.getElementById('share-profile-btn');
         shareBtn.addEventListener('click', async () => {
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: '@raviyunanto',
-                        text: 'Cek profil digital saya di sini:',
+                        title: CONFIG.name,
+                        text: 'Cek profil digital saya:',
                         url: window.location.href,
                     });
-                } catch (err) {
-                    console.log('Batal share');
-                }
+                } catch (err) {}
             } else {
                 navigator.clipboard.writeText(window.location.href);
                 alert('Link profil berhasil disalin! 📋');
