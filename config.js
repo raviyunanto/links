@@ -1,18 +1,17 @@
 const CONFIG = {
     // === DATA UTAMA ===
-    profileImage: "dp.jpg",     // Nama file foto profil
-    name: "@raviyunanto",       // Nama yang muncul
+    profileImage: "dp.jpg",     // Foto Profil
+    favicon: "icon.png",        // Icon Custom di Tab Browser
+    name: "@raviyunanto",       // Nama
     
     // === STATUS KETERSEDIAAN ===
-    // Ubah ke "false" jika sedang sibuk/full booked
-    // Ubah ke "true" jika sedang Open for Work (titik hijau nyala)
-    isOpenToWork: false, 
+    isOpenToWork: true,         // true = titik hijau nyala
 
     // === MUSIK ===
-    musicFile: "bs.mp3",       // Nama file lagu MP3
+    musicFile: "one.mp3",       // File lagu
+    initialVolume: 0.3,         // (BARU) Volume awal (0.1 - 1.0)
 
     // === BIO (EFEK KETIK) ===
-    // Kamu bisa tambah atau kurangi teks di dalam kurung siku []
     typingTexts: [
         "Videographer", 
         "Photographer", 
@@ -20,13 +19,11 @@ const CONFIG = {
     ],
 
     // === DAFTAR LINK ===
-    // Format: { text: "Nama Tombol", url: "Link Tujuan", special: true/false }
-    // 'special: true' akan bikin tombolnya beda (border putih transparan)
     links: [
         { 
             text: "📇 Save My Contact", 
             url: "contact.vcf", 
-            special: true // Ini buat tombol Contact yang beda sendiri
+            special: true 
         },
         { 
             text: "💬 WhatsApp", 
@@ -42,6 +39,6 @@ const CONFIG = {
         }
     ],
 
-    // === COPYRIGHT FOOTER ===
+    // === FOOTER ===
     copyright: "© 2026. All Rights Reserved."
 };
