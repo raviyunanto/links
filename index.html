@@ -106,8 +106,6 @@
         <a href="https://instagram.com/raviyunanto" class="link-item" target="_blank">📸 Instagram</a>
         <a href="mailto:ravi.yunanto@gmail.com" class="link-item">📩 Email Me</a>
 
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4cf1QRDUIfEKSIAawx7QzY?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
         <div class="footer">
             &copy; 2025. All Rights Reserved.
         </div>
@@ -136,6 +134,66 @@
             setTimeout(type, 100); // Kecepatan ngetik
         }
     }());
+</script>
+    <audio id="bg-music" loop>
+    <source src="one.mp3" type="audio/mpeg">
+</audio>
+
+<div id="overlay">
+    <div class="overlay-content">
+        <h2>Hi!:)</h2>
+        <p style="font-size: 12px; margin-top: 10px;">Tap anywhere to enter</p>
+    </div>
+</div>
+
+<style>
+    /* Gaya untuk layar penutup */
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000; /* Layar hitam penuh */
+        z-index: 9999; /* Pastikan di paling atas */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: opacity 0.8s ease; /* Efek memudar */
+    }
+    
+    .overlay-content {
+        text-align: center;
+        color: #cfa258; /* Warna emas sesuai tema */
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 0.6; }
+        50% { opacity: 1; }
+        100% { opacity: 0.6; }
+    }
+</style>
+
+<script>
+    // Script buat atur klik dan musik
+    const overlay = document.getElementById('overlay');
+    const audio = document.getElementById('bg-music');
+
+    overlay.addEventListener('click', () => {
+        // 1. Hilangkan layar penutup
+        overlay.style.opacity = '0';
+        
+        // 2. Tunggu dikit biar efek animasi selesai, baru hapus elemennya
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 800);
+
+        // 3. Mainkan musik
+        audio.play();
+        audio.volume = 0.5; // Atur volume biar gak kenceng banget (0.0 - 1.0)
+    });
 </script>
 </body>
 </html>
