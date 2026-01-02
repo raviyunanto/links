@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Ganti warna background di sini. Bisa kode HEX atau nama warna */
+            background: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px; /* Ukuran lebar ala HP */
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* Foto Profil */
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 14px;
+            color: #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        /* Gaya Tombol Link */
+        .link-item {
+            display: block;
+            background: rgba(255, 255, 255, 0.9); /* Putih agak transparan */
+            color: #333;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 30px; /* Biar bulat lonjong */
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease; /* Animasi halus */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Efek pas kursor nempel / disentuh */
+        .link-item:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: #fff;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            color: #764ba2; /* Warna teks berubah saat hover */
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://via.placeholder.com/150" alt="Foto Profil" class="profile-img">
+        
+        <h1>@raviyunanto</h1>
+        <p>Photographer | Hobbies | Chill</p>
+
+        <a href="https://wa.me/6281255655101" class="link-item" target="_blank">💬 WhatsApp</a>
+        <a href="https://instagram.com/raviyunanto" class="link-item" target="_blank">📸 Instagram</a>
+        <a href="mailto:ravi.yunanto@gmail.com" class="link-item">📩 Email Me</a>
+
+        <div class="footer">
+            &copy; 2025 Dibuat dengan semangat
+        </div>
+    </div>
+
+</body>
+</html>
