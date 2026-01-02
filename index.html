@@ -12,60 +12,67 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #000000 30%, #43300b 100%);
+            background-color: #000; /* Fallback */
+            background: linear-gradient(135deg, #050505 30%, #2a1e05 100%);
             min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #e0e0e0;
+            overflow-x: hidden; /* Biar ga ada scroll samping */
         }
-        .container { width: 100%; max-width: 450px; padding: 40px 25px; text-align: center; padding-bottom: 100px; }
+
+        /* CANVAS PARTIKEL (BACKGROUND) */
+        #particle-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; /* Taruh di belakang konten */
+            pointer-events: none;
+        }
+
+        .container { 
+            width: 100%; max-width: 450px; padding: 40px 25px; text-align: center; padding-bottom: 100px;
+            position: relative; z-index: 10; /* Biar di atas partikel */
+            animation: fadeUp 1s ease-out; /* Animasi Masuk */
+        }
+
+        /* Animasi Masuk Container */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* === PROFIL & STATUS === */
         .profile-wrapper { position: relative; display: inline-block; margin-bottom: 20px; }
         .profile-img {
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
-            border: 3px solid #cfa258; box-shadow: 0 0 25px rgba(207, 162, 88, 0.2); display: block;
+            border: 3px solid #cfa258; box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); display: block;
+            transition: transform 0.3s;
         }
+        .profile-img:hover { transform: scale(1.05) rotate(2deg); } /* Efek hover dikit */
 
-        /* LOGIKA DOT BARU (HIJAU/MERAH) */
         .status-dot {
             position: absolute; bottom: 5px; right: 5px; width: 22px; height: 22px;
             border: 3px solid #000; border-radius: 50%;
-            /* Warna default akan diatur Script */
         }
-
-        /* Kondisi Hijau (Open) */
-        .status-dot.online {
-            background-color: #2ecc71;
-            box-shadow: 0 0 10px #2ecc71;
-            animation: pulse-green 2s infinite;
-        }
-
-        /* Kondisi Merah (Busy) */
-        .status-dot.busy {
-            background-color: #e74c3c;
-            box-shadow: 0 0 10px #e74c3c;
-            animation: pulse-red 2s infinite;
-        }
+        .status-dot.online { background-color: #2ecc71; box-shadow: 0 0 10px #2ecc71; animation: pulse-green 2s infinite; }
+        .status-dot.busy { background-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; animation: pulse-red 2s infinite; }
 
         @keyframes pulse-green {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
-        
         @keyframes pulse-red {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
         }
 
-        h1 { font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 5px; letter-spacing: 1px; }
+        h1 { font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 5px; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         p { font-size: 15px; color: #cccccc; margin-bottom: 15px; font-weight: 300; min-height: 24px; }
 
-        /* === LINK & SHARE === */
+        /* === TOMBOL & LINK === */
         .share-btn-mini {
-            background: transparent; border: 1px solid rgba(207, 162, 88, 0.5); color: #cfa258;
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(207, 162, 88, 0.5); color: #cfa258;
             padding: 6px 15px; font-size: 11px; border-radius: 20px; cursor: pointer;
             margin-bottom: 30px; display: inline-flex; align-items: center; gap: 6px;
-            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;
+            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(5px);
         }
         .share-btn-mini:hover { background: rgba(207, 162, 88, 0.2); border-color: #cfa258; transform: scale(1.05); }
 
@@ -74,27 +81,25 @@
             display: block; background: rgba(255, 255, 255, 0.05); color: #f0f0f0;
             border: 1px solid rgba(207, 162, 88, 0.3); padding: 16px; border-radius: 50px;
             text-decoration: none; font-weight: 500; transition: all 0.3s ease; backdrop-filter: blur(5px);
+            position: relative; overflow: hidden;
         }
         .link-item:hover {
             transform: translateY(-3px); background: linear-gradient(90deg, #cfa258, #e6c584);
-            color: #000000; border-color: #cfa258; box-shadow: 0 10px 20px rgba(207, 162, 88, 0.2);
+            color: #000000; border-color: #cfa258; box-shadow: 0 10px 25px rgba(207, 162, 88, 0.3);
         }
         .link-special { border-color: #fff !important; background: rgba(255,255,255,0.1) !important; }
         .footer { margin-top: 40px; font-size: 13px; color: rgba(207, 162, 88, 0.5); }
 
-        /* === FITUR MUSIK POPUP === */
+        /* === MUSIK POPUP === */
         .music-wrapper {
-            position: fixed; right: 20px; bottom: 20px;
-            display: flex; flex-direction: column; align-items: center;
-            gap: 15px; z-index: 100;
-            display: none; 
+            position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; align-items: center;
+            gap: 15px; z-index: 100; display: none; 
         }
         .music-toggle-btn {
             width: 50px; height: 50px; border-radius: 50%;
             background: rgba(20, 20, 20, 0.9); border: 2px solid #cfa258;
             color: #cfa258; font-size: 20px; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: transform 0.2s;
             display: flex; justify-content: center; align-items: center;
         }
         .music-toggle-btn:active { transform: scale(0.9); }
@@ -130,6 +135,8 @@
 </head>
 <body>
 
+    <canvas id="particle-canvas"></canvas>
+
     <div id="overlay">
         <div class="overlay-content">
             <h2>Hi!</h2>
@@ -162,7 +169,68 @@
 
     <script src="config.js"></script>
     <script>
-        // 1. DATA SETUP
+        // === 1. FITUR VISUAL: PARTIKEL EMAS ===
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
+        // Set ukuran canvas full layar
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2; // Ukuran partikel
+                this.speedX = (Math.random() * 0.5) - 0.25; // Gerak kiri-kanan
+                this.speedY = (Math.random() * 0.5) - 0.25; // Gerak atas-bawah
+                this.color = 'rgba(207, 162, 88, ' + (Math.random() * 0.5 + 0.1) + ')'; // Warna Emas transparan
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                // Balik lagi kalau keluar layar
+                if (this.x < 0 || this.x > canvas.width) this.speedX = -this.speedX;
+                if (this.y < 0 || this.y > canvas.height) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 15000; // Kepadatan
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Jalankan Partikel
+        initParticles();
+        animateParticles();
+
+        // Resize kalau layar diubah
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        // === 2. DATA SETUP (SAMA KAYAK SEBELUMNYA) ===
         document.title = CONFIG.name;
         document.getElementById('page-title').textContent = CONFIG.name;
         document.getElementById('profile-img').src = CONFIG.profileImage;
@@ -171,18 +239,14 @@
         document.getElementById('bg-music').src = CONFIG.musicFile;
         document.getElementById('footer-text').textContent = CONFIG.copyright;
 
-        // --- LOGIKA STATUS BARU (HIJAU / MERAH) ---
         const statusDot = document.getElementById('status-dot');
         if (CONFIG.isOpenToWork) {
-            // Jika TRUE -> Class 'online' (Hijau)
             statusDot.className = 'status-dot online';
             statusDot.title = "Open for Work";
         } else {
-            // Jika FALSE -> Class 'busy' (Merah)
             statusDot.className = 'status-dot busy';
             statusDot.title = "Busy / Closed";
         }
-        // -------------------------------------------
 
         const linkContainer = document.getElementById('link-container');
         CONFIG.links.forEach(link => {
@@ -195,7 +259,7 @@
             linkContainer.appendChild(a);
         });
 
-        // 2. TYPING EFFECT
+        // === 3. TYPING EFFECT ===
         const textElement = document.getElementById('typing-text');
         const texts = CONFIG.typingTexts;
         let count = 0; let index = 0; let currentText = ""; let letter = "";
@@ -209,7 +273,7 @@
             } else { setTimeout(type, 100); }
         }());
 
-        // 3. MUSIC & SLIDER
+        // === 4. MUSIC & SLIDER ===
         const overlay = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
         const musicWrapper = document.getElementById('music-wrapper');
