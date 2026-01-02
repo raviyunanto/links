@@ -26,7 +26,7 @@
             text-align: center;
         }
 
-        /* Wrapper Foto Profil (Untuk Status Dot) */
+        /* Wrapper Foto Profil */
         .profile-wrapper {
             position: relative;
             display: inline-block;
@@ -40,24 +40,21 @@
             object-fit: cover;
             border: 3px solid #cfa258; 
             box-shadow: 0 0 25px rgba(207, 162, 88, 0.2);
-            display: block; /* Penting biar rapi */
+            display: block;
         }
 
         /* Indikator Status (Open to Work) */
         .status-dot {
             position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 22px;
-            height: 22px;
-            background-color: #2ecc71; /* Warna Hijau */
-            border: 3px solid #000; /* Border hitam biar kontras */
+            bottom: 5px; right: 5px;
+            width: 22px; height: 22px;
+            background-color: #2ecc71;
+            border: 3px solid #000;
             border-radius: 50%;
             box-shadow: 0 0 10px #2ecc71;
             animation: pulse-green 2s infinite;
         }
 
-        /* Animasi Denyut Hijau */
         @keyframes pulse-green {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
@@ -65,19 +62,11 @@
         }
 
         h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #cfa258;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
+            font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 8px; letter-spacing: 1px;
         }
 
         p {
-            font-size: 15px;
-            color: #cccccc;
-            margin-bottom: 35px;
-            font-weight: 300;
-            min-height: 24px;
+            font-size: 15px; color: #cccccc; margin-bottom: 35px; font-weight: 300; min-height: 24px;
         }
 
         .link-item {
@@ -85,36 +74,26 @@
             background: rgba(255, 255, 255, 0.05);
             color: #f0f0f0;
             border: 1px solid rgba(207, 162, 88, 0.3);
-            padding: 16px;
-            margin-bottom: 16px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            padding: 16px; margin-bottom: 16px;
+            border-radius: 50px; text-decoration: none; font-weight: 500;
+            transition: all 0.3s ease; backdrop-filter: blur(5px);
         }
 
         .link-item:hover {
             transform: translateY(-3px);
             background: linear-gradient(90deg, #cfa258, #e6c584);
-            color: #000000;
-            border-color: #cfa258;
+            color: #000000; border-color: #cfa258;
             box-shadow: 0 10px 20px rgba(207, 162, 88, 0.2);
         }
 
-        .footer {
-            margin-top: 40px;
-            font-size: 13px;
-            color: rgba(207, 162, 88, 0.5);
-        }
+        .footer { margin-top: 40px; font-size: 13px; color: rgba(207, 162, 88, 0.5); }
 
-        /* === FITUR TOMBOL MELAYANG (MUSIK & QR) === */
+        /* === POSISI TOMBOL MELAYANG DI KANAN === */
         
         .floating-btn {
             position: fixed;
-            bottom: 20px;
-            width: 50px;
-            height: 50px;
+            right: 20px; /* Semua nempel di kanan */
+            width: 50px; height: 50px;
             border-radius: 50%;
             background: rgba(20, 20, 20, 0.9);
             border: 2px solid #cfa258;
@@ -122,27 +101,27 @@
             font-size: 20px;
             cursor: pointer;
             z-index: 100;
-            display: none; /* Sembunyi dulu */
+            display: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .floating-btn:hover {
-            background: #cfa258;
-            color: #000;
-            transform: scale(1.1);
+            background: #cfa258; color: #000; transform: scale(1.1);
         }
 
-        /* Posisi Tombol */
-        #music-btn { right: 20px; } /* Kanan Bawah */
-        #qr-btn { left: 20px; }    /* Kiri Bawah */
+        /* Atur Tumpukan Tombol */
+        #music-btn { bottom: 20px; } /* Paling Bawah */
+        
+        #qr-btn { 
+            bottom: 80px; /* Di atas tombol musik (20px + 50px tinggi tombol + 10px jarak) */
+            font-size: 16px; /* Font QR lebih kecil dikit biar pas */
+            font-weight: 700; /* Tebal */
+        }
 
         /* === LAYAR PENUTUP & MODAL === */
-        
-        /* Layar Pembuka (Tap to Enter) */
         #overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #000; z-index: 9999;
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: opacity 0.8s ease;
@@ -152,36 +131,22 @@
         .overlay-content h2 { font-size: 2rem; margin-bottom: 10px; }
         .overlay-content p { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Modal QR Code */
+        /* Modal QR */
         #qr-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 2000;
-            display: none; /* Sembunyi default */
-            justify-content: center; align-items: center;
-            flex-direction: column;
-            backdrop-filter: blur(8px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 2000;
+            display: none; justify-content: center; align-items: center;
+            flex-direction: column; backdrop-filter: blur(8px);
         }
 
         .qr-box {
-            background: #fff;
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            animation: popUp 0.3s ease;
-            max-width: 80%;
+            background: #fff; padding: 20px; border-radius: 20px;
+            text-align: center; animation: popUp 0.3s ease; max-width: 80%;
         }
 
         .qr-box img { width: 200px; height: 200px; object-fit: contain; }
         .qr-box p { color: #333; margin-bottom: 5px; margin-top: 10px; font-weight: 600; }
-
-        .close-qr {
-            margin-top: 20px;
-            color: #fff;
-            font-size: 30px;
-            cursor: pointer;
-        }
+        .close-qr { margin-top: 20px; color: #fff; font-size: 30px; cursor: pointer; }
 
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
         @keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -210,10 +175,9 @@
     </audio>
 
     <button id="music-btn" class="floating-btn">🔊</button>
-    <button id="qr-btn" class="floating-btn">🔳</button>
+    <button id="qr-btn" class="floating-btn">QR</button>
 
     <div class="container">
-        
         <div class="profile-wrapper">
             <img src="dp.jpg" alt="Foto Profil" class="profile-img">
             <div class="status-dot" title="Open for Work"></div>
@@ -235,7 +199,7 @@
     </div>
 
     <script>
-        // 1. EFEK KETIK
+        // Typing Effect
         const textElement = document.getElementById('typing-text');
         const texts = ["Videographer", "Photographer", "Designer"]; 
         let count = 0; let index = 0; let currentText = ""; let letter = "";
@@ -250,7 +214,7 @@
             } else { setTimeout(type, 100); }
         }());
 
-        // 2. MUSIK & OVERLAY
+        // Music & UI Logic
         const overlay = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
@@ -261,10 +225,10 @@
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                musicBtn.style.display = 'block'; // Munculin tombol musik
-                qrBtn.style.display = 'block';    // Munculin tombol QR
+                musicBtn.style.display = 'block'; 
+                qrBtn.style.display = 'block';    
             }, 800);
-            audio.volume = 0.3;
+            audio.volume = 0.1;
             audio.play().catch(e => console.log("Audio perlu interaksi"));
             isPlaying = true;
         });
@@ -274,16 +238,10 @@
             else { audio.play(); musicBtn.innerHTML = '🔊'; isPlaying = true; }
         });
 
-        // 3. LOGIKA QR CODE POPUP
+        // QR Modal Logic
         const qrModal = document.getElementById('qr-modal');
         const closeQr = document.querySelector('.close-qr');
-
-        // Buka Popup
-        qrBtn.addEventListener('click', () => {
-            qrModal.style.display = 'flex';
-        });
-
-        // Tutup Popup (Klik silang atau klik area gelap)
+        qrBtn.addEventListener('click', () => { qrModal.style.display = 'flex'; });
         closeQr.addEventListener('click', () => { qrModal.style.display = 'none'; });
         qrModal.addEventListener('click', (e) => {
             if (e.target === qrModal) { qrModal.style.display = 'none'; }
