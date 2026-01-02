@@ -26,6 +26,13 @@
             text-align: center;
         }
 
+        /* Wrapper Foto Profil (Untuk Status Dot) */
+        .profile-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
         .profile-img {
             width: 110px;
             height: 110px;
@@ -33,7 +40,28 @@
             object-fit: cover;
             border: 3px solid #cfa258; 
             box-shadow: 0 0 25px rgba(207, 162, 88, 0.2);
-            margin-bottom: 20px;
+            display: block; /* Penting biar rapi */
+        }
+
+        /* Indikator Status (Open to Work) */
+        .status-dot {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 22px;
+            height: 22px;
+            background-color: #2ecc71; /* Warna Hijau */
+            border: 3px solid #000; /* Border hitam biar kontras */
+            border-radius: 50%;
+            box-shadow: 0 0 10px #2ecc71;
+            animation: pulse-green 2s infinite;
+        }
+
+        /* Animasi Denyut Hijau */
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
 
         h1 {
@@ -49,7 +77,7 @@
             color: #cccccc;
             margin-bottom: 35px;
             font-weight: 300;
-            min-height: 24px; /* Biar ga lompat pas ngetik */
+            min-height: 24px;
         }
 
         .link-item {
@@ -80,17 +108,15 @@
             color: rgba(207, 162, 88, 0.5);
         }
 
-        /* === BAGIAN CSS FITUR TAMBAHAN (OVERLAY & TOMBOL) === */
+        /* === FITUR TOMBOL MELAYANG (MUSIK & QR) === */
         
-        /* Tombol Musik Melayang */
         .floating-btn {
             position: fixed;
             bottom: 20px;
-            right: 20px;
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: rgba(20, 20, 20, 0.8);
+            background: rgba(20, 20, 20, 0.9);
             border: 2px solid #cfa258;
             color: #cfa258;
             font-size: 20px;
@@ -107,36 +133,59 @@
             transform: scale(1.1);
         }
 
-        /* Layar Penutup (Tap to Enter) */
+        /* Posisi Tombol */
+        #music-btn { right: 20px; } /* Kanan Bawah */
+        #qr-btn { left: 20px; }    /* Kiri Bawah */
+
+        /* === LAYAR PENUTUP & MODAL === */
+        
+        /* Layar Pembuka (Tap to Enter) */
         #overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: opacity 0.8s ease;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: opacity 0.8s ease;
         }
         
-        .overlay-content {
-            text-align: center;
-            color: #cfa258;
-            animation: pulse 2s infinite;
-        }
-        
+        .overlay-content { text-align: center; color: #cfa258; animation: pulse 2s infinite; }
         .overlay-content h2 { font-size: 2rem; margin-bottom: 10px; }
         .overlay-content p { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
 
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
+        /* Modal QR Code */
+        #qr-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            display: none; /* Sembunyi default */
+            justify-content: center; align-items: center;
+            flex-direction: column;
+            backdrop-filter: blur(8px);
         }
+
+        .qr-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            animation: popUp 0.3s ease;
+            max-width: 80%;
+        }
+
+        .qr-box img { width: 200px; height: 200px; object-fit: contain; }
+        .qr-box p { color: #333; margin-bottom: 5px; margin-top: 10px; font-weight: 600; }
+
+        .close-qr {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
     </style>
 </head>
 <body>
@@ -148,14 +197,27 @@
         </div>
     </div>
 
+    <div id="qr-modal">
+        <div class="qr-box">
+            <img src="qrcode.png" alt="Scan Me">
+            <p>Scan to Connect</p>
+        </div>
+        <div class="close-qr">&times;</div>
+    </div>
+
     <audio id="bg-music" loop>
         <source src="one.mp3" type="audio/mpeg">
     </audio>
 
     <button id="music-btn" class="floating-btn">🔊</button>
+    <button id="qr-btn" class="floating-btn">🔳</button>
 
     <div class="container">
-        <img src="dp.jpg" alt="Foto Profil" class="profile-img">
+        
+        <div class="profile-wrapper">
+            <img src="dp.jpg" alt="Foto Profil" class="profile-img">
+            <div class="status-dot" title="Open for Work"></div>
+        </div>
         
         <h1>@raviyunanto</h1>
         <p><span id="typing-text"></span><span class="cursor">|</span></p>
@@ -173,64 +235,58 @@
     </div>
 
     <script>
-        // 1. SCRIPT EFEK KETIK
+        // 1. EFEK KETIK
         const textElement = document.getElementById('typing-text');
         const texts = ["Videographer", "Photographer", "Designer"]; 
-        let count = 0;
-        let index = 0;
-        let currentText = "";
-        let letter = "";
+        let count = 0; let index = 0; let currentText = ""; let letter = "";
 
         (function type() {
-            if (count === texts.length) {
-                count = 0;
-            }
+            if (count === texts.length) { count = 0; }
             currentText = texts[count];
             letter = currentText.slice(0, ++index);
-            
             textElement.textContent = letter;
             if (letter.length === currentText.length) {
-                count++;
-                index = 0;
-                setTimeout(type, 2000); 
-            } else {
-                setTimeout(type, 100); 
-            }
+                count++; index = 0; setTimeout(type, 2000); 
+            } else { setTimeout(type, 100); }
         }());
 
-        // 2. SCRIPT MUSIK & OVERLAY
+        // 2. MUSIK & OVERLAY
         const overlay = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
-        const btn = document.getElementById('music-btn');
+        const musicBtn = document.getElementById('music-btn');
+        const qrBtn = document.getElementById('qr-btn');
         let isPlaying = false;
 
-        // Pas layar diklik
         overlay.addEventListener('click', () => {
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                btn.style.display = 'block'; // Munculin tombol musik
+                musicBtn.style.display = 'block'; // Munculin tombol musik
+                qrBtn.style.display = 'block';    // Munculin tombol QR
             }, 800);
-
-            // Coba play musik
             audio.volume = 0.3;
-            audio.play().catch(error => {
-                console.log("Autoplay dicegah browser, perlu interaksi user lagi.");
-            });
+            audio.play().catch(e => console.log("Audio perlu interaksi"));
             isPlaying = true;
         });
 
-        // Pas tombol musik diklik
-        btn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                btn.innerHTML = '🔇'; 
-                isPlaying = false;
-            } else {
-                audio.play();
-                btn.innerHTML = '🔊'; 
-                isPlaying = true;
-            }
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) { audio.pause(); musicBtn.innerHTML = '🔇'; isPlaying = false; } 
+            else { audio.play(); musicBtn.innerHTML = '🔊'; isPlaying = true; }
+        });
+
+        // 3. LOGIKA QR CODE POPUP
+        const qrModal = document.getElementById('qr-modal');
+        const closeQr = document.querySelector('.close-qr');
+
+        // Buka Popup
+        qrBtn.addEventListener('click', () => {
+            qrModal.style.display = 'flex';
+        });
+
+        // Tutup Popup (Klik silang atau klik area gelap)
+        closeQr.addEventListener('click', () => { qrModal.style.display = 'none'; });
+        qrModal.addEventListener('click', (e) => {
+            if (e.target === qrModal) { qrModal.style.display = 'none'; }
         });
     </script>
 </body>
