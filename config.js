@@ -5,7 +5,7 @@ const CONFIG = {
     name: "@raviyunanto",       // Nama
     
     // === STATUS KETERSEDIAAN ===
-    isOpenToWork: false,         // true = titik hijau nyala
+    isOpenToWork: true,         // true = titik hijau nyala
 
     // === MUSIK ===
     musicFile: "bs.mp3",       // File lagu
