@@ -6,10 +6,10 @@ const CONFIG = {
     // === STATUS KETERSEDIAAN ===
     // Ubah ke "false" jika sedang sibuk/full booked
     // Ubah ke "true" jika sedang Open for Work (titik hijau nyala)
-    isOpenToWork: true, 
+    isOpenToWork: false, 
 
     // === MUSIK ===
-    musicFile: "one.mp3",       // Nama file lagu MP3
+    musicFile: "bs.mp3",       // Nama file lagu MP3
 
     // === BIO (EFEK KETIK) ===
     // Kamu bisa tambah atau kurangi teks di dalam kurung siku []
