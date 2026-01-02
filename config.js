@@ -8,8 +8,8 @@ const CONFIG = {
     isOpenToWork: true,         // true = titik hijau nyala
 
     // === MUSIK ===
-    musicFile: "one.mp3",       // File lagu
-    initialVolume: 0.3,         // (BARU) Volume awal (0.1 - 1.0)
+    musicFile: "bs.mp3",       // File lagu
+    initialVolume: 0.1,         // (BARU) Volume awal (0.1 - 1.0)
 
     // === BIO (EFEK KETIK) ===
     typingTexts: [
