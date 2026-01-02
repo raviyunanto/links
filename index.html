@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Loading...</title>
-    
     <link id="favicon" rel="icon" type="image/png" href=""> 
-    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -25,21 +23,44 @@
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
             border: 3px solid #cfa258; box-shadow: 0 0 25px rgba(207, 162, 88, 0.2); display: block;
         }
+
+        /* LOGIKA DOT BARU (HIJAU/MERAH) */
         .status-dot {
             position: absolute; bottom: 5px; right: 5px; width: 22px; height: 22px;
-            background-color: #2ecc71; border: 3px solid #000; border-radius: 50%;
-            box-shadow: 0 0 10px #2ecc71; animation: pulse-green 2s infinite; display: none;
+            border: 3px solid #000; border-radius: 50%;
+            /* Warna default akan diatur Script */
         }
+
+        /* Kondisi Hijau (Open) */
+        .status-dot.online {
+            background-color: #2ecc71;
+            box-shadow: 0 0 10px #2ecc71;
+            animation: pulse-green 2s infinite;
+        }
+
+        /* Kondisi Merah (Busy) */
+        .status-dot.busy {
+            background-color: #e74c3c;
+            box-shadow: 0 0 10px #e74c3c;
+            animation: pulse-red 2s infinite;
+        }
+
         @keyframes pulse-green {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
+        
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
 
         h1 { font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 5px; letter-spacing: 1px; }
         p { font-size: 15px; color: #cccccc; margin-bottom: 15px; font-weight: 300; min-height: 24px; }
 
-        /* === TOMBOL & LINK === */
+        /* === LINK & SHARE === */
         .share-btn-mini {
             background: transparent; border: 1px solid rgba(207, 162, 88, 0.5); color: #cfa258;
             padding: 6px 15px; font-size: 11px; border-radius: 20px; cursor: pointer;
@@ -61,14 +82,13 @@
         .link-special { border-color: #fff !important; background: rgba(255,255,255,0.1) !important; }
         .footer { margin-top: 40px; font-size: 13px; color: rgba(207, 162, 88, 0.5); }
 
-        /* === FITUR MUSIK VERTIKAL (POPUP SLIDER) === */
+        /* === FITUR MUSIK POPUP === */
         .music-wrapper {
             position: fixed; right: 20px; bottom: 20px;
             display: flex; flex-direction: column; align-items: center;
             gap: 15px; z-index: 100;
-            display: none; /* Default sembunyi */
+            display: none; 
         }
-
         .music-toggle-btn {
             width: 50px; height: 50px; border-radius: 50%;
             background: rgba(20, 20, 20, 0.9); border: 2px solid #cfa258;
@@ -78,37 +98,25 @@
             display: flex; justify-content: center; align-items: center;
         }
         .music-toggle-btn:active { transform: scale(0.9); }
-
-        /* Kotak Slider (Default Sembunyi) */
         .volume-container {
             background: rgba(20, 20, 20, 0.9); border: 2px solid #cfa258;
-            border-radius: 25px;
-            width: 40px; height: 120px; 
+            border-radius: 25px; width: 40px; height: 120px; 
             display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; transform: translateY(20px);
             transition: all 0.3s ease;
         }
-
-        /* Class untul Memunculkan Slider */
-        .volume-container.show {
-            opacity: 1; pointer-events: auto; transform: translateY(0);
-        }
-
-        /* Slider Vertikal (Rotasi) */
+        .volume-container.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
         #vol-slider {
-            width: 100px; height: 4px;
-            transform: rotate(-90deg);
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px; outline: none; -webkit-appearance: none;
+            width: 100px; height: 4px; transform: rotate(-90deg);
+            background: rgba(255, 255, 255, 0.2); border-radius: 5px; outline: none; -webkit-appearance: none;
             accent-color: #cfa258; cursor: pointer;
         }
-        
         #vol-slider::-webkit-slider-thumb {
             -webkit-appearance: none; width: 14px; height: 14px;
             background: #cfa258; border-radius: 50%; border: 2px solid #000;
         }
 
-        /* === OVERLAY HITAM === */
+        /* === OVERLAY === */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #000; z-index: 9999; display: flex; justify-content: center; align-items: center;
@@ -141,7 +149,7 @@
     <div class="container">
         <div class="profile-wrapper">
             <img id="profile-img" src="" alt="Foto Profil" class="profile-img">
-            <div id="status-dot" class="status-dot" title="Open for Work"></div>
+            <div id="status-dot" class="status-dot"></div>
         </div>
         
         <h1 id="profile-name"></h1>
@@ -153,26 +161,29 @@
     </div>
 
     <script src="config.js"></script>
-
     <script>
-        // 1. SETUP TAMPILAN DARI CONFIG
+        // 1. DATA SETUP
         document.title = CONFIG.name;
         document.getElementById('page-title').textContent = CONFIG.name;
         document.getElementById('profile-img').src = CONFIG.profileImage;
-        
-        // Setup Favicon (Icon Tab Browser)
         document.getElementById('favicon').href = CONFIG.favicon; 
-        
         document.getElementById('profile-name').textContent = CONFIG.name;
         document.getElementById('bg-music').src = CONFIG.musicFile;
         document.getElementById('footer-text').textContent = CONFIG.copyright;
 
-        // Cek Status Open to Work
+        // --- LOGIKA STATUS BARU (HIJAU / MERAH) ---
+        const statusDot = document.getElementById('status-dot');
         if (CONFIG.isOpenToWork) {
-            document.getElementById('status-dot').style.display = 'block';
+            // Jika TRUE -> Class 'online' (Hijau)
+            statusDot.className = 'status-dot online';
+            statusDot.title = "Open for Work";
+        } else {
+            // Jika FALSE -> Class 'busy' (Merah)
+            statusDot.className = 'status-dot busy';
+            statusDot.title = "Busy / Closed";
         }
+        // -------------------------------------------
 
-        // Generate Link Tombol
         const linkContainer = document.getElementById('link-container');
         CONFIG.links.forEach(link => {
             const a = document.createElement('a');
@@ -184,11 +195,10 @@
             linkContainer.appendChild(a);
         });
 
-        // 2. EFEK KETIK (TYPING EFFECT)
+        // 2. TYPING EFFECT
         const textElement = document.getElementById('typing-text');
         const texts = CONFIG.typingTexts;
         let count = 0; let index = 0; let currentText = ""; let letter = "";
-        
         (function type() {
             if (count === texts.length) { count = 0; }
             currentText = texts[count];
@@ -199,7 +209,7 @@
             } else { setTimeout(type, 100); }
         }());
 
-        // 3. LOGIKA MUSIK & SLIDER
+        // 3. MUSIC & SLIDER
         const overlay = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
         const musicWrapper = document.getElementById('music-wrapper');
@@ -207,55 +217,37 @@
         const volBox = document.getElementById('vol-box');
         const volSlider = document.getElementById('vol-slider');
 
-        // Set Volume Awal (Pakai settingan Config, kalau kosong default 0.3)
         const startVol = CONFIG.initialVolume || 0.3;
         audio.volume = startVol;
         volSlider.value = startVol;
 
-        // Logika saat Overlay diklik (Masuk Website)
         overlay.addEventListener('click', () => {
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                musicWrapper.style.display = 'flex'; // Munculin Tombol Musik
+                musicWrapper.style.display = 'flex';
             }, 800);
-            
-            // Play Musik
-            audio.play().catch(e => console.log("Audio block (perlu interaksi user)"));
+            audio.play().catch(e => console.log("Audio block"));
         });
 
-        // Logika Klik Tombol Speaker (Munculin/Sembunyiin Slider)
         musicToggle.addEventListener('click', () => {
             volBox.classList.toggle('show');
         });
 
-        // Logika Geser Slider
         volSlider.addEventListener('input', (e) => {
             const val = e.target.value;
             audio.volume = val;
-            
-            // Ganti ikon jadi Mute kalau slider mentok bawah
-            if(val == 0) {
-                musicToggle.innerHTML = '🔇';
-            } else {
-                musicToggle.innerHTML = '🔊';
-            }
+            if(val == 0) { musicToggle.innerHTML = '🔇'; } else { musicToggle.innerHTML = '🔊'; }
         });
 
-        // 4. LOGIKA TOMBOL SHARE
+        // Share
         const shareBtn = document.getElementById('share-profile-btn');
         shareBtn.addEventListener('click', async () => {
             if (navigator.share) {
-                try { 
-                    await navigator.share({ 
-                        title: CONFIG.name, 
-                        text: 'Cek profil digital saya:', 
-                        url: window.location.href 
-                    }); 
-                } catch (err) {}
+                try { await navigator.share({ title: CONFIG.name, text: 'Cek profil saya:', url: window.location.href }); } catch (err) {}
             } else {
                 navigator.clipboard.writeText(window.location.href);
-                alert('Link profil berhasil disalin! 📋');
+                alert('Copied! 📋');
             }
         });
     </script>
