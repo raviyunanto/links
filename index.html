@@ -6,92 +6,153 @@
     <title>@raviyunanto</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-    /* Reset dasar */
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+        /* === BAGIAN CSS UTAMA === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-        font-family: 'Poppins', sans-serif;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #000000 30%, #43300b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e0e0e0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px 25px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #cfa258; 
+            box-shadow: 0 0 25px rgba(207, 162, 88, 0.2);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #cfa258;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 15px;
+            color: #cccccc;
+            margin-bottom: 35px;
+            font-weight: 300;
+            min-height: 24px; /* Biar ga lompat pas ngetik */
+        }
+
+        .link-item {
+            display: block;
+            background: rgba(255, 255, 255, 0.05);
+            color: #f0f0f0;
+            border: 1px solid rgba(207, 162, 88, 0.3);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .link-item:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(90deg, #cfa258, #e6c584);
+            color: #000000;
+            border-color: #cfa258;
+            box-shadow: 0 10px 20px rgba(207, 162, 88, 0.2);
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 13px;
+            color: rgba(207, 162, 88, 0.5);
+        }
+
+        /* === BAGIAN CSS FITUR TAMBAHAN (OVERLAY & TOMBOL) === */
         
-        /* INI YANG BERUBAH: GRADASI HITAM KE EMAS GELAP */
-        background: linear-gradient(135deg, #000000 30%, #43300b 100%);
+        /* Tombol Musik Melayang */
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid #cfa258;
+            color: #cfa258;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+            display: none; /* Sembunyi dulu */
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .floating-btn:hover {
+            background: #cfa258;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        /* Layar Penutup (Tap to Enter) */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.8s ease;
+        }
         
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #e0e0e0;
-    }
+        .overlay-content {
+            text-align: center;
+            color: #cfa258;
+            animation: pulse 2s infinite;
+        }
+        
+        .overlay-content h2 { font-size: 2rem; margin-bottom: 10px; }
+        .overlay-content p { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
 
-    .container {
-        width: 100%;
-        max-width: 450px;
-        padding: 40px 25px;
-        text-align: center;
-    }
-
-    /* Foto Profil */
-    .profile-img {
-        width: 110px;
-        height: 110px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid #cfa258; 
-        box-shadow: 0 0 25px rgba(207, 162, 88, 0.2);
-        margin-bottom: 20px;
-    }
-
-    h1 {
-        font-size: 24px;
-        font-weight: 700;
-        color: #cfa258;
-        margin-bottom: 8px;
-        letter-spacing: 1px;
-    }
-
-    p {
-        font-size: 15px;
-        color: #cccccc;
-        margin-bottom: 35px;
-        font-weight: 300;
-    }
-
-    /* Tombol Link */
-    .link-item {
-        display: block;
-        background: rgba(255, 255, 255, 0.05);
-        color: #f0f0f0;
-        border: 1px solid rgba(207, 162, 88, 0.3);
-        padding: 16px;
-        margin-bottom: 16px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(5px);
-    }
-
-    /* Efek Hover (Pas disentuh jadi emas) */
-    .link-item:hover {
-        transform: translateY(-3px);
-        background: linear-gradient(90deg, #cfa258, #e6c584);
-        color: #000000;
-        border-color: #cfa258;
-        box-shadow: 0 10px 20px rgba(207, 162, 88, 0.2);
-    }
-
-    .footer {
-        margin-top: 40px;
-        font-size: 13px;
-        color: rgba(207, 162, 88, 0.5);
-    }
-</style>
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+    </style>
 </head>
 <body>
-    <div class="overlay"></div>
+
+    <div id="overlay">
+        <div class="overlay-content">
+            <h2>Hi!</h2>
+            <p>Tap anywhere to enter</p>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="one.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="music-btn" class="floating-btn">🔊</button>
 
     <div class="container">
         <img src="dp.jpg" alt="Foto Profil" class="profile-img">
@@ -100,8 +161,8 @@
         <p><span id="typing-text"></span><span class="cursor">|</span></p>
 
         <a href="contact.vcf" class="link-item" style="border-color: #fff; background: rgba(255,255,255,0.1);">
-    📇 Save My Contact
-</a>
+            📇 Save My Contact
+        </a>
         <a href="https://wa.me/6281255655101" class="link-item" target="_blank">💬 WhatsApp</a>
         <a href="https://instagram.com/raviyunanto" class="link-item" target="_blank">📸 Instagram</a>
         <a href="mailto:ravi.yunanto@gmail.com" class="link-item">📩 Email Me</a>
@@ -110,134 +171,67 @@
             &copy; 2025. All Rights Reserved.
         </div>
     </div>
-<script>
-    const textElement = document.getElementById('typing-text');
-    const texts = ["Videographer", "Photographer", "Designer"]; // Ganti teks sesukamu
-    let count = 0;
-    let index = 0;
-    let currentText = "";
-    let letter = "";
 
-    (function type() {
-        if (count === texts.length) {
-            count = 0;
-        }
-        currentText = texts[count];
-        letter = currentText.slice(0, ++index);
-        
-        textElement.textContent = letter;
-        if (letter.length === currentText.length) {
-            count++;
-            index = 0;
-            setTimeout(type, 2000); // Jeda pas teks kebaca full
-        } else {
-            setTimeout(type, 100); // Kecepatan ngetik
-        }
-    }());
-<audio id="bg-music" loop>
-    <source src="one.mp3" type="audio/mpeg">
-</audio>
+    <script>
+        // 1. SCRIPT EFEK KETIK
+        const textElement = document.getElementById('typing-text');
+        const texts = ["Videographer", "Photographer", "Designer"]; 
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
 
-<button id="music-btn" class="floating-btn">🔊</button>
+        (function type() {
+            if (count === texts.length) {
+                count = 0;
+            }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+            
+            textElement.textContent = letter;
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000); 
+            } else {
+                setTimeout(type, 100); 
+            }
+        }());
 
-<div id="overlay">
-    <div class="overlay-content">
-        <h2>Hi!</h2>
-        <p>Tap anywhere to enter</p>
-    </div>
-</div>
+        // 2. SCRIPT MUSIK & OVERLAY
+        const overlay = document.getElementById('overlay');
+        const audio = document.getElementById('bg-music');
+        const btn = document.getElementById('music-btn');
+        let isPlaying = false;
 
-<style>
-    /* Tombol Musik Melayang */
-    .floating-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: rgba(20, 20, 20, 0.8); /* Gelap transparan */
-        border: 2px solid #cfa258; /* Ring Emas */
-        color: #cfa258;
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 100;
-        display: none; /* Sembunyi dulu sebelum masuk */
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
+        // Pas layar diklik
+        overlay.addEventListener('click', () => {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                btn.style.display = 'block'; // Munculin tombol musik
+            }, 800);
 
-    .floating-btn:hover {
-        background: #cfa258;
-        color: #000;
-        transform: scale(1.1);
-    }
-
-    /* Layar Penutup */
-    #overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        transition: opacity 0.8s ease;
-    }
-    
-    .overlay-content {
-        text-align: center;
-        color: #cfa258;
-        animation: pulse 2s infinite;
-    }
-    
-    .overlay-content h2 { font-size: 2rem; margin-bottom: 10px; }
-    .overlay-content p { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
-
-    @keyframes pulse {
-        0% { opacity: 0.6; }
-        50% { opacity: 1; }
-        100% { opacity: 0.6; }
-    }
-</style>
-
-<script>
-    const overlay = document.getElementById('overlay');
-    const audio = document.getElementById('bg-music');
-    const btn = document.getElementById('music-btn');
-    let isPlaying = false;
-
-    // Fungsi pas layar diklik pertama kali
-    overlay.addEventListener('click', () => {
-        overlay.style.opacity = '0';
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            // Munculin tombol musik
-            btn.style.display = 'block';
-        }, 800);
-
-        // Mulai musik
-        audio.volume = 0.3;
-        audio.play();
-        isPlaying = true;
-    });
-
-    // Fungsi pas tombol musik diklik
-    btn.addEventListener('click', () => {
-        if (isPlaying) {
-            audio.pause();
-            btn.innerHTML = '🔇'; // Ganti ikon jadi mute
-            isPlaying = false;
-        } else {
-            audio.play();
-            btn.innerHTML = '🔊'; // Ganti ikon jadi sound
+            // Coba play musik
+            audio.volume = 0.3;
+            audio.play().catch(error => {
+                console.log("Autoplay dicegah browser, perlu interaksi user lagi.");
+            });
             isPlaying = true;
-        }
-    });
-</script>
+        });
+
+        // Pas tombol musik diklik
+        btn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                btn.innerHTML = '🔇'; 
+                isPlaying = false;
+            } else {
+                audio.play();
+                btn.innerHTML = '🔊'; 
+                isPlaying = true;
+            }
+        });
+    </script>
 </body>
 </html>
