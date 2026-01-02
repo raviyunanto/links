@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links</title>
+    <title>Linktree Saya</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* Reset dasar */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,77 +15,107 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            /* Ganti warna background di sini. Bisa kode HEX atau nama warna */
-            background: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+            /* MENGGUNAKAN GAMBAR SEBAGAI BACKGROUND */
+            /* Pastikan file gambar "image_0.png" sudah diupload ke GitHub */
+            background-image: url('image_0.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Biar background diem pas discroll */
+            background-color: #0a0a0a; /* Warna cadangan kalo gambar gak muncul */
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #333;
+            color: #e0e0e0; /* Warna teks dasar terang (bukan putih murni) */
+        }
+
+        /* Lapisan gelap transparan biar teks lebih kebaca */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Ubah angka 0.6 buat atur gelap terangnya */
+            z-index: -1;
         }
 
         .container {
             width: 100%;
-            max-width: 400px; /* Ukuran lebar ala HP */
-            padding: 40px 20px;
+            max-width: 450px;
+            padding: 40px 25px;
             text-align: center;
+            z-index: 1;
         }
 
         /* Foto Profil */
         .profile-img {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 15px;
+            /* Border warna emas dengan efek cahaya */
+            border: 3px solid #cfa258; 
+            box-shadow: 0 0 20px rgba(207, 162, 88, 0.4);
+            margin-bottom: 20px;
         }
 
         h1 {
-            font-size: 20px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 24px;
+            font-weight: 700;
+            /* Warna emas untuk nama */
+            color: #cfa258;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
         }
 
         p {
-            font-size: 14px;
-            color: #f0f0f0;
-            margin-bottom: 30px;
+            font-size: 15px;
+            color: #cccccc;
+            margin-bottom: 35px;
+            font-weight: 300;
         }
 
-        /* Gaya Tombol Link */
+        /* Gaya Tombol Link Baru - Dark & Gold Theme */
         .link-item {
             display: block;
-            background: rgba(255, 255, 255, 0.9); /* Putih agak transparan */
-            color: #333;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 30px; /* Biar bulat lonjong */
+            /* Latar belakang transparan gelap */
+            background: rgba(20, 20, 20, 0.8);
+            /* Teks warna terang */
+            color: #f0f0f0;
+            /* Border tipis warna emas */
+            border: 1px solid rgba(207, 162, 88, 0.5);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 50px; /* Lebih bulat */
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease; /* Animasi halus */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px); /* Efek blur di belakang tombol */
+            letter-spacing: 0.5px;
         }
 
-        /* Efek pas kursor nempel / disentuh */
+        /* Efek Hover yang Mewah */
         .link-item:hover {
-            transform: translateY(-3px) scale(1.02);
-            background: #fff;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            color: #764ba2; /* Warna teks berubah saat hover */
+            transform: translateY(-3px);
+            /* Background jadi warna emas solid pas disorot */
+            background: #cfa258;
+            /* Teks jadi hitam biar kontras */
+            color: #0a0a0a;
+            border-color: #cfa258;
+            box-shadow: 0 10px 20px rgba(207, 162, 88, 0.3);
         }
 
         .footer {
-            margin-top: 30px;
-            font-size: 12px;
-            color: rgba(255,255,255,0.7);
+            margin-top: 40px;
+            font-size: 13px;
+            color: rgba(207, 162, 88, 0.7); /* Warna emas pudar */
         }
     </style>
 </head>
 <body>
+    <div class="overlay"></div>
 
     <div class="container">
         <img src="dp.jpg" alt="Foto Profil" class="profile-img">
@@ -97,7 +128,7 @@
         <a href="mailto:ravi.yunanto@gmail.com" class="link-item">📩 Email Me</a>
 
         <div class="footer">
-            &copy; 2025 Dibuat dengan semangat
+            &copy; 2025. All Rights Reserved.
         </div>
     </div>
 
