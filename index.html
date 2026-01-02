@@ -34,10 +34,8 @@
         }
 
         .profile-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
+            width: 110px; height: 110px;
+            border-radius: 50%; object-fit: cover;
             border: 3px solid #cfa258; 
             box-shadow: 0 0 25px rgba(207, 162, 88, 0.2);
             display: block;
@@ -45,12 +43,10 @@
 
         /* Indikator Status (Open to Work) */
         .status-dot {
-            position: absolute;
-            bottom: 5px; right: 5px;
+            position: absolute; bottom: 5px; right: 5px;
             width: 22px; height: 22px;
             background-color: #2ecc71;
-            border: 3px solid #000;
-            border-radius: 50%;
+            border: 3px solid #000; border-radius: 50%;
             box-shadow: 0 0 10px #2ecc71;
             animation: pulse-green 2s infinite;
         }
@@ -62,13 +58,39 @@
         }
 
         h1 {
-            font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 8px; letter-spacing: 1px;
+            font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 5px; letter-spacing: 1px;
         }
 
+        /* Teks Typing (Bio) */
         p {
-            font-size: 15px; color: #cccccc; margin-bottom: 35px; font-weight: 300; min-height: 24px;
+            font-size: 15px; color: #cccccc; margin-bottom: 15px; font-weight: 300; min-height: 24px;
         }
 
+        /* === TOMBOL SHARE KECIL === */
+        .share-btn-mini {
+            background: transparent;
+            border: 1px solid rgba(207, 162, 88, 0.5);
+            color: #cfa258;
+            padding: 6px 15px;
+            font-size: 11px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .share-btn-mini:hover {
+            background: rgba(207, 162, 88, 0.2);
+            border-color: #cfa258;
+            transform: scale(1.05);
+        }
+
+        /* Tombol Link Utama */
         .link-item {
             display: block;
             background: rgba(255, 255, 255, 0.05);
@@ -88,69 +110,30 @@
 
         .footer { margin-top: 40px; font-size: 13px; color: rgba(207, 162, 88, 0.5); }
 
-        /* === POSISI TOMBOL MELAYANG DI KANAN === */
-        
+        /* === TOMBOL MUSIK MELAYANG === */
         .floating-btn {
-            position: fixed;
-            right: 20px; /* Semua nempel di kanan */
-            width: 50px; height: 50px;
-            border-radius: 50%;
+            position: fixed; right: 20px; bottom: 20px;
+            width: 50px; height: 50px; border-radius: 50%;
             background: rgba(20, 20, 20, 0.9);
-            border: 2px solid #cfa258;
-            color: #cfa258;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 100;
-            display: none;
-            transition: all 0.3s ease;
+            border: 2px solid #cfa258; color: #cfa258;
+            font-size: 20px; cursor: pointer; z-index: 100;
+            display: none; transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-
-        .floating-btn:hover {
-            background: #cfa258; color: #000; transform: scale(1.1);
-        }
-
-        /* Atur Tumpukan Tombol */
-        #music-btn { bottom: 20px; } /* Paling Bawah */
+        .floating-btn:hover { background: #cfa258; color: #000; transform: scale(1.1); }
         
-        #qr-btn { 
-            bottom: 80px; /* Di atas tombol musik (20px + 50px tinggi tombol + 10px jarak) */
-            font-size: 16px; /* Font QR lebih kecil dikit biar pas */
-            font-weight: 700; /* Tebal */
-        }
-
-        /* === LAYAR PENUTUP & MODAL === */
+        /* === OVERLAY === */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #000; z-index: 9999;
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: opacity 0.8s ease;
         }
-        
         .overlay-content { text-align: center; color: #cfa258; animation: pulse 2s infinite; }
         .overlay-content h2 { font-size: 2rem; margin-bottom: 10px; }
         .overlay-content p { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Modal QR */
-        #qr-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 2000;
-            display: none; justify-content: center; align-items: center;
-            flex-direction: column; backdrop-filter: blur(8px);
-        }
-
-        .qr-box {
-            background: #fff; padding: 20px; border-radius: 20px;
-            text-align: center; animation: popUp 0.3s ease; max-width: 80%;
-        }
-
-        .qr-box img { width: 200px; height: 200px; object-fit: contain; }
-        .qr-box p { color: #333; margin-bottom: 5px; margin-top: 10px; font-weight: 600; }
-        .close-qr { margin-top: 20px; color: #fff; font-size: 30px; cursor: pointer; }
-
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-        @keyframes popUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
     </style>
 </head>
 <body>
@@ -162,20 +145,11 @@
         </div>
     </div>
 
-    <div id="qr-modal">
-        <div class="qr-box">
-            <img src="qrcode.png" alt="Scan Me">
-            <p>Scan to Connect</p>
-        </div>
-        <div class="close-qr">&times;</div>
-    </div>
-
     <audio id="bg-music" loop>
         <source src="one.mp3" type="audio/mpeg">
     </audio>
 
     <button id="music-btn" class="floating-btn">🔊</button>
-    <button id="qr-btn" class="floating-btn">QR</button>
 
     <div class="container">
         <div class="profile-wrapper">
@@ -185,6 +159,10 @@
         
         <h1>@raviyunanto</h1>
         <p><span id="typing-text"></span><span class="cursor">|</span></p>
+
+        <button id="share-profile-btn" class="share-btn-mini">
+            🔗 Share Profile
+        </button>
 
         <a href="contact.vcf" class="link-item" style="border-color: #fff; background: rgba(255,255,255,0.1);">
             📇 Save My Contact
@@ -203,7 +181,6 @@
         const textElement = document.getElementById('typing-text');
         const texts = ["Videographer", "Photographer", "Designer"]; 
         let count = 0; let index = 0; let currentText = ""; let letter = "";
-
         (function type() {
             if (count === texts.length) { count = 0; }
             currentText = texts[count];
@@ -218,7 +195,6 @@
         const overlay = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
-        const qrBtn = document.getElementById('qr-btn');
         let isPlaying = false;
 
         overlay.addEventListener('click', () => {
@@ -226,9 +202,8 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
                 musicBtn.style.display = 'block'; 
-                qrBtn.style.display = 'block';    
             }, 800);
-            audio.volume = 0.1;
+            audio.volume = 0.3;
             audio.play().catch(e => console.log("Audio perlu interaksi"));
             isPlaying = true;
         });
@@ -238,13 +213,23 @@
             else { audio.play(); musicBtn.innerHTML = '🔊'; isPlaying = true; }
         });
 
-        // QR Modal Logic
-        const qrModal = document.getElementById('qr-modal');
-        const closeQr = document.querySelector('.close-qr');
-        qrBtn.addEventListener('click', () => { qrModal.style.display = 'flex'; });
-        closeQr.addEventListener('click', () => { qrModal.style.display = 'none'; });
-        qrModal.addEventListener('click', (e) => {
-            if (e.target === qrModal) { qrModal.style.display = 'none'; }
+        // SHARE BUTTON LOGIC
+        const shareBtn = document.getElementById('share-profile-btn');
+        shareBtn.addEventListener('click', async () => {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: '@raviyunanto',
+                        text: 'Cek profil digital saya di sini:',
+                        url: window.location.href,
+                    });
+                } catch (err) {
+                    console.log('Batal share');
+                }
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link profil berhasil disalin! 📋');
+            }
         });
     </script>
 </body>
