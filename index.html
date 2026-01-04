@@ -2,356 +2,512 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <meta property="og:site_name" content="@raviyunanto">
-    <meta property="og:title" content="@raviyunanto | Visual Artist">
-    <meta property="og:description" content="Videographer, Photographer, & Designer. Tap to view my profile & contacts.">
-    <meta property="og:image" content="https://raviyunanto.my.id/dp.jpg">
-    <meta property="og:url" content="https://raviyunanto.my.id">
+    <meta name="author" content="Ravi Yunanto">
+    <meta name="description" content="Official digital portfolio of Ravi Yunanto - Videographer, Photographer, & Designer.">
+    <meta name="theme-color" content="#000000">
+
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://raviyunanto.my.id">
+    <meta property="og:site_name" content="Ravi Yunanto Portfolio">
+    <meta property="og:title" content="@raviyunanto | Visual Artist">
+    <meta property="og:description" content="Videographer, Photographer, & Designer. Tap to connect.">
+    <meta property="og:image" content="https://raviyunanto.my.id/dp.jpg">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@raviyunanto | Visual Artist">
-    <meta name="twitter:description" content="Videographer, Photographer, & Designer. Tap to view my profile.">
+    <meta name="twitter:description" content="Videographer, Photographer, & Designer. Tap to connect.">
     <meta name="twitter:image" content="https://raviyunanto.my.id/dp.jpg">
 
-    <title id="page-title">Loading...</title>
-    <link id="favicon" rel="icon" type="image/png" href=""> 
+    <title id="page-title">Ravi Yunanto | Loading...</title>
+    
+    <link id="favicon" rel="icon" type="image/png" href="icon.png"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* === VARIABEL WARNA === */
+        /* * DESIGN SYSTEM & VARIABLES 
+         * Theme: Gold Luxury
+         */
         :root {
-            /* === DARK MODE (DEFAULT - TETAP SAMA) === */
-            --bg-color: #000;
-            --bg-gradient: linear-gradient(135deg, #050505 30%, #2a1e05 100%);
-            --text-main: #e0e0e0;
-            --text-sub: #cccccc;
+            /* Colors: Dark Mode (Default) */
+            --theme-bg: #050505;
+            --theme-surface: rgba(255, 255, 255, 0.07);
+            --theme-text-primary: #e0e0e0;
+            --theme-text-secondary: #cccccc;
+            --theme-accent: #cfa258;
+            --theme-gradient: linear-gradient(135deg, #050505 30%, #2a1e05 100%);
             
-            --glass-bg: rgba(255, 255, 255, 0.07);
+            /* Glassmorphism Props */
             --glass-border: rgba(255, 255, 255, 0.1);
-            --btn-bg: rgba(255, 255, 255, 0.05);
-            --border-highlight: rgba(207, 162, 88, 0.4);
+            --glass-blur: blur(12px);
+            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+            /* Special Elements */
+            --special-btn-bg: rgba(255, 255, 255, 0.12);
+            --special-btn-border: rgba(255, 255, 255, 0.5);
+            --special-accent-line: #ffffff;
             
-            --gold: #cfa258;
-            
-            --special-bg: rgba(255,255,255,0.12); 
-            --special-border: rgba(255,255,255,0.5); 
-            --special-accent: #ffffff; 
+            /* Transitions */
+            --transition-ease: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* === LIGHT MODE (LEBIH EMAS/CREAMY) === */
-        body.light-mode {
-            /* Background: Cream Lembut ke Emas (Royal Vibe) */
-            --bg-color: #fdf6e3;
-            --bg-gradient: linear-gradient(135deg, #fffcf5 20%, #e6d2a8 100%);
+        /* Colors: Light Mode Override */
+        [data-theme="light"] {
+            --theme-bg: #fdf6e3;
+            --theme-surface: rgba(74, 59, 34, 0.08);
+            --theme-text-primary: #4a3b22;
+            --theme-text-secondary: #6e5d3e;
+            --theme-accent: #b8860b;
+            --theme-gradient: linear-gradient(135deg, #fffcf5 20%, #e6d2a8 100%);
             
-            /* Teks: Coklat Tua (Biar enak dibaca di background emas) */
-            --text-main: #4a3b22; 
-            --text-sub: #6e5d3e;
-            
-            /* Elemen Kaca: Nuansa Coklat Transparan */
-            --glass-bg: rgba(74, 59, 34, 0.08); 
             --glass-border: rgba(74, 59, 34, 0.15);
-            --btn-bg: rgba(74, 59, 34, 0.05);
-            --border-highlight: #cfa258;
-            
-            /* Tombol Special: Emas Transparan */
-            --special-bg: rgba(207, 162, 88, 0.25); 
-            --special-border: #b8860b; /* Emas Tua biar tegas */
-            --special-accent: #b8860b; 
+            --special-btn-bg: rgba(207, 162, 88, 0.25);
+            --special-btn-border: #b8860b;
+            --special-accent-line: #b8860b;
         }
 
-        /* === CSS DASAR === */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* --- CORE RESET --- */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            background: var(--bg-gradient);
-            min-height: 100vh; display: flex; justify-content: center; align-items: center; 
-            color: var(--text-main);
+            background: var(--theme-gradient);
+            background-color: var(--theme-bg);
+            color: var(--theme-text-primary);
+            min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
             overflow-x: hidden;
             transition: background 0.5s ease, color 0.5s ease;
         }
 
-        /* CANVAS PARTIKEL */
+        /* --- VISUAL EFFECTS --- */
         #particle-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none;
+            z-index: 0; pointer-events: none;
         }
 
-        .container { 
-            width: 100%; max-width: 450px; padding: 40px 25px; text-align: center; padding-bottom: 100px;
-            position: relative; z-index: 10; animation: fadeUp 1s ease-out;
+        #overlay {
+            position: fixed; inset: 0;
+            background-color: #000; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: opacity 0.8s ease, visibility 0.8s;
         }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .overlay-content { text-align: center; color: var(--theme-accent); animation: pulse 2s infinite; }
+        .overlay-content h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .overlay-content p { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; }
 
-        /* PROFIL */
-        .profile-wrapper { position: relative; display: inline-block; margin-bottom: 20px; }
-        .profile-img {
-            width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
-            border: 3px solid var(--gold); box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); display: block;
-            transition: transform 0.3s;
+        /* --- LAYOUT --- */
+        main.card-container {
+            width: 100%; max-width: 450px;
+            padding: 2.5rem 1.5rem 6rem;
+            text-align: center;
+            position: relative; z-index: 10;
+            opacity: 0; transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
         }
-        .profile-img:hover { transform: scale(1.05) rotate(2deg); }
 
-        .status-dot {
-            position: absolute; bottom: 5px; right: 5px; width: 22px; height: 22px;
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* --- COMPONENTS --- */
+        /* Profile Header */
+        .profile-section { position: relative; display: inline-block; margin-bottom: 1.25rem; }
+        .profile-avatar {
+            width: 110px; height: 110px;
+            border-radius: 50%; object-fit: cover;
+            border: 3px solid var(--theme-accent);
+            box-shadow: 0 0 25px rgba(207, 162, 88, 0.3);
+            transition: var(--transition-ease);
+        }
+        .profile-avatar:hover { transform: scale(1.05) rotate(2deg); }
+
+        .status-badge {
+            position: absolute; bottom: 5px; right: 5px;
+            width: 22px; height: 22px;
             border: 3px solid #000; border-radius: 50%;
         }
-        .status-dot.online { background-color: #2ecc71; box-shadow: 0 0 10px #2ecc71; animation: pulse-green 2s infinite; }
-        .status-dot.busy { background-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; animation: pulse-red 2s infinite; }
-        
-        @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
-        @keyframes pulse-red { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
+        .status-badge.online { background-color: #2ecc71; box-shadow: 0 0 10px #2ecc71; animation: pulse-status 2s infinite; }
+        .status-badge.busy { background-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; animation: pulse-busy 2s infinite; }
 
-        h1 { font-size: 24px; font-weight: 700; color: var(--gold); margin-bottom: 5px; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        p { font-size: 15px; color: var(--text-sub); margin-bottom: 15px; font-weight: 300; min-height: 24px; }
+        /* Typography */
+        h1.profile-name { font-size: 1.5rem; font-weight: 700; color: var(--theme-accent); margin-bottom: 0.25rem; letter-spacing: 1px; }
+        .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 1rem; min-height: 1.5rem; font-weight: 300; }
+        .cursor { display: inline-block; width: 2px; animation: blink 1s infinite; }
 
-        /* TOMBOL (GLASSMORPHISM) */
-        .share-btn-mini {
-            background: var(--btn-bg); 
-            border: 1px solid var(--border-highlight); 
-            color: var(--gold);
-            padding: 8px 18px; font-size: 11px; border-radius: 20px; cursor: pointer;
-            margin-bottom: 30px; display: inline-flex; align-items: center; gap: 6px;
-            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; 
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        /* Action Buttons */
+        .btn-share {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--theme-accent);
+            padding: 8px 20px; font-size: 0.7rem; border-radius: 50px;
+            cursor: pointer; margin-bottom: 2rem;
+            display: inline-flex; align-items: center; gap: 8px;
+            text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            transition: var(--transition-ease);
         }
-        .share-btn-mini:hover { 
-            background: rgba(207, 162, 88, 0.15); 
-            border-color: var(--gold); transform: scale(1.05); 
-        }
+        .btn-share:hover { background: rgba(207, 162, 88, 0.15); border-color: var(--theme-accent); transform: translateY(-2px); }
 
-        .link-container { display: flex; flex-direction: column; gap: 16px; }
-        .link-item {
-            display: block; 
-            background: var(--glass-bg); 
-            color: var(--text-main);
-            border: 1px solid var(--glass-border); 
-            border-left: 3px solid rgba(207, 162, 88, 0.5); 
-            padding: 18px; border-radius: 15px;
-            text-decoration: none; font-weight: 500; transition: all 0.3s ease; 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            position: relative; overflow: hidden;
+        /* Links List */
+        .link-list { display: flex; flex-direction: column; gap: 1rem; }
+        .link-card {
+            display: block; position: relative;
+            background: var(--theme-surface);
+            color: var(--theme-text-primary);
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid rgba(207, 162, 88, 0.5);
+            padding: 1.1rem; border-radius: 16px;
+            text-decoration: none; font-weight: 500;
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            overflow: hidden; transition: var(--transition-ease);
         }
-        .link-item:hover {
-            transform: translateY(-3px); 
+        .link-card:hover {
+            transform: translateY(-4px);
             background: linear-gradient(90deg, rgba(207, 162, 88, 0.9), rgba(230, 197, 132, 0.9));
-            color: #000000; border-color: var(--gold); 
-            box-shadow: 0 10px 25px rgba(207, 162, 88, 0.3);
+            color: #000; border-color: var(--theme-accent);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* TOMBOL SPECIAL */
-        .link-special { 
-            border: 1px solid var(--special-border) !important; 
-            background: var(--special-bg) !important; 
-            border-left: 3px solid var(--special-accent) !important;
-            font-weight: 600; 
+        /* Special Link Modifier */
+        .link-card.special {
+            background: var(--special-btn-bg) !important;
+            border: 1px solid var(--special-btn-border) !important;
+            border-left: 3px solid var(--special-accent-line) !important;
+            font-weight: 600;
         }
-        
-        .footer { margin-top: 40px; font-size: 13px; color: rgba(207, 162, 88, 0.5); }
 
-        /* TOGGLE SWITCH */
-        .switch-container { position: fixed; top: 20px; right: 20px; z-index: 100; }
-        .switch { position: relative; display: inline-block; width: 60px; height: 30px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(20, 20, 20, 0.8);
-            border: 2px solid var(--gold);
-            transition: .4s; border-radius: 34px;
+        /* --- FLOATING CONTROLS --- */
+        .controls-layer { position: fixed; z-index: 50; }
+        .pos-top-right { top: 20px; right: 20px; }
+        .pos-bottom-right { bottom: 20px; right: 20px; }
+
+        .btn-float {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid var(--theme-accent);
+            color: var(--theme-accent);
+            font-size: 1.2rem; cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            transition: transform 0.2s cubic-bezier(0.3, 0.7, 0.4, 1.5);
             backdrop-filter: blur(5px);
         }
-        .slider:before {
-            position: absolute; content: "🌙"; 
-            height: 22px; width: 22px;
-            left: 3px; bottom: 2px;
-            background-color: var(--gold);
-            transition: .4s; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 12px; color: #000;
-        }
-        /* Saat Switch ON (Light Mode) */
-        input:checked + .slider { background-color: rgba(255, 255, 255, 0.8); }
-        input:checked + .slider:before {
-            transform: translateX(28px);
-            content: "☀️"; background-color: #000; color: var(--gold);
-        }
+        .btn-float:active { transform: scale(0.9); }
+        [data-theme="light"] .btn-float { background: rgba(255, 255, 255, 0.8); color: #4a3b22; }
 
-        /* TOMBOL MUSIK */
-        .music-pos { position: fixed; right: 20px; bottom: 20px; z-index: 100; }
-        .float-btn {
-            width: 50px; height: 50px; border-radius: 50%;
-            background: rgba(20, 20, 20, 0.8); border: 2px solid var(--gold);
-            color: var(--gold); font-size: 20px; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: transform 0.2s;
+        /* Toggle Switch UI */
+        .toggle-switch { position: relative; width: 64px; height: 32px; cursor: pointer; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-track {
+            position: absolute; inset: 0;
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 2px solid var(--theme-accent);
+            border-radius: 34px; transition: 0.4s;
+            backdrop-filter: blur(4px);
+        }
+        .toggle-thumb {
+            position: absolute; height: 22px; width: 22px;
+            left: 4px; bottom: 3px;
+            background-color: var(--theme-accent);
+            border-radius: 50%; transition: 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             display: flex; justify-content: center; align-items: center;
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            font-size: 12px;
         }
-        .float-btn:active { transform: scale(0.9); }
-        body.light-mode .float-btn { background: rgba(255, 255, 255, 0.8); border-color: var(--gold); color: #4a3b22; }
+        .toggle-thumb::after { content: "🌙"; }
+        
+        input:checked + .toggle-track { background-color: rgba(255, 255, 255, 0.9); }
+        input:checked + .toggle-track .toggle-thumb { transform: translateX(32px); background-color: #000; color: var(--theme-accent); }
+        input:checked + .toggle-track .toggle-thumb::after { content: "☀️"; }
 
-        /* OVERLAY */
-        #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000; z-index: 9999; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: opacity 0.8s ease;
-        }
-        .overlay-content { text-align: center; color: var(--gold); animation: pulse 2s infinite; }
-        .overlay-content h2 { font-size: 2rem; margin-bottom: 10px; }
-        .overlay-content p { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        /* Footer */
+        footer { margin-top: 3rem; font-size: 0.8rem; color: var(--theme-accent); opacity: 0.6; }
+
+        /* Keyframes */
+        @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes pulse-status { 0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
+        @keyframes pulse-busy { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
     </style>
 </head>
 <body>
 
     <canvas id="particle-canvas"></canvas>
 
-    <div id="overlay">
+    <div id="overlay" role="button" aria-label="Enter Website">
         <div class="overlay-content">
-            <h2>Hi!</h2>
-            <p>Tap anywhere to enter</p>
+            <h2>HELLO.</h2>
+            <p>Tap anywhere to begin</p>
         </div>
     </div>
 
-    <audio id="bg-music" loop></audio>
+    <audio id="bg-music" loop preload="auto"></audio>
 
-    <div class="switch-container">
-        <label class="switch">
+    <div class="controls-layer pos-top-right">
+        <label class="toggle-switch" title="Switch Theme">
             <input type="checkbox" id="theme-toggle">
-            <span class="slider"></span>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
         </label>
     </div>
 
-    <div class="music-pos">
-        <button id="music-toggle" class="float-btn">🔊</button>
+    <div class="controls-layer pos-bottom-right">
+        <button id="music-btn" class="btn-float" aria-label="Toggle Music">🔊</button>
     </div>
 
-    <div class="container">
-        <div class="profile-wrapper">
-            <img id="profile-img" src="" alt="Foto Profil" class="profile-img">
-            <div id="status-dot" class="status-dot"></div>
+    <main class="card-container">
+        <header class="profile-section">
+            <img id="profile-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Profile" class="profile-avatar">
+            <div id="status-badge" class="status-badge"></div>
+        </header>
+        
+        <h1 id="profile-name" class="profile-name"></h1>
+        <div class="profile-bio">
+            <span id="typing-text"></span><span class="cursor">|</span>
         </div>
-        
-        <h1 id="profile-name"></h1>
-        <p><span id="typing-text"></span><span class="cursor">|</span></p>
 
-        <button id="share-profile-btn" class="share-btn-mini">🔗 Share This Profile</button>
+        <button id="btn-share" class="btn-share">
+            <span>🔗 Share This Profile</span>
+        </button>
         
-        <div id="link-container" class="link-container"></div>
-        <div id="footer-text" class="footer"></div>
-    </div>
+        <nav id="links-wrapper" class="link-list"></nav>
+        
+        <footer id="footer-text"></footer>
+    </main>
 
     <script src="config.js"></script>
+    
     <script>
-        // === PARTIKEL EMAS ===
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let particlesArray;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        /**
+         * RAVI YUNANTO PORTFOLIO ENGINE
+         * Developed with clean code principles.
+         * -------------------------------------
+         */
+        
+        (function() {
+            'use strict'; // Professional mode activated
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedX = (Math.random() * 0.5) - 0.25;
-                this.speedY = (Math.random() * 0.5) - 0.25;
-                this.color = 'rgba(207, 162, 88, ' + (Math.random() * 0.5 + 0.1) + ')';
+            // --- 1. STATE MANAGEMENT ---
+            const state = {
+                audioPlaying: false,
+                isLightMode: false,
+                particles: [],
+                typingIndex: 0,
+                typingCharIndex: 0
+            };
+
+            // --- 2. DOM ELEMENTS ---
+            const dom = {
+                body: document.body,
+                overlay: document.getElementById('overlay'),
+                audio: document.getElementById('bg-music'),
+                musicBtn: document.getElementById('music-btn'),
+                themeSwitch: document.getElementById('theme-toggle'),
+                canvas: document.getElementById('particle-canvas'),
+                ctx: document.getElementById('particle-canvas').getContext('2d'),
+                linksWrapper: document.getElementById('links-wrapper'),
+                typingEl: document.getElementById('typing-text'),
+                shareBtn: document.getElementById('btn-share')
+            };
+
+            // --- 3. INITIALIZATION ---
+            function init() {
+                loadConfig();
+                setupEventListeners();
+                initParticles();
+                animateParticles();
+                
+                // Console Signature (Dev easter egg)
+                console.log('%c Designed by Ravi Yunanto ', 'background: #cfa258; color: #000; font-weight: bold; padding: 4px; border-radius: 4px;');
             }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width) this.speedX = -this.speedX;
-                if (this.y < 0 || this.y > canvas.height) this.speedY = -this.speedY;
+
+            function loadConfig() {
+                // Meta & Text
+                document.title = CONFIG.name;
+                document.getElementById('page-title').textContent = CONFIG.name;
+                document.getElementById('profile-name').textContent = CONFIG.name;
+                document.getElementById('footer-text').textContent = CONFIG.copyright;
+                
+                // Images & Icons
+                const pImg = document.getElementById('profile-img');
+                pImg.src = CONFIG.profileImage;
+                pImg.onload = () => pImg.style.opacity = 1; // Smooth load
+                document.getElementById('favicon').href = CONFIG.favicon;
+
+                // Audio
+                dom.audio.src = CONFIG.musicFile;
+                dom.audio.volume = 0.2; // Fixed low volume
+
+                // Status Logic
+                const statusEl = document.getElementById('status-badge');
+                statusEl.className = `status-badge ${CONFIG.isOpenToWork ? 'online' : 'busy'}`;
+                statusEl.title = CONFIG.isOpenToWork ? "Open to Work" : "Currently Busy";
+
+                // Generate Links
+                CONFIG.links.forEach(link => {
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.textContent = link.text;
+                    a.className = `link-card ${link.special ? 'special' : ''}`;
+                    if(link.url.startsWith('http')) a.target = '_blank';
+                    if(link.url.startsWith('http')) a.rel = 'noopener noreferrer'; // Security best practice
+                    dom.linksWrapper.appendChild(a);
+                });
+
+                // Start Typing Effect
+                typeWriter();
             }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+
+            // --- 4. CORE FEATURES ---
+
+            // Audio Handler
+            function toggleAudio() {
+                if (dom.audio.paused) {
+                    dom.audio.play().then(() => {
+                        dom.musicBtn.textContent = '🔊';
+                    }).catch(err => console.warn('Audio blocked:', err));
+                } else {
+                    dom.audio.pause();
+                    dom.audio.currentTime = 0; // Reset logic (optional)
+                    dom.musicBtn.textContent = '🔇';
+                }
             }
-        }
-        function initParticles() {
-            particlesArray = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 15000;
-            for (let i = 0; i < numberOfParticles; i++) particlesArray.push(new Particle());
-        }
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); particlesArray[i].draw(); }
-            requestAnimationFrame(animateParticles);
-        }
-        initParticles(); animateParticles();
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
 
-        // === CONFIG ===
-        document.title = CONFIG.name;
-        document.getElementById('page-title').textContent = CONFIG.name;
-        document.getElementById('profile-img').src = CONFIG.profileImage;
-        document.getElementById('favicon').href = CONFIG.favicon; 
-        document.getElementById('profile-name').textContent = CONFIG.name;
-        document.getElementById('bg-music').src = CONFIG.musicFile;
-        document.getElementById('footer-text').textContent = CONFIG.copyright;
-
-        const statusDot = document.getElementById('status-dot');
-        if (CONFIG.isOpenToWork) { statusDot.className = 'status-dot online'; statusDot.title = "Open for Work"; }
-        else { statusDot.className = 'status-dot busy'; statusDot.title = "Busy / Closed"; }
-
-        const linkContainer = document.getElementById('link-container');
-        CONFIG.links.forEach(link => {
-            const a = document.createElement('a'); a.href = link.url; a.textContent = link.text; a.className = 'link-item';
-            if (link.url.startsWith('http')) a.target = '_blank';
-            if (link.special) a.classList.add('link-special');
-            linkContainer.appendChild(a);
-        });
-
-        const textElement = document.getElementById('typing-text');
-        const texts = CONFIG.typingTexts;
-        let count = 0; let index = 0; let currentText = ""; let letter = "";
-        (function type() {
-            if (count === texts.length) { count = 0; }
-            currentText = texts[count]; letter = currentText.slice(0, ++index); textElement.textContent = letter;
-            if (letter.length === currentText.length) { count++; index = 0; setTimeout(type, 2000); } 
-            else { setTimeout(type, 100); }
-        }());
-
-        // === MUSIK ===
-        const overlay = document.getElementById('overlay');
-        const audio = document.getElementById('bg-music');
-        const musicToggle = document.getElementById('music-toggle');
-        const defaultVol = 0.2; audio.volume = defaultVol; 
-
-        overlay.addEventListener('click', () => {
-            overlay.style.opacity = '0';
-            setTimeout(() => { overlay.style.display = 'none'; }, 800);
-            audio.play().catch(e => console.log("Audio block"));
-        });
-
-        musicToggle.addEventListener('click', () => {
-            if (audio.volume > 0) { audio.volume = 0; musicToggle.innerHTML = '🔇'; }
-            else { audio.volume = defaultVol; musicToggle.innerHTML = '🔊'; }
-        });
-
-        // === SWITCH THEME ===
-        const themeSwitch = document.getElementById('theme-toggle');
-        const body = document.body;
-        themeSwitch.addEventListener('change', (e) => {
-            if (e.target.checked) { body.classList.add('light-mode'); }
-            else { body.classList.remove('light-mode'); }
-        });
-
-        // === SHARE ===
-        const shareBtn = document.getElementById('share-profile-btn');
-        shareBtn.addEventListener('click', async () => {
-            if (navigator.share) { 
-                try { await navigator.share({ title: CONFIG.name, text: 'Cek profil digital ini:', url: window.location.href }); } 
-                catch (err) {} 
-            } else { 
-                navigator.clipboard.writeText(window.location.href); alert('Copied! 📋'); 
+            // Theme Switcher
+            function toggleTheme(e) {
+                const isLight = e.target.checked;
+                if (isLight) {
+                    dom.body.setAttribute('data-theme', 'light');
+                    dom.body.classList.add('light-mode'); // Fallback
+                } else {
+                    dom.body.removeAttribute('data-theme');
+                    dom.body.classList.remove('light-mode');
+                }
             }
-        });
+
+            // Typing Effect (Recursive)
+            function typeWriter() {
+                const currentWord = CONFIG.typingTexts[state.typingIndex];
+                
+                if (state.typingCharIndex < currentWord.length) {
+                    dom.typingEl.textContent += currentWord.charAt(state.typingCharIndex);
+                    state.typingCharIndex++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    setTimeout(eraseWriter, 2000);
+                }
+            }
+
+            function eraseWriter() {
+                if (state.typingCharIndex > 0) {
+                    dom.typingEl.textContent = CONFIG.typingTexts[state.typingIndex].substring(0, state.typingCharIndex - 1);
+                    state.typingCharIndex--;
+                    setTimeout(eraseWriter, 50);
+                } else {
+                    state.typingIndex = (state.typingIndex + 1) % CONFIG.typingTexts.length;
+                    setTimeout(typeWriter, 500);
+                }
+            }
+
+            // Share Logic
+            async function handleShare() {
+                const shareData = {
+                    title: CONFIG.name,
+                    text: 'Cek profil digital ini:',
+                    url: window.location.href
+                };
+
+                if (navigator.share) {
+                    try { await navigator.share(shareData); } 
+                    catch (err) { console.log('Share dismissed'); }
+                } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                }
+            }
+
+            // --- 5. CANVAS PARTICLES SYSTEM ---
+            function initParticles() {
+                resizeCanvas();
+                const density = 15000; // Higher = fewer particles
+                const count = (dom.canvas.width * dom.canvas.height) / density;
+                
+                state.particles = [];
+                for (let i = 0; i < count; i++) {
+                    state.particles.push(createParticle());
+                }
+            }
+
+            function createParticle() {
+                return {
+                    x: Math.random() * dom.canvas.width,
+                    y: Math.random() * dom.canvas.height,
+                    size: Math.random() * 2,
+                    speedX: (Math.random() * 0.5) - 0.25,
+                    speedY: (Math.random() * 0.5) - 0.25,
+                    opacity: Math.random() * 0.5 + 0.1
+                };
+            }
+
+            function animateParticles() {
+                dom.ctx.clearRect(0, 0, dom.canvas.width, dom.canvas.height);
+                
+                state.particles.forEach(p => {
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+
+                    // Boundary Check (Bounce)
+                    if (p.x < 0 || p.x > dom.canvas.width) p.speedX *= -1;
+                    if (p.y < 0 || p.y > dom.canvas.height) p.speedY *= -1;
+
+                    // Draw
+                    dom.ctx.fillStyle = `rgba(207, 162, 88, ${p.opacity})`;
+                    dom.ctx.beginPath();
+                    dom.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    dom.ctx.fill();
+                });
+                
+                requestAnimationFrame(animateParticles);
+            }
+
+            function resizeCanvas() {
+                dom.canvas.width = window.innerWidth;
+                dom.canvas.height = window.innerHeight;
+            }
+
+            // --- 6. EVENTS ---
+            function setupEventListeners() {
+                // Enter Site Overlay
+                dom.overlay.addEventListener('click', () => {
+                    dom.overlay.style.opacity = '0';
+                    dom.overlay.style.visibility = 'hidden';
+                    dom.audio.play().catch(() => {}); // Autoplay attempt
+                });
+
+                // Controls
+                dom.musicBtn.addEventListener('click', () => {
+                   if(dom.audio.volume > 0) {
+                       dom.audio.volume = 0; dom.musicBtn.textContent = '🔇';
+                   } else {
+                       dom.audio.volume = 0.2; dom.musicBtn.textContent = '🔊';
+                   }
+                });
+                
+                dom.themeSwitch.addEventListener('change', toggleTheme);
+                dom.shareBtn.addEventListener('click', handleShare);
+                
+                // Window
+                window.addEventListener('resize', () => {
+                    resizeCanvas();
+                    initParticles();
+                });
+            }
+
+            // Run
+            init();
+
+        })();
     </script>
 </body>
 </html>
