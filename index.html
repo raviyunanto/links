@@ -29,11 +29,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* * DESIGN SYSTEM & VARIABLES 
-         * Theme: Gold Luxury
-         */
+        /* * DESIGN SYSTEM & VARIABLES */
         :root {
-            /* Colors: Dark Mode (Default) */
+            /* DARK MODE (Default) */
             --theme-bg: #050505;
             --theme-surface: rgba(255, 255, 255, 0.07);
             --theme-text-primary: #e0e0e0;
@@ -41,35 +39,32 @@
             --theme-accent: #cfa258;
             --theme-gradient: linear-gradient(135deg, #050505 30%, #2a1e05 100%);
             
-            /* Glassmorphism Props */
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-blur: blur(12px);
-            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-
-            /* Special Elements (Dark Mode) */
-            --special-btn-bg: rgba(255, 255, 255, 0.12);
-            --special-btn-border: rgba(255, 255, 255, 0.5);
-            --special-accent-line: #ffffff;
             
-            /* Transitions */
+            /* Special Button (Save Contact) */
+            --special-bg: rgba(255, 255, 255, 0.12);
+            --special-border: rgba(255, 255, 255, 0.5);
+            --special-line: #ffffff;
+            
             --transition-ease: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Colors: Light Mode Override */
+        /* LIGHT MODE OVERRIDE */
         [data-theme="light"] {
             --theme-bg: #fdf6e3;
             --theme-surface: rgba(74, 59, 34, 0.08);
             --theme-text-primary: #4a3b22;
             --theme-text-secondary: #6e5d3e;
-            --theme-accent: #b8860b; /* Emas yang lebih gelap biar kontras */
+            --theme-accent: #b8860b;
             --theme-gradient: linear-gradient(135deg, #fffcf5 20%, #e6d2a8 100%);
             
             --glass-border: rgba(74, 59, 34, 0.15);
             
-            /* Special Elements (Light Mode - Dipertegas) */
-            --special-btn-bg: rgba(184, 134, 11, 0.15); /* Emas gelap transparan */
-            --special-btn-border: #a07408; /* Border Emas Tua Solid */
-            --special-accent-line: #a07408;
+            /* Special Button Light Mode (Kontras Kuat) */
+            --special-bg: rgba(184, 134, 11, 0.15);
+            --special-border: #a07408; /* Border Emas Tua Solid */
+            --special-line: #a07408;
         }
 
         /* --- CORE RESET --- */
@@ -81,21 +76,16 @@
             background-color: var(--theme-bg);
             color: var(--theme-text-primary);
             min-height: 100vh;
-            width: 100%;
             display: flex; justify-content: center; align-items: center;
             overflow-x: hidden;
             transition: background 0.5s ease, color 0.5s ease;
         }
 
-        /* --- VISUAL EFFECTS --- */
-        #particle-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; pointer-events: none;
-        }
+        /* --- VISUALS --- */
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
         #overlay {
-            position: fixed; inset: 0;
-            background-color: #000; z-index: 9999;
+            position: fixed; inset: 0; background-color: #000; z-index: 9999;
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: opacity 0.8s ease, visibility 0.8s;
         }
@@ -112,56 +102,43 @@
             opacity: 0; transform: translateY(20px);
             animation: fadeInUp 0.8s ease-out forwards;
         }
-
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
         /* --- COMPONENTS --- */
-        /* Profile Header */
         .profile-section { position: relative; display: inline-block; margin-bottom: 1.25rem; }
         .profile-avatar {
-            width: 110px; height: 110px;
-            border-radius: 50%; object-fit: cover;
+            width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
             border: 3px solid var(--theme-accent);
-            box-shadow: 0 0 25px rgba(207, 162, 88, 0.3);
-            transition: var(--transition-ease);
+            box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); transition: var(--transition-ease);
         }
         .profile-avatar:hover { transform: scale(1.05) rotate(2deg); }
 
         .status-badge {
-            position: absolute; bottom: 5px; right: 5px;
-            width: 22px; height: 22px;
+            position: absolute; bottom: 5px; right: 5px; width: 22px; height: 22px;
             border: 3px solid #000; border-radius: 50%;
         }
         .status-badge.online { background-color: #2ecc71; box-shadow: 0 0 10px #2ecc71; animation: pulse-status 2s infinite; }
         .status-badge.busy { background-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; animation: pulse-busy 2s infinite; }
 
-        /* Typography */
         h1.profile-name { font-size: 1.5rem; font-weight: 700; color: var(--theme-accent); margin-bottom: 0.25rem; letter-spacing: 1px; }
         .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 1rem; min-height: 1.5rem; font-weight: 300; }
         .cursor { display: inline-block; width: 2px; animation: blink 1s infinite; }
 
-        /* Action Buttons */
         .btn-share {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            color: var(--theme-accent);
-            padding: 8px 20px; font-size: 0.7rem; border-radius: 50px;
-            cursor: pointer; margin-bottom: 2rem;
-            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
+            color: var(--theme-accent); padding: 8px 20px; font-size: 0.7rem; border-radius: 50px;
+            cursor: pointer; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 8px;
             text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             transition: var(--transition-ease);
         }
         .btn-share:hover { background: rgba(207, 162, 88, 0.15); border-color: var(--theme-accent); transform: translateY(-2px); }
 
-        /* Links List */
         .link-list { display: flex; flex-direction: column; gap: 1rem; }
         .link-card {
             display: block; position: relative;
-            background: var(--theme-surface);
-            color: var(--theme-text-primary);
-            border: 1px solid var(--glass-border);
-            border-left: 3px solid rgba(207, 162, 88, 0.5);
+            background: var(--theme-surface); color: var(--theme-text-primary);
+            border: 1px solid var(--glass-border); border-left: 3px solid rgba(207, 162, 88, 0.5);
             padding: 1.1rem; border-radius: 16px;
             text-decoration: none; font-weight: 500;
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
@@ -174,20 +151,18 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* Special Link Modifier (Save Contact) */
+        /* Special Link (Save Contact) */
         .link-card.special {
             background: var(--special-btn-bg) !important;
-            border: 2px solid var(--special-btn-border) !important; /* Border dipertebal jadi 2px */
-            border-left: 3px solid var(--special-accent-line) !important;
+            border: 2px solid var(--special-btn-border) !important;
+            border-left: 3px solid var(--special-line) !important;
             font-weight: 600;
         }
 
-        /* --- FLOATING CONTROLS (FIXED POSITION) --- */
-        .controls-layer { position: fixed; z-index: 1000; } /* Z-index ditinggiin biar aman */
-        
-        /* FIX POSISI TOGGLE: Geser ke kiri (30px) biar aman dari Scrollbar */
-        .pos-top-right { top: 25px; right: 30px; } 
-        .pos-bottom-right { bottom: 25px; right: 30px; }
+        /* --- FIXED CONTROLS --- */
+        .controls-layer { position: fixed; z-index: 9999; }
+        .pos-top-right { top: 20px; right: 30px; } /* Margin 30px aman */
+        .pos-bottom-right { bottom: 20px; right: 30px; }
 
         .btn-float {
             width: 48px; height: 48px; border-radius: 50%;
@@ -203,34 +178,39 @@
         .btn-float:active { transform: scale(0.9); }
         [data-theme="light"] .btn-float { background: rgba(255, 255, 255, 0.8); color: #4a3b22; }
 
-        /* Toggle Switch UI */
-        .toggle-switch { position: relative; width: 64px; height: 32px; cursor: pointer; }
-        .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .toggle-track {
-            position: absolute; inset: 0;
+        /* --- RESTORED TOGGLE SWITCH LOGIC (ROBUST) --- */
+        .switch {
+            position: relative; display: inline-block; width: 60px; height: 30px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        
+        .slider {
+            position: absolute; cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(20, 20, 20, 0.8);
             border: 2px solid var(--theme-accent);
-            border-radius: 34px; transition: 0.4s;
-            backdrop-filter: blur(4px);
+            transition: .4s; border-radius: 34px;
+            backdrop-filter: blur(5px);
         }
-        .toggle-thumb {
-            position: absolute; height: 22px; width: 22px;
-            left: 4px; bottom: 3px;
-            background-color: var(--theme-accent);
-            border-radius: 50%; transition: 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 12px;
-        }
-        .toggle-thumb::after { content: "🌙"; }
         
-        input:checked + .toggle-track { background-color: rgba(255, 255, 255, 0.9); }
-        input:checked + .toggle-track .toggle-thumb { transform: translateX(32px); background-color: #000; color: var(--theme-accent); }
-        input:checked + .toggle-track .toggle-thumb::after { content: "☀️"; }
+        .slider:before {
+            position: absolute; content: "🌙";
+            height: 22px; width: 22px;
+            left: 3px; bottom: 2px;
+            background-color: var(--theme-accent);
+            transition: .4s; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 12px; color: #000;
+        }
+        
+        input:checked + .slider { background-color: rgba(255, 255, 255, 0.9); }
+        input:checked + .slider:before {
+            transform: translateX(28px);
+            content: "☀️"; background-color: #000; color: var(--theme-accent);
+        }
 
-        /* Footer */
         footer { margin-top: 3rem; font-size: 0.8rem; color: var(--theme-accent); opacity: 0.6; }
 
-        /* Keyframes */
         @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         @keyframes pulse-status { 0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
@@ -251,9 +231,9 @@
     <audio id="bg-music" loop preload="auto"></audio>
 
     <div class="controls-layer pos-top-right">
-        <label class="toggle-switch" title="Switch Theme">
+        <label class="switch" title="Switch Theme">
             <input type="checkbox" id="theme-toggle">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            <span class="slider"></span>
         </label>
     </div>
 
@@ -286,23 +266,14 @@
     <script>
         /**
          * RAVI YUNANTO PORTFOLIO ENGINE
-         * Developed with clean code principles.
-         * -------------------------------------
+         * Clean & Robust Version
          */
         
         (function() {
             'use strict';
 
-            // --- 1. STATE MANAGEMENT ---
-            const state = {
-                audioPlaying: false,
-                isLightMode: false,
-                particles: [],
-                typingIndex: 0,
-                typingCharIndex: 0
-            };
+            const state = { audioPlaying: false, particles: [], typingIndex: 0, typingCharIndex: 0 };
 
-            // --- 2. DOM ELEMENTS ---
             const dom = {
                 body: document.body,
                 overlay: document.getElementById('overlay'),
@@ -316,7 +287,6 @@
                 shareBtn: document.getElementById('btn-share')
             };
 
-            // --- 3. INITIALIZATION ---
             function init() {
                 loadConfig();
                 setupEventListeners();
@@ -356,28 +326,18 @@
                 typeWriter();
             }
 
-            // --- 4. CORE FEATURES ---
             function toggleAudio() {
                 if (dom.audio.paused) {
-                    dom.audio.play().then(() => {
-                        dom.musicBtn.textContent = '🔊';
-                    }).catch(err => console.warn('Audio blocked:', err));
+                    dom.audio.play().then(() => { dom.musicBtn.textContent = '🔊'; }).catch(err => console.warn('Audio blocked:', err));
                 } else {
-                    dom.audio.pause();
-                    dom.audio.currentTime = 0; 
-                    dom.musicBtn.textContent = '🔇';
+                    dom.audio.pause(); dom.audio.currentTime = 0; dom.musicBtn.textContent = '🔇';
                 }
             }
 
             function toggleTheme(e) {
                 const isLight = e.target.checked;
-                if (isLight) {
-                    dom.body.setAttribute('data-theme', 'light');
-                    dom.body.classList.add('light-mode'); 
-                } else {
-                    dom.body.removeAttribute('data-theme');
-                    dom.body.classList.remove('light-mode');
-                }
+                if (isLight) { dom.body.setAttribute('data-theme', 'light'); } 
+                else { dom.body.removeAttribute('data-theme'); }
             }
 
             function typeWriter() {
@@ -386,9 +346,7 @@
                     dom.typingEl.textContent += currentWord.charAt(state.typingCharIndex);
                     state.typingCharIndex++;
                     setTimeout(typeWriter, 100);
-                } else {
-                    setTimeout(eraseWriter, 2000);
-                }
+                } else { setTimeout(eraseWriter, 2000); }
             }
 
             function eraseWriter() {
@@ -403,22 +361,11 @@
             }
 
             async function handleShare() {
-                const shareData = {
-                    title: CONFIG.name,
-                    text: 'Cek profil digital ini:',
-                    url: window.location.href
-                };
-
-                if (navigator.share) {
-                    try { await navigator.share(shareData); } 
-                    catch (err) { console.log('Share dismissed'); }
-                } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert('Link copied to clipboard!');
-                }
+                const shareData = { title: CONFIG.name, text: 'Cek profil digital ini:', url: window.location.href };
+                if (navigator.share) { try { await navigator.share(shareData); } catch (err) {} } 
+                else { navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard!'); }
             }
 
-            // --- 5. CANVAS PARTICLES SYSTEM ---
             function initParticles() {
                 resizeCanvas();
                 const density = 15000; 
@@ -429,11 +376,8 @@
 
             function createParticle() {
                 return {
-                    x: Math.random() * dom.canvas.width,
-                    y: Math.random() * dom.canvas.height,
-                    size: Math.random() * 2,
-                    speedX: (Math.random() * 0.5) - 0.25,
-                    speedY: (Math.random() * 0.5) - 0.25,
+                    x: Math.random() * dom.canvas.width, y: Math.random() * dom.canvas.height,
+                    size: Math.random() * 2, speedX: (Math.random() * 0.5) - 0.25, speedY: (Math.random() * 0.5) - 0.25,
                     opacity: Math.random() * 0.5 + 0.1
                 };
             }
@@ -445,45 +389,28 @@
                     if (p.x < 0 || p.x > dom.canvas.width) p.speedX *= -1;
                     if (p.y < 0 || p.y > dom.canvas.height) p.speedY *= -1;
                     dom.ctx.fillStyle = `rgba(207, 162, 88, ${p.opacity})`;
-                    dom.ctx.beginPath();
-                    dom.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    dom.ctx.fill();
+                    dom.ctx.beginPath(); dom.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); dom.ctx.fill();
                 });
                 requestAnimationFrame(animateParticles);
             }
 
-            function resizeCanvas() {
-                dom.canvas.width = window.innerWidth;
-                dom.canvas.height = window.innerHeight;
-            }
+            function resizeCanvas() { dom.canvas.width = window.innerWidth; dom.canvas.height = window.innerHeight; }
 
-            // --- 6. EVENTS ---
             function setupEventListeners() {
                 dom.overlay.addEventListener('click', () => {
-                    dom.overlay.style.opacity = '0';
-                    dom.overlay.style.visibility = 'hidden';
+                    dom.overlay.style.opacity = '0'; dom.overlay.style.visibility = 'hidden';
                     dom.audio.play().catch(() => {}); 
                 });
-
                 dom.musicBtn.addEventListener('click', () => {
-                   if(dom.audio.volume > 0) {
-                       dom.audio.volume = 0; dom.musicBtn.textContent = '🔇';
-                   } else {
-                       dom.audio.volume = 0.2; dom.musicBtn.textContent = '🔊';
-                   }
+                   if(dom.audio.volume > 0) { dom.audio.volume = 0; dom.musicBtn.textContent = '🔇'; } 
+                   else { dom.audio.volume = 0.2; dom.musicBtn.textContent = '🔊'; }
                 });
-                
                 dom.themeSwitch.addEventListener('change', toggleTheme);
                 dom.shareBtn.addEventListener('click', handleShare);
-                
-                window.addEventListener('resize', () => {
-                    resizeCanvas();
-                    initParticles();
-                });
+                window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
             }
 
             init();
-
         })();
     </script>
 </body>
