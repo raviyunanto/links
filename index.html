@@ -46,7 +46,7 @@
             --glass-blur: blur(12px);
             --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 
-            /* Special Elements */
+            /* Special Elements (Dark Mode) */
             --special-btn-bg: rgba(255, 255, 255, 0.12);
             --special-btn-border: rgba(255, 255, 255, 0.5);
             --special-accent-line: #ffffff;
@@ -61,13 +61,15 @@
             --theme-surface: rgba(74, 59, 34, 0.08);
             --theme-text-primary: #4a3b22;
             --theme-text-secondary: #6e5d3e;
-            --theme-accent: #b8860b;
+            --theme-accent: #b8860b; /* Emas yang lebih gelap biar kontras */
             --theme-gradient: linear-gradient(135deg, #fffcf5 20%, #e6d2a8 100%);
             
             --glass-border: rgba(74, 59, 34, 0.15);
-            --special-btn-bg: rgba(207, 162, 88, 0.25);
-            --special-btn-border: #b8860b;
-            --special-accent-line: #b8860b;
+            
+            /* Special Elements (Light Mode - Dipertegas) */
+            --special-btn-bg: rgba(184, 134, 11, 0.15); /* Emas gelap transparan */
+            --special-btn-border: #a07408; /* Border Emas Tua Solid */
+            --special-accent-line: #a07408;
         }
 
         /* --- CORE RESET --- */
@@ -79,6 +81,7 @@
             background-color: var(--theme-bg);
             color: var(--theme-text-primary);
             min-height: 100vh;
+            width: 100%;
             display: flex; justify-content: center; align-items: center;
             overflow-x: hidden;
             transition: background 0.5s ease, color 0.5s ease;
@@ -171,18 +174,20 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* Special Link Modifier */
+        /* Special Link Modifier (Save Contact) */
         .link-card.special {
             background: var(--special-btn-bg) !important;
-            border: 1px solid var(--special-btn-border) !important;
+            border: 2px solid var(--special-btn-border) !important; /* Border dipertebal jadi 2px */
             border-left: 3px solid var(--special-accent-line) !important;
             font-weight: 600;
         }
 
-        /* --- FLOATING CONTROLS --- */
-        .controls-layer { position: fixed; z-index: 50; }
-        .pos-top-right { top: 20px; right: 20px; }
-        .pos-bottom-right { bottom: 20px; right: 20px; }
+        /* --- FLOATING CONTROLS (FIXED POSITION) --- */
+        .controls-layer { position: fixed; z-index: 1000; } /* Z-index ditinggiin biar aman */
+        
+        /* FIX POSISI TOGGLE: Geser ke kiri (30px) biar aman dari Scrollbar */
+        .pos-top-right { top: 25px; right: 30px; } 
+        .pos-bottom-right { bottom: 25px; right: 30px; }
 
         .btn-float {
             width: 48px; height: 48px; border-radius: 50%;
@@ -286,7 +291,7 @@
          */
         
         (function() {
-            'use strict'; // Professional mode activated
+            'use strict';
 
             // --- 1. STATE MANAGEMENT ---
             const state = {
@@ -317,51 +322,41 @@
                 setupEventListeners();
                 initParticles();
                 animateParticles();
-                
-                // Console Signature (Dev easter egg)
                 console.log('%c Designed by Ravi Yunanto ', 'background: #cfa258; color: #000; font-weight: bold; padding: 4px; border-radius: 4px;');
             }
 
             function loadConfig() {
-                // Meta & Text
                 document.title = CONFIG.name;
                 document.getElementById('page-title').textContent = CONFIG.name;
                 document.getElementById('profile-name').textContent = CONFIG.name;
                 document.getElementById('footer-text').textContent = CONFIG.copyright;
                 
-                // Images & Icons
                 const pImg = document.getElementById('profile-img');
                 pImg.src = CONFIG.profileImage;
-                pImg.onload = () => pImg.style.opacity = 1; // Smooth load
+                pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
 
-                // Audio
                 dom.audio.src = CONFIG.musicFile;
-                dom.audio.volume = 0.2; // Fixed low volume
+                dom.audio.volume = 0.2; 
 
-                // Status Logic
                 const statusEl = document.getElementById('status-badge');
                 statusEl.className = `status-badge ${CONFIG.isOpenToWork ? 'online' : 'busy'}`;
                 statusEl.title = CONFIG.isOpenToWork ? "Open to Work" : "Currently Busy";
 
-                // Generate Links
                 CONFIG.links.forEach(link => {
                     const a = document.createElement('a');
                     a.href = link.url;
                     a.textContent = link.text;
                     a.className = `link-card ${link.special ? 'special' : ''}`;
                     if(link.url.startsWith('http')) a.target = '_blank';
-                    if(link.url.startsWith('http')) a.rel = 'noopener noreferrer'; // Security best practice
+                    if(link.url.startsWith('http')) a.rel = 'noopener noreferrer'; 
                     dom.linksWrapper.appendChild(a);
                 });
 
-                // Start Typing Effect
                 typeWriter();
             }
 
             // --- 4. CORE FEATURES ---
-
-            // Audio Handler
             function toggleAudio() {
                 if (dom.audio.paused) {
                     dom.audio.play().then(() => {
@@ -369,27 +364,24 @@
                     }).catch(err => console.warn('Audio blocked:', err));
                 } else {
                     dom.audio.pause();
-                    dom.audio.currentTime = 0; // Reset logic (optional)
+                    dom.audio.currentTime = 0; 
                     dom.musicBtn.textContent = '🔇';
                 }
             }
 
-            // Theme Switcher
             function toggleTheme(e) {
                 const isLight = e.target.checked;
                 if (isLight) {
                     dom.body.setAttribute('data-theme', 'light');
-                    dom.body.classList.add('light-mode'); // Fallback
+                    dom.body.classList.add('light-mode'); 
                 } else {
                     dom.body.removeAttribute('data-theme');
                     dom.body.classList.remove('light-mode');
                 }
             }
 
-            // Typing Effect (Recursive)
             function typeWriter() {
                 const currentWord = CONFIG.typingTexts[state.typingIndex];
-                
                 if (state.typingCharIndex < currentWord.length) {
                     dom.typingEl.textContent += currentWord.charAt(state.typingCharIndex);
                     state.typingCharIndex++;
@@ -410,7 +402,6 @@
                 }
             }
 
-            // Share Logic
             async function handleShare() {
                 const shareData = {
                     title: CONFIG.name,
@@ -430,13 +421,10 @@
             // --- 5. CANVAS PARTICLES SYSTEM ---
             function initParticles() {
                 resizeCanvas();
-                const density = 15000; // Higher = fewer particles
+                const density = 15000; 
                 const count = (dom.canvas.width * dom.canvas.height) / density;
-                
                 state.particles = [];
-                for (let i = 0; i < count; i++) {
-                    state.particles.push(createParticle());
-                }
+                for (let i = 0; i < count; i++) { state.particles.push(createParticle()); }
             }
 
             function createParticle() {
@@ -452,22 +440,15 @@
 
             function animateParticles() {
                 dom.ctx.clearRect(0, 0, dom.canvas.width, dom.canvas.height);
-                
                 state.particles.forEach(p => {
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-
-                    // Boundary Check (Bounce)
+                    p.x += p.speedX; p.y += p.speedY;
                     if (p.x < 0 || p.x > dom.canvas.width) p.speedX *= -1;
                     if (p.y < 0 || p.y > dom.canvas.height) p.speedY *= -1;
-
-                    // Draw
                     dom.ctx.fillStyle = `rgba(207, 162, 88, ${p.opacity})`;
                     dom.ctx.beginPath();
                     dom.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                     dom.ctx.fill();
                 });
-                
                 requestAnimationFrame(animateParticles);
             }
 
@@ -478,14 +459,12 @@
 
             // --- 6. EVENTS ---
             function setupEventListeners() {
-                // Enter Site Overlay
                 dom.overlay.addEventListener('click', () => {
                     dom.overlay.style.opacity = '0';
                     dom.overlay.style.visibility = 'hidden';
-                    dom.audio.play().catch(() => {}); // Autoplay attempt
+                    dom.audio.play().catch(() => {}); 
                 });
 
-                // Controls
                 dom.musicBtn.addEventListener('click', () => {
                    if(dom.audio.volume > 0) {
                        dom.audio.volume = 0; dom.musicBtn.textContent = '🔇';
@@ -497,14 +476,12 @@
                 dom.themeSwitch.addEventListener('change', toggleTheme);
                 dom.shareBtn.addEventListener('click', handleShare);
                 
-                // Window
                 window.addEventListener('resize', () => {
                     resizeCanvas();
                     initParticles();
                 });
             }
 
-            // Run
             init();
 
         })();
