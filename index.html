@@ -21,39 +21,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* === VARIABEL WARNA (DARK/LIGHT MODE) === */
+        /* === VARIABEL WARNA === */
         :root {
-            /* DARK MODE (DEFAULT) */
+            /* === DARK MODE (DEFAULT - TETAP SAMA) === */
             --bg-color: #000;
             --bg-gradient: linear-gradient(135deg, #050505 30%, #2a1e05 100%);
             --text-main: #e0e0e0;
             --text-sub: #cccccc;
             
-            /* Kaca Gelap (Dark Mode) */
             --glass-bg: rgba(255, 255, 255, 0.07);
             --glass-border: rgba(255, 255, 255, 0.1);
             --btn-bg: rgba(255, 255, 255, 0.05);
             --border-highlight: rgba(207, 162, 88, 0.4);
             
-            /* Warna Emas Tetap */
             --gold: #cfa258;
-            --special-bg: rgba(255,255,255,0.12); /* Background tombol save contact */
+            
+            --special-bg: rgba(255,255,255,0.12); 
+            --special-border: rgba(255,255,255,0.5); 
+            --special-accent: #ffffff; 
         }
 
-        /* LIGHT MODE (SETTINGS BARU) */
+        /* === LIGHT MODE (LEBIH EMAS/CREAMY) === */
         body.light-mode {
-            --bg-color: #f5f5f5;
-            --bg-gradient: linear-gradient(135deg, #ffffff 30%, #f0e6d2 100%);
-            --text-main: #222222; /* Teks lebih hitam */
-            --text-sub: #444444;
+            /* Background: Cream Lembut ke Emas (Royal Vibe) */
+            --bg-color: #fdf6e3;
+            --bg-gradient: linear-gradient(135deg, #fffcf5 20%, #e6d2a8 100%);
             
-            /* Kaca Terang (Dibuat Lebih Gelap Sesuai Request) */
-            --glass-bg: rgba(0, 0, 0, 0.15); /* Abu-abu transparan tebal */
-            --glass-border: rgba(0, 0, 0, 0.2);
-            --btn-bg: rgba(0, 0, 0, 0.1);
-            --border-highlight: rgba(207, 162, 88, 0.8);
+            /* Teks: Coklat Tua (Biar enak dibaca di background emas) */
+            --text-main: #4a3b22; 
+            --text-sub: #6e5d3e;
             
-            --special-bg: rgba(0, 0, 0, 0.2); /* Tombol save contact lebih gelap di light mode */
+            /* Elemen Kaca: Nuansa Coklat Transparan */
+            --glass-bg: rgba(74, 59, 34, 0.08); 
+            --glass-border: rgba(74, 59, 34, 0.15);
+            --btn-bg: rgba(74, 59, 34, 0.05);
+            --border-highlight: #cfa258;
+            
+            /* Tombol Special: Emas Transparan */
+            --special-bg: rgba(207, 162, 88, 0.25); 
+            --special-border: #b8860b; /* Emas Tua biar tegas */
+            --special-accent: #b8860b; 
         }
 
         /* === CSS DASAR === */
@@ -135,26 +142,21 @@
             color: #000000; border-color: var(--gold); 
             box-shadow: 0 10px 25px rgba(207, 162, 88, 0.3);
         }
+        
+        /* TOMBOL SPECIAL */
         .link-special { 
-            border-color: rgba(255,255,255,0.3) !important; 
-            background: var(--special-bg) !important; /* Pake variabel biar adaptif */
-            border-left: 3px solid #fff !important;
+            border: 1px solid var(--special-border) !important; 
+            background: var(--special-bg) !important; 
+            border-left: 3px solid var(--special-accent) !important;
+            font-weight: 600; 
         }
         
         .footer { margin-top: 40px; font-size: 13px; color: rgba(207, 162, 88, 0.5); }
 
-        /* === FITUR BARU: TOGGLE SWITCH (GESER) === */
-        .switch-container {
-            position: fixed; top: 20px; right: 20px; z-index: 100;
-        }
-
-        /* Kotak Switch */
-        .switch {
-            position: relative; display: inline-block; width: 60px; height: 30px;
-        }
+        /* TOGGLE SWITCH */
+        .switch-container { position: fixed; top: 20px; right: 20px; z-index: 100; }
+        .switch { position: relative; display: inline-block; width: 60px; height: 30px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-
-        /* Slider Background */
         .slider {
             position: absolute; cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -163,10 +165,8 @@
             transition: .4s; border-radius: 34px;
             backdrop-filter: blur(5px);
         }
-
-        /* Bulatan Geser (Knob) */
         .slider:before {
-            position: absolute; content: "🌙"; /* Ikon Default (Dark) */
+            position: absolute; content: "🌙"; 
             height: 22px; width: 22px;
             left: 3px; bottom: 2px;
             background-color: var(--gold);
@@ -174,21 +174,15 @@
             display: flex; justify-content: center; align-items: center;
             font-size: 12px; color: #000;
         }
-
         /* Saat Switch ON (Light Mode) */
-        input:checked + .slider {
-            background-color: rgba(255, 255, 255, 0.8);
-        }
+        input:checked + .slider { background-color: rgba(255, 255, 255, 0.8); }
         input:checked + .slider:before {
             transform: translateX(28px);
-            content: "☀️"; /* Ganti Ikon jadi Matahari */
-            background-color: #000; color: var(--gold);
+            content: "☀️"; background-color: #000; color: var(--gold);
         }
 
-        /* TOMBOL MUSIK DI POJOK BAWAH */
-        .music-pos { 
-            position: fixed; right: 20px; bottom: 20px; z-index: 100;
-        }
+        /* TOMBOL MUSIK */
+        .music-pos { position: fixed; right: 20px; bottom: 20px; z-index: 100; }
         .float-btn {
             width: 50px; height: 50px; border-radius: 50%;
             background: rgba(20, 20, 20, 0.8); border: 2px solid var(--gold);
@@ -198,12 +192,7 @@
             backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
         }
         .float-btn:active { transform: scale(0.9); }
-        /* Style tombol musik saat Light Mode */
-        body.light-mode .float-btn {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: var(--gold);
-            color: #000;
-        }
+        body.light-mode .float-btn { background: rgba(255, 255, 255, 0.8); border-color: var(--gold); color: #4a3b22; }
 
         /* OVERLAY */
         #overlay {
@@ -297,7 +286,7 @@
         initParticles(); animateParticles();
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
 
-        // === CONFIG DATA ===
+        // === CONFIG ===
         document.title = CONFIG.name;
         document.getElementById('page-title').textContent = CONFIG.name;
         document.getElementById('profile-img').src = CONFIG.profileImage;
@@ -328,13 +317,11 @@
             else { setTimeout(type, 100); }
         }());
 
-        // === LOGIKA MUSIK ===
+        // === MUSIK ===
         const overlay = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
         const musicToggle = document.getElementById('music-toggle');
-        
-        const defaultVol = 0.2; 
-        audio.volume = defaultVol; 
+        const defaultVol = 0.2; audio.volume = defaultVol; 
 
         overlay.addEventListener('click', () => {
             overlay.style.opacity = '0';
@@ -343,41 +330,26 @@
         });
 
         musicToggle.addEventListener('click', () => {
-            if (audio.volume > 0) {
-                audio.volume = 0; musicToggle.innerHTML = '🔇';
-            } else {
-                audio.volume = defaultVol; musicToggle.innerHTML = '🔊';
-            }
+            if (audio.volume > 0) { audio.volume = 0; musicToggle.innerHTML = '🔇'; }
+            else { audio.volume = defaultVol; musicToggle.innerHTML = '🔊'; }
         });
 
-        // === LOGIKA SWITCH MODE (GESER) ===
+        // === SWITCH THEME ===
         const themeSwitch = document.getElementById('theme-toggle');
         const body = document.body;
-
         themeSwitch.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                // Jika Switch ON -> Light Mode
-                body.classList.add('light-mode');
-            } else {
-                // Jika Switch OFF -> Dark Mode
-                body.classList.remove('light-mode');
-            }
+            if (e.target.checked) { body.classList.add('light-mode'); }
+            else { body.classList.remove('light-mode'); }
         });
 
-        // === LOGIKA SHARE ===
+        // === SHARE ===
         const shareBtn = document.getElementById('share-profile-btn');
         shareBtn.addEventListener('click', async () => {
             if (navigator.share) { 
-                try { 
-                    await navigator.share({ 
-                        title: CONFIG.name, 
-                        text: 'Cek profil digital ini:', // Teks Baru
-                        url: window.location.href 
-                    }); 
-                } catch (err) {} 
+                try { await navigator.share({ title: CONFIG.name, text: 'Cek profil digital ini:', url: window.location.href }); } 
+                catch (err) {} 
             } else { 
-                navigator.clipboard.writeText(window.location.href); 
-                alert('Link profil berhasil disalin! 📋'); 
+                navigator.clipboard.writeText(window.location.href); alert('Copied! 📋'); 
             }
         });
     </script>
