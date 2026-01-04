@@ -42,9 +42,9 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-blur: blur(12px);
             
-            /* Special Button (Save Contact) */
+            /* Special Button (Save Contact) - DARK */
             --special-bg: rgba(255, 255, 255, 0.12);
-            --special-border: rgba(255, 255, 255, 0.5);
+            --special-border: #ffffff; /* Border Putih Solid di Dark Mode */
             --special-line: #ffffff;
             
             --transition-ease: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,12 +59,12 @@
             --theme-accent: #b8860b;
             --theme-gradient: linear-gradient(135deg, #fffcf5 20%, #e6d2a8 100%);
             
-            --glass-border: rgba(74, 59, 34, 0.15);
+            --glass-border: rgba(74, 59, 34, 0.2); /* Border kartu biasa lebih tegas */
             
-            /* Special Button Light Mode (Kontras Kuat) */
-            --special-bg: rgba(184, 134, 11, 0.15);
-            --special-border: #a07408; /* Border Emas Tua Solid */
-            --special-line: #a07408;
+            /* Special Button (Save Contact) - LIGHT */
+            --special-bg: rgba(184, 134, 11, 0.1);
+            --special-border: #8B4513; /* Border Coklat Emas Tua Solid */
+            --special-line: #8B4513;
         }
 
         /* --- CORE RESET --- */
@@ -84,8 +84,9 @@
         /* --- VISUALS --- */
         #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
+        /* FIX: Z-Index Super Tinggi untuk menutupi semua tombol */
         #overlay {
-            position: fixed; inset: 0; background-color: #000; z-index: 9999;
+            position: fixed; inset: 0; background-color: #000; z-index: 99999; 
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: opacity 0.8s ease, visibility 0.8s;
         }
@@ -151,17 +152,18 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* Special Link (Save Contact) */
+        /* FIX: BORDER SAVE CONTACT - Pakai border 2px solid di semua sisi */
         .link-card.special {
-            background: var(--special-btn-bg) !important;
-            border: 2px solid var(--special-btn-border) !important;
-            border-left: 3px solid var(--special-line) !important;
+            background: var(--special-bg) !important;
+            border: 2px solid var(--special-border) !important; 
+            border-left: 4px solid var(--special-line) !important; /* Kiri lebih tebal */
             font-weight: 600;
         }
 
-        /* --- FIXED CONTROLS --- */
-        .controls-layer { position: fixed; z-index: 9999; }
-        .pos-top-right { top: 20px; right: 30px; } /* Margin 30px aman */
+        /* --- CONTROLS --- */
+        /* Z-Index lebih rendah dari Overlay (99999), tapi tinggi dari konten */
+        .controls-layer { position: fixed; z-index: 5000; } 
+        .pos-top-right { top: 20px; right: 30px; }
         .pos-bottom-right { bottom: 20px; right: 30px; }
 
         .btn-float {
@@ -178,7 +180,7 @@
         .btn-float:active { transform: scale(0.9); }
         [data-theme="light"] .btn-float { background: rgba(255, 255, 255, 0.8); color: #4a3b22; }
 
-        /* --- RESTORED TOGGLE SWITCH LOGIC (ROBUST) --- */
+        /* TOGGLE SWITCH LOGIC (Stable) */
         .switch {
             position: relative; display: inline-block; width: 60px; height: 30px;
         }
