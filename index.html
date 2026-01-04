@@ -44,7 +44,7 @@
             
             /* Special Button (Save Contact) - DARK */
             --special-bg: rgba(255, 255, 255, 0.12);
-            --special-border: #ffffff; /* Border Putih Solid di Dark Mode */
+            --special-border: #ffffff; /* Border Putih Solid */
             --special-line: #ffffff;
             
             --transition-ease: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,11 +59,11 @@
             --theme-accent: #b8860b;
             --theme-gradient: linear-gradient(135deg, #fffcf5 20%, #e6d2a8 100%);
             
-            --glass-border: rgba(74, 59, 34, 0.2); /* Border kartu biasa lebih tegas */
+            --glass-border: rgba(74, 59, 34, 0.2);
             
             /* Special Button (Save Contact) - LIGHT */
             --special-bg: rgba(184, 134, 11, 0.1);
-            --special-border: #8B4513; /* Border Coklat Emas Tua Solid */
+            --special-border: #8B4513; /* Border Coklat Tua Solid */
             --special-line: #8B4513;
         }
 
@@ -84,7 +84,7 @@
         /* --- VISUALS --- */
         #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-        /* FIX: Z-Index Super Tinggi untuk menutupi semua tombol */
+        /* OVERLAY Z-INDEX TERTINGGI (99999) agar menutupi tombol */
         #overlay {
             position: fixed; inset: 0; background-color: #000; z-index: 99999; 
             display: flex; justify-content: center; align-items: center;
@@ -152,19 +152,20 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* FIX: BORDER SAVE CONTACT - Pakai border 2px solid di semua sisi */
+        /* BORDER SAVE CONTACT - FIXED */
         .link-card.special {
             background: var(--special-bg) !important;
             border: 2px solid var(--special-border) !important; 
-            border-left: 4px solid var(--special-line) !important; /* Kiri lebih tebal */
+            border-left: 4px solid var(--special-line) !important;
             font-weight: 600;
         }
 
         /* --- CONTROLS --- */
-        /* Z-Index lebih rendah dari Overlay (99999), tapi tinggi dari konten */
-        .controls-layer { position: fixed; z-index: 5000; } 
-        .pos-top-right { top: 20px; right: 30px; }
-        .pos-bottom-right { bottom: 20px; right: 30px; }
+        .controls-layer { position: fixed; z-index: 5000; } /* Z-index dibawah Overlay */
+        
+        /* KEMBALI KE POSISI ORIGINAL (20px) */
+        .pos-top-right { top: 20px; right: 20px; } 
+        .pos-bottom-right { bottom: 20px; right: 20px; }
 
         .btn-float {
             width: 48px; height: 48px; border-radius: 50%;
@@ -180,7 +181,7 @@
         .btn-float:active { transform: scale(0.9); }
         [data-theme="light"] .btn-float { background: rgba(255, 255, 255, 0.8); color: #4a3b22; }
 
-        /* TOGGLE SWITCH LOGIC (Stable) */
+        /* TOGGLE SWITCH */
         .switch {
             position: relative; display: inline-block; width: 60px; height: 30px;
         }
