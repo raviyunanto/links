@@ -21,14 +21,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
+        /* === VARIABEL WARNA (DARK/LIGHT MODE) === */
+        :root {
+            /* Warna Dasar (Dark Mode Default) */
+            --bg-color: #000;
+            --bg-gradient: linear-gradient(135deg, #050505 30%, #2a1e05 100%);
+            --text-main: #e0e0e0;
+            --text-sub: #cccccc;
+            
+            /* Warna Elemen Kaca */
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --btn-bg: rgba(255, 255, 255, 0.05);
+            --border-highlight: rgba(207, 162, 88, 0.4);
+            
+            /* Warna Emas Tetap */
+            --gold: #cfa258;
+        }
+
+        /* LIGHT MODE OVERRIDE */
+        body.light-mode {
+            --bg-color: #f5f5f5;
+            --bg-gradient: linear-gradient(135deg, #ffffff 30%, #f3e5c9 100%);
+            --text-main: #333333;
+            --text-sub: #555555;
+            
+            --glass-bg: rgba(0, 0, 0, 0.05);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --btn-bg: rgba(0, 0, 0, 0.05);
+            --border-highlight: rgba(207, 162, 88, 0.6);
+        }
+
         /* === CSS DASAR === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #000;
-            background: linear-gradient(135deg, #050505 30%, #2a1e05 100%);
-            min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #e0e0e0;
+            background-color: var(--bg-color);
+            background: var(--bg-gradient);
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; 
+            color: var(--text-main);
             overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease; /* Transisi halus saat ganti mode */
         }
 
         /* CANVAS PARTIKEL */
@@ -47,7 +80,7 @@
         .profile-wrapper { position: relative; display: inline-block; margin-bottom: 20px; }
         .profile-img {
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
-            border: 3px solid #cfa258; box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); display: block;
+            border: 3px solid var(--gold); box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); display: block;
             transition: transform 0.3s;
         }
         .profile-img:hover { transform: scale(1.05) rotate(2deg); }
@@ -62,61 +95,73 @@
         @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
         @keyframes pulse-red { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
 
-        h1 { font-size: 24px; font-weight: 700; color: #cfa258; margin-bottom: 5px; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        p { font-size: 15px; color: #cccccc; margin-bottom: 15px; font-weight: 300; min-height: 24px; }
+        h1 { font-size: 24px; font-weight: 700; color: var(--gold); margin-bottom: 5px; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        p { font-size: 15px; color: var(--text-sub); margin-bottom: 15px; font-weight: 300; min-height: 24px; }
 
-        /* TOMBOL */
+        /* TOMBOL (GLASSMORPHISM) */
         .share-btn-mini {
-            background: rgba(0,0,0,0.3); border: 1px solid rgba(207, 162, 88, 0.5); color: #cfa258;
-            padding: 6px 15px; font-size: 11px; border-radius: 20px; cursor: pointer;
+            background: var(--btn-bg); 
+            border: 1px solid var(--border-highlight); 
+            color: var(--gold);
+            padding: 8px 18px; font-size: 11px; border-radius: 20px; cursor: pointer;
             margin-bottom: 30px; display: inline-flex; align-items: center; gap: 6px;
-            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(5px);
+            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; 
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
         }
-        .share-btn-mini:hover { background: rgba(207, 162, 88, 0.2); border-color: #cfa258; transform: scale(1.05); }
+        .share-btn-mini:hover { 
+            background: rgba(207, 162, 88, 0.15); 
+            border-color: var(--gold); transform: scale(1.05); 
+        }
 
         .link-container { display: flex; flex-direction: column; gap: 16px; }
         .link-item {
-            display: block; background: rgba(255, 255, 255, 0.05); color: #f0f0f0;
-            border: 1px solid rgba(207, 162, 88, 0.3); padding: 16px; border-radius: 50px;
-            text-decoration: none; font-weight: 500; transition: all 0.3s ease; backdrop-filter: blur(5px);
+            display: block; 
+            background: var(--glass-bg); 
+            color: var(--text-main);
+            border: 1px solid var(--glass-border); 
+            border-left: 3px solid rgba(207, 162, 88, 0.5); 
+            padding: 18px; border-radius: 15px;
+            text-decoration: none; font-weight: 500; transition: all 0.3s ease; 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             position: relative; overflow: hidden;
         }
         .link-item:hover {
-            transform: translateY(-3px); background: linear-gradient(90deg, #cfa258, #e6c584);
-            color: #000000; border-color: #cfa258; box-shadow: 0 10px 25px rgba(207, 162, 88, 0.3);
+            transform: translateY(-3px); 
+            background: linear-gradient(90deg, rgba(207, 162, 88, 0.9), rgba(230, 197, 132, 0.9));
+            color: #000000; border-color: var(--gold); 
+            box-shadow: 0 10px 25px rgba(207, 162, 88, 0.3);
         }
-        .link-special { border-color: #fff !important; background: rgba(255,255,255,0.1) !important; }
+        .link-special { 
+            border-color: rgba(255,255,255,0.3) !important; 
+            background: rgba(255,255,255,0.12) !important; 
+            border-left: 3px solid #fff !important;
+        }
+        
         .footer { margin-top: 40px; font-size: 13px; color: rgba(207, 162, 88, 0.5); }
 
-        /* MUSIK & SLIDER */
-        .music-wrapper {
-            position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; align-items: center;
-            gap: 15px; z-index: 100; display: none; 
+        /* FLOATING BUTTONS (Theme & Music) */
+        .controls-wrapper {
+            position: fixed; display: flex; flex-direction: column; gap: 15px; 
+            z-index: 100;
         }
-        .music-toggle-btn {
+        /* Posisi Tombol Musik (Kanan Bawah) */
+        .music-pos { right: 20px; bottom: 20px; }
+        /* Posisi Tombol Tema (Kanan Atas) */
+        .theme-pos { right: 20px; top: 20px; }
+
+        .float-btn {
             width: 50px; height: 50px; border-radius: 50%;
-            background: rgba(20, 20, 20, 0.9); border: 2px solid #cfa258;
-            color: #cfa258; font-size: 20px; cursor: pointer;
+            background: rgba(20, 20, 20, 0.8); border: 2px solid var(--gold);
+            color: var(--gold); font-size: 20px; cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: transform 0.2s;
             display: flex; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
         }
-        .music-toggle-btn:active { transform: scale(0.9); }
-        .volume-container {
-            background: rgba(20, 20, 20, 0.9); border: 2px solid #cfa258;
-            border-radius: 25px; width: 40px; height: 120px; 
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transform: translateY(20px);
-            transition: all 0.3s ease;
-        }
-        .volume-container.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        #vol-slider {
-            width: 100px; height: 4px; transform: rotate(-90deg);
-            background: rgba(255, 255, 255, 0.2); border-radius: 5px; outline: none; -webkit-appearance: none;
-            accent-color: #cfa258; cursor: pointer;
-        }
-        #vol-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 14px; height: 14px;
-            background: #cfa258; border-radius: 50%; border: 2px solid #000;
+        .float-btn:active { transform: scale(0.9); }
+        /* Style khusus Light Mode untuk tombol */
+        body.light-mode .float-btn {
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         /* OVERLAY */
@@ -125,7 +170,7 @@
             background-color: #000; z-index: 9999; display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: opacity 0.8s ease;
         }
-        .overlay-content { text-align: center; color: #cfa258; animation: pulse 2s infinite; }
+        .overlay-content { text-align: center; color: var(--gold); animation: pulse 2s infinite; }
         .overlay-content h2 { font-size: 2rem; margin-bottom: 10px; }
         .overlay-content p { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
@@ -144,11 +189,12 @@
 
     <audio id="bg-music" loop></audio>
 
-    <div id="music-wrapper" class="music-wrapper">
-        <div id="vol-box" class="volume-container">
-            <input type="range" id="vol-slider" min="0" max="1" step="0.01">
-        </div>
-        <button id="music-toggle" class="music-toggle-btn">🔊</button>
+    <div class="controls-wrapper theme-pos">
+        <button id="theme-toggle" class="float-btn">☀️</button>
+    </div>
+
+    <div class="controls-wrapper music-pos">
+        <button id="music-toggle" class="float-btn">🔊</button>
     </div>
 
     <div class="container">
@@ -160,7 +206,8 @@
         <h1 id="profile-name"></h1>
         <p><span id="typing-text"></span><span class="cursor">|</span></p>
 
-        <button id="share-profile-btn" class="share-btn-mini">🔗 Share Profile</button>
+        <button id="share-profile-btn" class="share-btn-mini">🔗 Share This Profile</button>
+        
         <div id="link-container" class="link-container"></div>
         <div id="footer-text" class="footer"></div>
     </div>
@@ -237,34 +284,61 @@
             else { setTimeout(type, 100); }
         }());
 
-        // === MUSIC & SLIDER ===
+        // === LOGIKA MUSIK (SIMPLE MUTE/UNMUTE) ===
         const overlay = document.getElementById('overlay');
         const audio = document.getElementById('bg-music');
-        const musicWrapper = document.getElementById('music-wrapper');
         const musicToggle = document.getElementById('music-toggle');
-        const volBox = document.getElementById('vol-box');
-        const volSlider = document.getElementById('vol-slider');
-
-        const startVol = CONFIG.initialVolume || 0.3;
-        audio.volume = startVol; volSlider.value = startVol;
+        
+        // Default Volume 0.2 (Kecil)
+        const defaultVol = 0.2; 
+        audio.volume = defaultVol; 
 
         overlay.addEventListener('click', () => {
             overlay.style.opacity = '0';
-            setTimeout(() => { overlay.style.display = 'none'; musicWrapper.style.display = 'flex'; }, 800);
+            setTimeout(() => { overlay.style.display = 'none'; }, 800);
             audio.play().catch(e => console.log("Audio block"));
         });
 
-        musicToggle.addEventListener('click', () => { volBox.classList.toggle('show'); });
-
-        volSlider.addEventListener('input', (e) => {
-            const val = e.target.value; audio.volume = val;
-            if(val == 0) { musicToggle.innerHTML = '🔇'; } else { musicToggle.innerHTML = '🔊'; }
+        musicToggle.addEventListener('click', () => {
+            if (audio.volume > 0) {
+                audio.volume = 0; // Mute
+                musicToggle.innerHTML = '🔇';
+            } else {
+                audio.volume = defaultVol; // Balik ke 0.2
+                musicToggle.innerHTML = '🔊';
+            }
         });
 
+        // === LOGIKA THEME SWITCH (LIGHT/DARK) ===
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            
+            // Ganti Ikon Matahari/Bulan
+            if (body.classList.contains('light-mode')) {
+                themeToggle.innerHTML = '🌙'; // Kalau Light, tombol jadi Bulan
+            } else {
+                themeToggle.innerHTML = '☀️'; // Kalau Dark, tombol jadi Matahari
+            }
+        });
+
+        // === LOGIKA SHARE (DIPERBARUI) ===
         const shareBtn = document.getElementById('share-profile-btn');
         shareBtn.addEventListener('click', async () => {
-            if (navigator.share) { try { await navigator.share({ title: CONFIG.name, text: 'Cek profil saya:', url: window.location.href }); } catch (err) {} }
-            else { navigator.clipboard.writeText(window.location.href); alert('Copied! 📋'); }
+            if (navigator.share) { 
+                try { 
+                    await navigator.share({ 
+                        title: CONFIG.name, 
+                        text: 'Cek profil digital ini:', // Teks Baru
+                        url: window.location.href 
+                    }); 
+                } catch (err) {} 
+            } else { 
+                navigator.clipboard.writeText(window.location.href); 
+                alert('Link profil berhasil disalin! 📋'); 
+            }
         });
     </script>
 </body>
