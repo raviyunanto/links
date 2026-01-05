@@ -1,15 +1,11 @@
 const CONFIG = {
     // === DATA UTAMA ===
     profileImage: "dp.jpg",     // Foto Profil
-    favicon: "icon.png",        // Icon Custom di Tab Browser
-    name: "@raviyunanto",       // Nama
+    favicon: "icon.png",        // Icon di Tab Browser
+    name: "@raviyunanto",       // Nama Utama
     
     // === STATUS KETERSEDIAAN ===
-    isOpenToWork: true,         // true = titik hijau nyala
-
-    // === MUSIK ===
-    musicFile: "bs.mp3",       // File lagu
-    initialVolume: 0.1,         // (BARU) Volume awal (0.1 - 1.0)
+    isOpenToWork: true,         // true = Hijau (Open), false = Merah (Busy)
 
     // === BIO (EFEK KETIK) ===
     typingTexts: [
@@ -23,7 +19,7 @@ const CONFIG = {
         { 
             text: "📇 Save My Contact", 
             url: "contact.vcf", 
-            special: true 
+            special: true  // Tombol ini akan punya border khusus
         },
         { 
             text: "💬 WhatsApp", 
