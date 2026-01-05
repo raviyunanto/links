@@ -14,15 +14,6 @@ const CONFIG = {
         "Designer"
     ],
 
-    // === SKILL BADGES (BARU) ===
-    // Isi dengan skill atau tools andalanmu
-    skills: [
-        "Adobe Premiere",
-        "Adobe Photoshop",
-        "CapCut",
-        "Canva"
-    ],
-
     // === LINKS ===
     links: [
         { 
