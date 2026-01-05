@@ -112,7 +112,6 @@
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
             border: 3px solid var(--theme-accent);
             box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); transition: var(--transition-ease);
-            /* Efek Bernapas Halus */
             animation: breathing 4s ease-in-out infinite;
         }
         .profile-avatar:hover { transform: scale(1.05) rotate(2deg); animation: none; }
@@ -169,7 +168,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* Special Button (Save Contact) */
         .link-card.special {
             background: var(--special-bg) !important;
             border: 2px solid var(--special-border) !important; 
@@ -180,7 +178,7 @@
         /* --- FIXED CONTROLS --- */
         .controls-layer { position: fixed; z-index: 5000; }
         .pos-top-right { top: 20px; right: 20px; } 
-        .pos-top-left { top: 20px; left: 20px; } /* Posisi Tombol QR */
+        .pos-top-left { top: 20px; left: 20px; } 
 
         /* TOGGLE SWITCH */
         .switch { position: relative; display: inline-block; width: 60px; height: 30px; }
@@ -198,18 +196,28 @@
         input:checked + .slider { background-color: rgba(255, 255, 255, 0.9); }
         input:checked + .slider:before { transform: translateX(28px); content: "☀️"; background-color: #000; color: var(--theme-accent); }
 
-        /* QR BUTTON */
+        /* QR BUTTON (IMAGE) */
         .btn-qr {
-            width: 40px; height: 40px; border-radius: 50%;
+            width: 44px; height: 44px; border-radius: 50%;
             background: rgba(20, 20, 20, 0.8); border: 2px solid var(--theme-accent);
-            color: var(--theme-accent); font-size: 1.2rem; cursor: pointer;
-            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
             transition: var(--transition-ease); backdrop-filter: blur(5px);
+            padding: 0; overflow: hidden; /* Biar gambar gak keluar */
+        }
+        .btn-qr img {
+            width: 24px; height: 24px; object-fit: contain;
+            transition: var(--transition-ease);
+            /* Opsi: kalau icon kamu hitam, biar putih di dark mode pake filter invert */
+            /* filter: invert(1); */ 
         }
         .btn-qr:hover { transform: scale(1.1); background: rgba(207, 162, 88, 0.2); }
-        [data-theme="light"] .btn-qr { background: rgba(255, 255, 255, 0.8); color: #4a3b22; }
+        
+        [data-theme="light"] .btn-qr { background: rgba(255, 255, 255, 0.8); }
+        [data-theme="light"] .btn-qr img { 
+            /* filter: invert(0); */ 
+        }
 
-        /* QR MODAL (POPUP) */
+        /* QR MODAL */
         .qr-modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999;
             display: flex; justify-content: center; align-items: center;
@@ -256,7 +264,7 @@
 
     <div class="controls-layer pos-top-left">
         <button id="btn-qr" class="btn-qr" title="Show QR Code">
-            📱
+            <img src="qr.png" alt="QR">
         </button>
     </div>
 
@@ -306,7 +314,7 @@
     <script>
         /**
          * RAVI YUNANTO PORTFOLIO ENGINE
-         * Feature: QR Code & Breathing Effect
+         * Clean, Robust & Feature Rich
          */
         
         (function() {
@@ -350,7 +358,7 @@
                 pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
 
-                // GENERATE QR CODE DINAMIS
+                // QR GENERATOR
                 const currentUrl = window.location.href;
                 dom.qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${currentUrl}`;
 
@@ -365,7 +373,6 @@
                     statusText.textContent = "CURRENTLY BUSY";
                 }
 
-                // LINKS
                 CONFIG.links.forEach(link => {
                     const a = document.createElement('a');
                     a.href = link.url;
@@ -459,11 +466,11 @@
                 dom.themeSwitch.addEventListener('change', toggleTheme);
                 dom.shareBtn.addEventListener('click', handleShare);
                 
-                // QR Listeners
+                // QR Events
                 dom.btnQr.addEventListener('click', openQr);
                 dom.qrClose.addEventListener('click', closeQr);
                 dom.qrModal.addEventListener('click', (e) => {
-                    if(e.target === dom.qrModal) closeQr(); // Close if click outside
+                    if(e.target === dom.qrModal) closeQr();
                 });
 
                 window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
