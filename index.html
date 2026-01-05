@@ -26,7 +26,7 @@
     <link id="favicon" rel="icon" type="image/png" href="icon.png"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* * DESIGN SYSTEM & VARIABLES */
@@ -42,12 +42,12 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-blur: blur(12px);
             
-            /* Special Button (Save Contact) - DARK */
+            /* Special Button */
             --special-bg: rgba(255, 255, 255, 0.12);
             --special-border: #ffffff;
             --special-line: #ffffff;
 
-            /* Status Capsule Colors */
+            /* Status Capsule */
             --status-bg: rgba(20, 20, 20, 0.9);
             --status-border: rgba(255, 255, 255, 0.2);
             --status-text: #ffffff;
@@ -66,7 +66,7 @@
             
             --glass-border: rgba(74, 59, 34, 0.2);
             
-            /* Special Button (Save Contact) - LIGHT */
+            /* Special Button */
             --special-bg: rgba(184, 134, 11, 0.1);
             --special-border: #8B4513; 
             --special-line: #8B4513;
@@ -118,15 +118,11 @@
 
         /* STATUS CAPSULE */
         .status-capsule {
-            position: absolute; 
-            bottom: -12px; left: 50%; 
-            transform: translateX(-50%);
-            background: var(--status-bg);
-            border: 1px solid var(--status-border);
+            position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--status-bg); border: 1px solid var(--status-border);
             padding: 4px 12px; border-radius: 20px;
             display: flex; align-items: center; gap: 6px;
-            white-space: nowrap;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
             transition: var(--transition-ease);
         }
@@ -135,8 +131,20 @@
         .status-capsule.online .status-dot { background-color: #2ecc71; box-shadow: 0 0 6px #2ecc71; animation: pulse-status 2s infinite; }
         .status-capsule.busy .status-dot { background-color: #e74c3c; box-shadow: 0 0 6px #e74c3c; }
 
-        /* Typography */
-        h1.profile-name { font-size: 1.5rem; font-weight: 700; color: var(--theme-accent); margin-bottom: 0.25rem; letter-spacing: 1px; }
+        /* TYPOGRAPHY & VERIFIED BADGE */
+        .profile-header {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            margin-bottom: 0.25rem;
+        }
+        h1.profile-name { font-size: 1.5rem; font-weight: 700; color: var(--theme-accent); letter-spacing: 1px; }
+        
+        .verified-badge {
+            width: 20px; height: 20px; color: var(--theme-accent);
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .verified-badge:hover { transform: scale(1.2); }
+        .verified-badge svg { width: 100%; height: 100%; fill: currentColor; }
+
         .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 1.5rem; min-height: 1.5rem; font-weight: 300; }
         .cursor { display: inline-block; width: 2px; animation: blink 1s infinite; }
 
@@ -167,7 +175,6 @@
             color: #000; border-color: var(--theme-accent);
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
-        
         .link-card.special {
             background: var(--special-bg) !important;
             border: 2px solid var(--special-border) !important; 
@@ -175,7 +182,7 @@
             font-weight: 600;
         }
 
-        /* --- FIXED CONTROLS --- */
+        /* --- CONTROLS --- */
         .controls-layer { position: fixed; z-index: 5000; }
         .pos-top-right { top: 20px; right: 20px; } 
         .pos-top-left { top: 20px; left: 20px; } 
@@ -196,49 +203,57 @@
         input:checked + .slider { background-color: rgba(255, 255, 255, 0.9); }
         input:checked + .slider:before { transform: translateX(28px); content: "☀️"; background-color: #000; color: var(--theme-accent); }
 
-        /* QR BUTTON (IMAGE) */
+        /* QR BUTTON */
         .btn-qr {
             width: 44px; height: 44px; border-radius: 50%;
             background: rgba(20, 20, 20, 0.8); border: 2px solid var(--theme-accent);
             cursor: pointer; display: flex; justify-content: center; align-items: center;
             transition: var(--transition-ease); backdrop-filter: blur(5px);
-            padding: 0; overflow: hidden; /* Biar gambar gak keluar */
+            padding: 0; overflow: hidden;
         }
-        .btn-qr img {
-            width: 24px; height: 24px; object-fit: contain;
-            transition: var(--transition-ease);
-            /* Opsi: kalau icon kamu hitam, biar putih di dark mode pake filter invert */
-            /* filter: invert(1); */ 
-        }
+        .btn-qr img { width: 24px; height: 24px; object-fit: contain; transition: var(--transition-ease); }
         .btn-qr:hover { transform: scale(1.1); background: rgba(207, 162, 88, 0.2); }
-        
         [data-theme="light"] .btn-qr { background: rgba(255, 255, 255, 0.8); }
-        [data-theme="light"] .btn-qr img { 
-            /* filter: invert(0); */ 
-        }
 
-        /* QR MODAL */
-        .qr-modal {
+        /* UNIVERSAL MODAL STYLE (Untuk QR & Verified) */
+        .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999;
             display: flex; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: var(--transition-ease);
             backdrop-filter: blur(8px);
         }
-        .qr-modal.active { opacity: 1; visibility: visible; }
-        .qr-content {
-            background: #fff; padding: 2rem; border-radius: 20px;
-            text-align: center; position: relative;
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: #fff; padding: 2rem; border-radius: 24px;
+            text-align: center; position: relative; width: 85%; max-width: 320px;
             transform: scale(0.8); transition: var(--transition-ease);
             border: 2px solid var(--theme-accent);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
-        .qr-modal.active .qr-content { transform: scale(1); }
-        .qr-image { width: 200px; height: 200px; object-fit: contain; margin-bottom: 1rem; }
-        .qr-text { color: #000; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .qr-sub { color: #555; font-size: 0.75rem; }
-        .qr-close {
-            margin-top: 1rem; background: #000; color: #fff; border: none;
-            padding: 8px 24px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        
+        .modal-close {
+            position: absolute; top: 15px; right: 15px;
+            background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #555;
         }
+        
+        /* QR Specific */
+        .qr-image { width: 180px; height: 180px; object-fit: contain; margin: 10px 0; }
+        
+        /* Verified Modal Specific */
+        .verified-avatar {
+            width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+            border: 3px solid var(--theme-accent); margin-bottom: 10px;
+            position: relative;
+        }
+        .verified-badge-large {
+            color: var(--theme-accent); width: 24px; height: 24px;
+            position: absolute; bottom: 8px; right: 35%; 
+            background: #fff; border-radius: 50%;
+        }
+        .verified-badge-large svg { width: 100%; height: 100%; fill: currentColor; }
+        .modal-title { font-size: 1.2rem; font-weight: 700; color: #000; margin-bottom: 5px; }
+        .modal-desc { font-size: 0.85rem; color: #555; line-height: 1.5; }
 
         /* TOAST */
         #toast {
@@ -275,12 +290,31 @@
         </label>
     </div>
 
-    <div id="qr-modal" class="qr-modal">
-        <div class="qr-content">
+    <div id="qr-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAllModals()">×</button>
+            <div class="modal-title" style="margin-top: 10px;">Scan to Connect</div>
             <img id="qr-image" src="" alt="QR Code" class="qr-image">
-            <div class="qr-text">Scan to Connect</div>
-            <div class="qr-sub">@raviyunanto</div>
-            <button id="qr-close" class="qr-close">Close</button>
+            <div class="modal-desc">@raviyunanto</div>
+        </div>
+    </div>
+
+    <div id="verified-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAllModals()">×</button>
+            
+            <div style="position: relative; display: inline-block;">
+                <img id="verified-modal-img" src="" alt="Profile" class="verified-avatar">
+                <div class="verified-badge-large">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg>
+                </div>
+            </div>
+
+            <div class="modal-title">Verified Creator</div>
+            <div class="modal-desc">
+                You are viewing the official portfolio of <b>Ravi Yunanto</b>.<br>
+                Professional Videographer, Photographer & Designer.
+            </div>
         </div>
     </div>
 
@@ -295,7 +329,13 @@
             </div>
         </header>
         
-        <h1 id="profile-name" class="profile-name"></h1>
+        <div class="profile-header">
+            <h1 id="profile-name" class="profile-name"></h1>
+            <span id="btn-verified" class="verified-badge" title="Verified Account">
+                <svg viewBox="0 0 24 24"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg>
+            </span>
+        </div>
+
         <div class="profile-bio">
             <span id="typing-text"></span><span class="cursor">|</span>
         </div>
@@ -314,9 +354,14 @@
     <script>
         /**
          * RAVI YUNANTO PORTFOLIO ENGINE
-         * Clean, Robust & Feature Rich
+         * Feature: Verified Badge & Modals
          */
         
+        // Fungsi Global untuk Close Button di HTML
+        function closeAllModals() {
+            document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
+        }
+
         (function() {
             'use strict';
 
@@ -332,11 +377,14 @@
                 shareBtn: document.getElementById('btn-share'),
                 toast: document.getElementById('toast'),
                 
-                // QR Elements
+                // Modal Elements
                 btnQr: document.getElementById('btn-qr'),
                 qrModal: document.getElementById('qr-modal'),
                 qrImage: document.getElementById('qr-image'),
-                qrClose: document.getElementById('qr-close')
+                
+                btnVerified: document.getElementById('btn-verified'),
+                verifiedModal: document.getElementById('verified-modal'),
+                verifiedImg: document.getElementById('verified-modal-img')
             };
 
             function init() {
@@ -357,6 +405,9 @@
                 pImg.src = CONFIG.profileImage;
                 pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
+
+                // Load Image ke Modal Verified juga
+                dom.verifiedImg.src = CONFIG.profileImage;
 
                 // QR GENERATOR
                 const currentUrl = window.location.href;
@@ -397,10 +448,6 @@
                 if (isLight) { dom.body.setAttribute('data-theme', 'light'); } 
                 else { dom.body.removeAttribute('data-theme'); }
             }
-
-            // QR HANDLERS
-            function openQr() { dom.qrModal.classList.add('active'); }
-            function closeQr() { dom.qrModal.classList.remove('active'); }
 
             function typeWriter() {
                 const currentWord = CONFIG.typingTexts[state.typingIndex];
@@ -466,11 +513,15 @@
                 dom.themeSwitch.addEventListener('change', toggleTheme);
                 dom.shareBtn.addEventListener('click', handleShare);
                 
-                // QR Events
-                dom.btnQr.addEventListener('click', openQr);
-                dom.qrClose.addEventListener('click', closeQr);
-                dom.qrModal.addEventListener('click', (e) => {
-                    if(e.target === dom.qrModal) closeQr();
+                // Modal Events
+                dom.btnQr.addEventListener('click', () => dom.qrModal.classList.add('active'));
+                dom.btnVerified.addEventListener('click', () => dom.verifiedModal.classList.add('active'));
+                
+                // Close on Outside Click
+                window.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal-overlay')) {
+                        closeAllModals();
+                    }
                 });
 
                 window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
