@@ -42,7 +42,7 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-blur: blur(12px);
             
-            /* Special Button (Save Contact) */
+            /* Special Button (Save Contact) - DARK */
             --special-bg: rgba(255, 255, 255, 0.12);
             --special-border: #ffffff;
             --special-line: #ffffff;
@@ -66,7 +66,7 @@
             
             --glass-border: rgba(74, 59, 34, 0.2);
             
-            /* Special Button */
+            /* Special Button (Save Contact) - LIGHT */
             --special-bg: rgba(184, 134, 11, 0.1);
             --special-border: #8B4513; 
             --special-line: #8B4513;
@@ -106,7 +106,7 @@
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
         /* --- COMPONENTS --- */
-        .profile-section { position: relative; display: inline-block; margin-bottom: 1.5rem; } /* Margin ditambah dikit buat space status */
+        .profile-section { position: relative; display: inline-block; margin-bottom: 1.5rem; }
         
         .profile-avatar {
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
@@ -115,44 +115,35 @@
         }
         .profile-avatar:hover { transform: scale(1.05) rotate(2deg); }
 
-        /* STATUS CAPSULE (DESAIN BARU) */
+        /* STATUS CAPSULE */
         .status-capsule {
             position: absolute; 
             bottom: -12px; left: 50%; 
             transform: translateX(-50%);
-            
             background: var(--status-bg);
             border: 1px solid var(--status-border);
-            padding: 4px 12px;
-            border-radius: 20px;
-            
+            padding: 4px 12px; border-radius: 20px;
             display: flex; align-items: center; gap: 6px;
             white-space: nowrap;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
             transition: var(--transition-ease);
         }
-
-        .status-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .status-text {
-            font-size: 0.65rem; font-weight: 600;
-            color: var(--status-text);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Warna Status */
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .status-text { font-size: 0.65rem; font-weight: 600; color: var(--status-text); text-transform: uppercase; letter-spacing: 0.5px; }
         .status-capsule.online .status-dot { background-color: #2ecc71; box-shadow: 0 0 6px #2ecc71; animation: pulse-status 2s infinite; }
         .status-capsule.busy .status-dot { background-color: #e74c3c; box-shadow: 0 0 6px #e74c3c; }
 
         /* Typography */
         h1.profile-name { font-size: 1.5rem; font-weight: 700; color: var(--theme-accent); margin-bottom: 0.25rem; letter-spacing: 1px; }
-        .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 1rem; min-height: 1.5rem; font-weight: 300; }
+        .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 0.5rem; min-height: 1.5rem; font-weight: 300; }
         .cursor { display: inline-block; width: 2px; animation: blink 1s infinite; }
+
+        /* FITUR BARU: LOCATION & TIME */
+        .local-info {
+            font-size: 0.75rem; color: var(--theme-accent); opacity: 0.8;
+            margin-bottom: 1.5rem; display: block; font-weight: 400; letter-spacing: 0.5px;
+        }
 
         .btn-share {
             background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
@@ -193,36 +184,32 @@
         .controls-layer { position: fixed; z-index: 5000; }
         .pos-top-right { top: 20px; right: 20px; } 
 
-        /* TOGGLE SWITCH UI */
-        .switch {
-            position: relative; display: inline-block; width: 60px; height: 30px;
-        }
+        /* TOGGLE SWITCH */
+        .switch { position: relative; display: inline-block; width: 60px; height: 30px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        
         .slider {
-            position: absolute; cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(20, 20, 20, 0.8);
-            border: 2px solid var(--theme-accent);
-            transition: .4s; border-radius: 34px;
-            backdrop-filter: blur(5px);
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(20, 20, 20, 0.8); border: 2px solid var(--theme-accent);
+            transition: .4s; border-radius: 34px; backdrop-filter: blur(5px);
         }
-        
         .slider:before {
-            position: absolute; content: "🌙";
-            height: 22px; width: 22px;
-            left: 3px; bottom: 2px;
-            background-color: var(--theme-accent);
-            transition: .4s; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 12px; color: #000;
+            position: absolute; content: "🌙"; height: 22px; width: 22px; left: 3px; bottom: 2px;
+            background-color: var(--theme-accent); transition: .4s; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-size: 12px; color: #000;
         }
-        
         input:checked + .slider { background-color: rgba(255, 255, 255, 0.9); }
-        input:checked + .slider:before {
-            transform: translateX(28px);
-            content: "☀️"; background-color: #000; color: var(--theme-accent);
+        input:checked + .slider:before { transform: translateX(28px); content: "☀️"; background-color: #000; color: var(--theme-accent); }
+
+        /* TOAST NOTIFICATION (PENGGANTI ALERT) */
+        #toast {
+            visibility: hidden; min-width: 250px; background-color: #333;
+            color: #fff; text-align: center; border-radius: 50px; padding: 16px;
+            position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%);
+            font-size: 14px; border: 1px solid var(--theme-accent);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.5s, bottom 0.5s;
         }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+        [data-theme="light"] #toast { background-color: #fdf6e3; color: #4a3b22; }
 
         footer { margin-top: 3rem; font-size: 0.8rem; color: var(--theme-accent); opacity: 0.6; }
 
@@ -241,10 +228,11 @@
         </label>
     </div>
 
+    <div id="toast">Link berhasil disalin! 📋</div>
+
     <main class="card-container">
         <header class="profile-section">
             <img id="profile-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Profile" class="profile-avatar">
-            
             <div id="status-capsule" class="status-capsule">
                 <div class="status-dot"></div>
                 <span id="status-text" class="status-text"></span>
@@ -255,6 +243,8 @@
         <div class="profile-bio">
             <span id="typing-text"></span><span class="cursor">|</span>
         </div>
+
+        <span id="local-time" class="local-info">Loading time...</span>
 
         <button id="btn-share" class="btn-share">
             <span>🔗 Share This Profile</span>
@@ -270,7 +260,7 @@
     <script>
         /**
          * RAVI YUNANTO PORTFOLIO ENGINE
-         * Clean & Robust Version
+         * Clean, Robust & Feature Rich
          */
         
         (function() {
@@ -285,7 +275,9 @@
                 ctx: document.getElementById('particle-canvas').getContext('2d'),
                 linksWrapper: document.getElementById('links-wrapper'),
                 typingEl: document.getElementById('typing-text'),
-                shareBtn: document.getElementById('btn-share')
+                shareBtn: document.getElementById('btn-share'),
+                timeEl: document.getElementById('local-time'),
+                toast: document.getElementById('toast')
             };
 
             function init() {
@@ -293,6 +285,7 @@
                 setupEventListeners();
                 initParticles();
                 animateParticles();
+                startTime(); // Mulai jam
                 console.log('%c Designed by Ravi Yunanto ', 'background: #cfa258; color: #000; font-weight: bold; padding: 4px; border-radius: 4px;');
             }
 
@@ -307,7 +300,7 @@
                 pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
 
-                // STATUS CAPSULE LOGIC
+                // STATUS CAPSULE
                 const statusCapsule = document.getElementById('status-capsule');
                 const statusText = document.getElementById('status-text');
                 
@@ -330,6 +323,29 @@
                 });
 
                 typeWriter();
+            }
+
+            // --- FITUR JAM & LOKASI (WITA) ---
+            function startTime() {
+                const update = () => {
+                    const now = new Date();
+                    // Opsi waktu Indonesia (WITA)
+                    const timeString = now.toLocaleTimeString('id-ID', {
+                        hour: '2-digit', 
+                        minute:'2-digit',
+                        timeZone: 'Asia/Makassar' // Hardcoded ke WITA biar konsisten
+                    });
+                    dom.timeEl.textContent = `📍 North Kalimantan • ${timeString} WITA`;
+                };
+                update();
+                setInterval(update, 1000); // Update tiap detik
+            }
+
+            // --- FITUR TOAST NOTIFICATION ---
+            function showToast(message) {
+                dom.toast.textContent = message;
+                dom.toast.className = "show";
+                setTimeout(function(){ dom.toast.className = dom.toast.className.replace("show", ""); }, 3000);
             }
 
             function toggleTheme(e) {
@@ -360,8 +376,12 @@
 
             async function handleShare() {
                 const shareData = { title: CONFIG.name, text: 'Cek profil digital ini:', url: window.location.href };
-                if (navigator.share) { try { await navigator.share(shareData); } catch (err) {} } 
-                else { navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard!'); }
+                if (navigator.share) { 
+                    try { await navigator.share(shareData); } catch (err) {} 
+                } else { 
+                    navigator.clipboard.writeText(window.location.href); 
+                    showToast('Link berhasil disalin! 📋'); // Pake Custom Toast
+                }
             }
 
             function initParticles() {
