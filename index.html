@@ -112,8 +112,10 @@
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
             border: 3px solid var(--theme-accent);
             box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); transition: var(--transition-ease);
+            /* Efek Bernapas Halus */
+            animation: breathing 4s ease-in-out infinite;
         }
-        .profile-avatar:hover { transform: scale(1.05) rotate(2deg); }
+        .profile-avatar:hover { transform: scale(1.05) rotate(2deg); animation: none; }
 
         /* STATUS CAPSULE */
         .status-capsule {
@@ -136,35 +138,8 @@
 
         /* Typography */
         h1.profile-name { font-size: 1.5rem; font-weight: 700; color: var(--theme-accent); margin-bottom: 0.25rem; letter-spacing: 1px; }
-        .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 0.5rem; min-height: 1.5rem; font-weight: 300; }
+        .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 1.5rem; min-height: 1.5rem; font-weight: 300; }
         .cursor { display: inline-block; width: 2px; animation: blink 1s infinite; }
-
-        /* LOCATION & TIME */
-        .local-info {
-            font-size: 0.75rem; color: var(--theme-accent); opacity: 0.8;
-            margin-bottom: 1rem; display: block; font-weight: 400; letter-spacing: 0.5px;
-        }
-
-        /* FITUR BARU: SKILL BADGES */
-        .skills-container {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-            margin-bottom: 1.5rem;
-        }
-        .skill-tag {
-            font-size: 0.7rem; font-weight: 500;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            color: var(--theme-text-primary);
-            padding: 4px 12px; border-radius: 12px;
-            backdrop-filter: blur(4px);
-            transition: var(--transition-ease);
-        }
-        .skill-tag:hover {
-            border-color: var(--theme-accent);
-            transform: translateY(-2px);
-            background: rgba(207, 162, 88, 0.1);
-        }
-        [data-theme="light"] .skill-tag { background: rgba(0, 0, 0, 0.05); }
 
         /* BUTTONS */
         .btn-share {
@@ -194,6 +169,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
+        /* Special Button (Save Contact) */
         .link-card.special {
             background: var(--special-bg) !important;
             border: 2px solid var(--special-border) !important; 
@@ -201,9 +177,10 @@
             font-weight: 600;
         }
 
-        /* --- CONTROLS --- */
+        /* --- FIXED CONTROLS --- */
         .controls-layer { position: fixed; z-index: 5000; }
         .pos-top-right { top: 20px; right: 20px; } 
+        .pos-top-left { top: 20px; left: 20px; } /* Posisi Tombol QR */
 
         /* TOGGLE SWITCH */
         .switch { position: relative; display: inline-block; width: 60px; height: 30px; }
@@ -221,6 +198,40 @@
         input:checked + .slider { background-color: rgba(255, 255, 255, 0.9); }
         input:checked + .slider:before { transform: translateX(28px); content: "☀️"; background-color: #000; color: var(--theme-accent); }
 
+        /* QR BUTTON */
+        .btn-qr {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(20, 20, 20, 0.8); border: 2px solid var(--theme-accent);
+            color: var(--theme-accent); font-size: 1.2rem; cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            transition: var(--transition-ease); backdrop-filter: blur(5px);
+        }
+        .btn-qr:hover { transform: scale(1.1); background: rgba(207, 162, 88, 0.2); }
+        [data-theme="light"] .btn-qr { background: rgba(255, 255, 255, 0.8); color: #4a3b22; }
+
+        /* QR MODAL (POPUP) */
+        .qr-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: var(--transition-ease);
+            backdrop-filter: blur(8px);
+        }
+        .qr-modal.active { opacity: 1; visibility: visible; }
+        .qr-content {
+            background: #fff; padding: 2rem; border-radius: 20px;
+            text-align: center; position: relative;
+            transform: scale(0.8); transition: var(--transition-ease);
+            border: 2px solid var(--theme-accent);
+        }
+        .qr-modal.active .qr-content { transform: scale(1); }
+        .qr-image { width: 200px; height: 200px; object-fit: contain; margin-bottom: 1rem; }
+        .qr-text { color: #000; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .qr-sub { color: #555; font-size: 0.75rem; }
+        .qr-close {
+            margin-top: 1rem; background: #000; color: #fff; border: none;
+            padding: 8px 24px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;
+        }
+
         /* TOAST */
         #toast {
             visibility: hidden; min-width: 250px; background-color: #333;
@@ -235,6 +246,7 @@
         footer { margin-top: 3rem; font-size: 0.8rem; color: var(--theme-accent); opacity: 0.6; }
 
         @keyframes pulse-status { 0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
+        @keyframes breathing { 0% { box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); } 50% { box-shadow: 0 0 40px rgba(207, 162, 88, 0.6); } 100% { box-shadow: 0 0 25px rgba(207, 162, 88, 0.3); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
@@ -242,11 +254,26 @@
 
     <canvas id="particle-canvas"></canvas>
 
+    <div class="controls-layer pos-top-left">
+        <button id="btn-qr" class="btn-qr" title="Show QR Code">
+            📱
+        </button>
+    </div>
+
     <div class="controls-layer pos-top-right">
         <label class="switch" title="Switch Theme">
             <input type="checkbox" id="theme-toggle">
             <span class="slider"></span>
         </label>
+    </div>
+
+    <div id="qr-modal" class="qr-modal">
+        <div class="qr-content">
+            <img id="qr-image" src="" alt="QR Code" class="qr-image">
+            <div class="qr-text">Scan to Connect</div>
+            <div class="qr-sub">@raviyunanto</div>
+            <button id="qr-close" class="qr-close">Close</button>
+        </div>
     </div>
 
     <div id="toast">Link berhasil disalin! 📋</div>
@@ -265,10 +292,6 @@
             <span id="typing-text"></span><span class="cursor">|</span>
         </div>
 
-        <span id="local-time" class="local-info">Loading time...</span>
-        
-        <div id="skills-container" class="skills-container"></div>
-
         <button id="btn-share" class="btn-share">
             <span>🔗 Share This Profile</span>
         </button>
@@ -283,7 +306,7 @@
     <script>
         /**
          * RAVI YUNANTO PORTFOLIO ENGINE
-         * Clean, Robust & Feature Rich
+         * Feature: QR Code & Breathing Effect
          */
         
         (function() {
@@ -299,9 +322,13 @@
                 linksWrapper: document.getElementById('links-wrapper'),
                 typingEl: document.getElementById('typing-text'),
                 shareBtn: document.getElementById('btn-share'),
-                timeEl: document.getElementById('local-time'),
-                skillsContainer: document.getElementById('skills-container'),
-                toast: document.getElementById('toast')
+                toast: document.getElementById('toast'),
+                
+                // QR Elements
+                btnQr: document.getElementById('btn-qr'),
+                qrModal: document.getElementById('qr-modal'),
+                qrImage: document.getElementById('qr-image'),
+                qrClose: document.getElementById('qr-close')
             };
 
             function init() {
@@ -309,7 +336,6 @@
                 setupEventListeners();
                 initParticles();
                 animateParticles();
-                startTime();
                 console.log('%c Designed by Ravi Yunanto ', 'background: #cfa258; color: #000; font-weight: bold; padding: 4px; border-radius: 4px;');
             }
 
@@ -324,7 +350,11 @@
                 pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
 
-                // STATUS
+                // GENERATE QR CODE DINAMIS
+                const currentUrl = window.location.href;
+                dom.qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${currentUrl}`;
+
+                // STATUS CAPSULE
                 const statusCapsule = document.getElementById('status-capsule');
                 const statusText = document.getElementById('status-text');
                 if (CONFIG.isOpenToWork) {
@@ -335,19 +365,7 @@
                     statusText.textContent = "CURRENTLY BUSY";
                 }
 
-                // RENDER SKILLS
-                if(CONFIG.skills && CONFIG.skills.length > 0) {
-                    CONFIG.skills.forEach(skill => {
-                        const span = document.createElement('span');
-                        span.className = 'skill-tag';
-                        span.textContent = skill;
-                        dom.skillsContainer.appendChild(span);
-                    });
-                } else {
-                    dom.skillsContainer.style.display = 'none';
-                }
-
-                // RENDER LINKS
+                // LINKS
                 CONFIG.links.forEach(link => {
                     const a = document.createElement('a');
                     a.href = link.url;
@@ -361,18 +379,6 @@
                 typeWriter();
             }
 
-            function startTime() {
-                const update = () => {
-                    const now = new Date();
-                    const timeString = now.toLocaleTimeString('id-ID', {
-                        hour: '2-digit', minute:'2-digit', timeZone: 'Asia/Makassar'
-                    });
-                    dom.timeEl.textContent = `📍 North Kalimantan • ${timeString} WITA`;
-                };
-                update();
-                setInterval(update, 1000);
-            }
-
             function showToast(message) {
                 dom.toast.textContent = message;
                 dom.toast.className = "show";
@@ -384,6 +390,10 @@
                 if (isLight) { dom.body.setAttribute('data-theme', 'light'); } 
                 else { dom.body.removeAttribute('data-theme'); }
             }
+
+            // QR HANDLERS
+            function openQr() { dom.qrModal.classList.add('active'); }
+            function closeQr() { dom.qrModal.classList.remove('active'); }
 
             function typeWriter() {
                 const currentWord = CONFIG.typingTexts[state.typingIndex];
@@ -448,6 +458,14 @@
             function setupEventListeners() {
                 dom.themeSwitch.addEventListener('change', toggleTheme);
                 dom.shareBtn.addEventListener('click', handleShare);
+                
+                // QR Listeners
+                dom.btnQr.addEventListener('click', openQr);
+                dom.qrClose.addEventListener('click', closeQr);
+                dom.qrModal.addEventListener('click', (e) => {
+                    if(e.target === dom.qrModal) closeQr(); // Close if click outside
+                });
+
                 window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
             }
 
