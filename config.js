@@ -4,8 +4,7 @@ const CONFIG = {
     favicon: "icon.png", 
     name: "@raviyunanto",
     
-    // === KONTAK UNTUK vCARD (BARU) ===
-    // Data ini akan otomatis masuk ke kontak saat orang klik "Save My Contact"
+    // === KONTAK vCARD ===
     phone: "081255655101", 
     email: "ravi.yunanto@gmail.com",
 
@@ -19,25 +18,35 @@ const CONFIG = {
         "Designer"
     ],
 
-    // === LINKS ===
+    // === LINKS & DIVIDERS ===
     links: [
+        // -- KATEGORI 1: CONTACT --
+        { type: 'divider', text: 'Quick Actions' }, 
         { 
             text: "📇 Save My Contact", 
-            url: "#", // URL dikosongkan karena akan di-handle otomatis oleh script vCard
+            url: "#", 
             special: true 
-        },
-        { 
-            text: "💬 WhatsApp", 
-            url: "https://wa.me/6281255655101" 
-        },
-        { 
-            text: "📸 Instagram", 
-            url: "https://instagram.com/raviyunanto" 
         },
         { 
             text: "📩 Email Me", 
             url: "mailto:ravi.yunanto@gmail.com" 
-        }
+        },
+
+        // -- KATEGORI 2: SOCIALS --
+        { type: 'divider', text: 'Social Media' },
+        { 
+            text: "💬 WhatsApp", 
+            url: "https://wa.me/6281255655101"
+        },
+        { 
+            text: "📸 Instagram", 
+            url: "https://instagram.com/raviyunanto",
+            badge: "ACTIVE" // Contoh fitur Badge
+        },
+        
+        // -- KATEGORI 3 (CONTOH LAIN) --
+        // { type: 'divider', text: 'Portfolio' },
+        // { text: "🎬 My Showreel", url: "...", badge: "NEW" }
     ],
 
     copyright: "© 2026. All Rights Reserved."
