@@ -139,12 +139,34 @@
         .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 0.5rem; min-height: 1.5rem; font-weight: 300; }
         .cursor { display: inline-block; width: 2px; animation: blink 1s infinite; }
 
-        /* FITUR BARU: LOCATION & TIME */
+        /* LOCATION & TIME */
         .local-info {
             font-size: 0.75rem; color: var(--theme-accent); opacity: 0.8;
-            margin-bottom: 1.5rem; display: block; font-weight: 400; letter-spacing: 0.5px;
+            margin-bottom: 1rem; display: block; font-weight: 400; letter-spacing: 0.5px;
         }
 
+        /* FITUR BARU: SKILL BADGES */
+        .skills-container {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .skill-tag {
+            font-size: 0.7rem; font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--theme-text-primary);
+            padding: 4px 12px; border-radius: 12px;
+            backdrop-filter: blur(4px);
+            transition: var(--transition-ease);
+        }
+        .skill-tag:hover {
+            border-color: var(--theme-accent);
+            transform: translateY(-2px);
+            background: rgba(207, 162, 88, 0.1);
+        }
+        [data-theme="light"] .skill-tag { background: rgba(0, 0, 0, 0.05); }
+
+        /* BUTTONS */
         .btn-share {
             background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
             color: var(--theme-accent); padding: 8px 20px; font-size: 0.7rem; border-radius: 50px;
@@ -172,7 +194,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* Special Button (Save Contact) */
         .link-card.special {
             background: var(--special-bg) !important;
             border: 2px solid var(--special-border) !important; 
@@ -200,7 +221,7 @@
         input:checked + .slider { background-color: rgba(255, 255, 255, 0.9); }
         input:checked + .slider:before { transform: translateX(28px); content: "☀️"; background-color: #000; color: var(--theme-accent); }
 
-        /* TOAST NOTIFICATION (PENGGANTI ALERT) */
+        /* TOAST */
         #toast {
             visibility: hidden; min-width: 250px; background-color: #333;
             color: #fff; text-align: center; border-radius: 50px; padding: 16px;
@@ -245,6 +266,8 @@
         </div>
 
         <span id="local-time" class="local-info">Loading time...</span>
+        
+        <div id="skills-container" class="skills-container"></div>
 
         <button id="btn-share" class="btn-share">
             <span>🔗 Share This Profile</span>
@@ -277,6 +300,7 @@
                 typingEl: document.getElementById('typing-text'),
                 shareBtn: document.getElementById('btn-share'),
                 timeEl: document.getElementById('local-time'),
+                skillsContainer: document.getElementById('skills-container'),
                 toast: document.getElementById('toast')
             };
 
@@ -285,7 +309,7 @@
                 setupEventListeners();
                 initParticles();
                 animateParticles();
-                startTime(); // Mulai jam
+                startTime();
                 console.log('%c Designed by Ravi Yunanto ', 'background: #cfa258; color: #000; font-weight: bold; padding: 4px; border-radius: 4px;');
             }
 
@@ -300,10 +324,9 @@
                 pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
 
-                // STATUS CAPSULE
+                // STATUS
                 const statusCapsule = document.getElementById('status-capsule');
                 const statusText = document.getElementById('status-text');
-                
                 if (CONFIG.isOpenToWork) {
                     statusCapsule.className = 'status-capsule online';
                     statusText.textContent = "OPEN TO WORK";
@@ -312,6 +335,19 @@
                     statusText.textContent = "CURRENTLY BUSY";
                 }
 
+                // RENDER SKILLS
+                if(CONFIG.skills && CONFIG.skills.length > 0) {
+                    CONFIG.skills.forEach(skill => {
+                        const span = document.createElement('span');
+                        span.className = 'skill-tag';
+                        span.textContent = skill;
+                        dom.skillsContainer.appendChild(span);
+                    });
+                } else {
+                    dom.skillsContainer.style.display = 'none';
+                }
+
+                // RENDER LINKS
                 CONFIG.links.forEach(link => {
                     const a = document.createElement('a');
                     a.href = link.url;
@@ -325,23 +361,18 @@
                 typeWriter();
             }
 
-            // --- FITUR JAM & LOKASI (WITA) ---
             function startTime() {
                 const update = () => {
                     const now = new Date();
-                    // Opsi waktu Indonesia (WITA)
                     const timeString = now.toLocaleTimeString('id-ID', {
-                        hour: '2-digit', 
-                        minute:'2-digit',
-                        timeZone: 'Asia/Makassar' // Hardcoded ke WITA biar konsisten
+                        hour: '2-digit', minute:'2-digit', timeZone: 'Asia/Makassar'
                     });
                     dom.timeEl.textContent = `📍 North Kalimantan • ${timeString} WITA`;
                 };
                 update();
-                setInterval(update, 1000); // Update tiap detik
+                setInterval(update, 1000);
             }
 
-            // --- FITUR TOAST NOTIFICATION ---
             function showToast(message) {
                 dom.toast.textContent = message;
                 dom.toast.className = "show";
@@ -380,7 +411,7 @@
                     try { await navigator.share(shareData); } catch (err) {} 
                 } else { 
                     navigator.clipboard.writeText(window.location.href); 
-                    showToast('Link berhasil disalin! 📋'); // Pake Custom Toast
+                    showToast('Link berhasil disalin! 📋'); 
                 }
             }
 
