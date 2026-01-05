@@ -4,6 +4,11 @@ const CONFIG = {
     favicon: "icon.png", 
     name: "@raviyunanto",
     
+    // === KONTAK UNTUK vCARD (BARU) ===
+    // Data ini akan otomatis masuk ke kontak saat orang klik "Save My Contact"
+    phone: "081255655101", 
+    email: "ravi.yunanto@gmail.com",
+
     // === STATUS ===
     isOpenToWork: true,
 
@@ -18,7 +23,7 @@ const CONFIG = {
     links: [
         { 
             text: "📇 Save My Contact", 
-            url: "contact.vcf", 
+            url: "#", // URL dikosongkan karena akan di-handle otomatis oleh script vCard
             special: true 
         },
         { 
