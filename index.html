@@ -102,8 +102,7 @@
             position: relative; z-index: 10;
         }
 
-        /* --- ANIMASI STAGGER (BERURUTAN) --- */
-        /* Class ini akan ditambahkan via JS ke elemen yang mau dianimasikan */
+        /* --- ANIMASI STAGGER --- */
         .animate-item {
             opacity: 0;
             transform: translateY(20px);
@@ -177,6 +176,7 @@
             text-decoration: none; font-weight: 500;
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             overflow: hidden; transition: var(--transition-ease);
+            cursor: pointer; /* Pointer biar jelas bisa diklik */
         }
         .link-card:hover {
             transform: translateY(-4px);
@@ -189,7 +189,6 @@
             border: 2px solid var(--special-border) !important; 
             border-left: 4px solid var(--special-line) !important;
             font-weight: 600;
-            cursor: pointer; /* Pointer biar kelihatan bisa diklik */
         }
 
         /* --- CONTROLS --- */
@@ -360,7 +359,7 @@
     <script>
         /**
          * RAVI YUNANTO PORTFOLIO ENGINE
-         * Final Update: Staggered Animation & Auto vCard
+         * Final Update: No URL Preview
          */
         
         function closeAllModals() {
@@ -402,29 +401,24 @@
                 setupEventListeners();
                 initParticles();
                 animateParticles();
-                applyStaggeredAnimation(); // Jalankan animasi
+                applyStaggeredAnimation();
                 console.log('%c Designed by Ravi Yunanto ', 'background: #cfa258; color: #000; font-weight: bold; padding: 4px; border-radius: 4px;');
             }
 
-            // --- ANIMATION LOGIC ---
             function applyStaggeredAnimation() {
-                // Tambah class dan delay manual untuk elemen statis
                 const elements = [dom.animProfile, dom.animName, dom.animBio, dom.animShare];
                 elements.forEach((el, index) => {
                     el.classList.add('animate-item');
                     el.style.animationDelay = `${index * 0.1}s`;
                 });
-
-                // Link elements di-handle di loadConfig saat dibuat
             }
 
-            // --- AUTO vCARD GENERATOR ---
+            // AUTO vCARD GENERATOR
             function generateAndDownloadVCard() {
-                // vCard 3.0 Standard Format
                 const vCardData = [
                     'BEGIN:VCARD',
                     'VERSION:3.0',
-                    `FN:${CONFIG.name.replace('@', '')}`, // Nama (hapus @)
+                    `FN:${CONFIG.name.replace('@', '')}`,
                     `TEL;TYPE=CELL:${CONFIG.phone}`,
                     `EMAIL;TYPE=WORK:${CONFIG.email}`,
                     `URL:${window.location.href}`,
@@ -468,26 +462,32 @@
                     statusText.textContent = "CURRENTLY BUSY";
                 }
 
-                // LINKS GENERATOR + ANIMATION
+                // LINKS GENERATOR (NO PREVIEW URL LOGIC)
                 CONFIG.links.forEach((link, index) => {
                     const a = document.createElement('a');
                     a.textContent = link.text;
                     a.className = `link-card ${link.special ? 'special' : ''} animate-item`;
                     
-                    // Set Animation Delay (start from 0.4s)
+                    // Set Animation Delay
                     a.style.animationDelay = `${0.4 + (index * 0.1)}s`;
 
+                    // PENTING: Set href jadi void agar URL tidak muncul di pojok kiri bawah saat hover
+                    a.href = "javascript:void(0)";
+
                     if (link.special) {
-                        // Jika special link (Save Contact), jalankan script vCard
-                        a.href = "#";
+                        // Logic untuk Save Contact
                         a.addEventListener('click', (e) => {
                             e.preventDefault();
                             generateAndDownloadVCard();
                         });
                     } else {
-                        a.href = link.url;
-                        if(link.url.startsWith('http')) a.target = '_blank';
-                        if(link.url.startsWith('http')) a.rel = 'noopener noreferrer'; 
+                        // Logic untuk Link Biasa (Open via JS)
+                        a.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            if(link.url) {
+                                window.open(link.url, '_blank', 'noopener,noreferrer');
+                            }
+                        });
                     }
                     dom.linksWrapper.appendChild(a);
                 });
