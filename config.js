@@ -5,7 +5,7 @@ const CONFIG = {
     name: "@raviyunanto",       // Nama Utama
     
     // === STATUS KETERSEDIAAN ===
-    isOpenToWork: true,         // true = Hijau (Open), false = Merah (Busy)
+    isOpenToWork: false,         // true = Hijau (Open), false = Merah (Busy)
 
     // === BIO (EFEK KETIK) ===
     typingTexts: [
