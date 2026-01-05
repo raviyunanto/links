@@ -100,10 +100,19 @@
             padding: 2.5rem 1.5rem 6rem;
             text-align: center;
             position: relative; z-index: 10;
-            opacity: 0; transform: translateY(20px);
-            animation: fadeInUp 0.8s ease-out forwards;
         }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* --- ANIMASI STAGGER (BERURUTAN) --- */
+        /* Class ini akan ditambahkan via JS ke elemen yang mau dianimasikan */
+        .animate-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUpStagger 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeUpStagger {
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* --- COMPONENTS --- */
         .profile-section { position: relative; display: inline-block; margin-bottom: 1.5rem; }
@@ -131,7 +140,7 @@
         .status-capsule.online .status-dot { background-color: #2ecc71; box-shadow: 0 0 6px #2ecc71; animation: pulse-status 2s infinite; }
         .status-capsule.busy .status-dot { background-color: #e74c3c; box-shadow: 0 0 6px #e74c3c; }
 
-        /* TYPOGRAPHY & VERIFIED BADGE */
+        /* TYPOGRAPHY */
         .profile-header {
             display: flex; align-items: center; justify-content: center; gap: 6px;
             margin-bottom: 0.25rem;
@@ -180,6 +189,7 @@
             border: 2px solid var(--special-border) !important; 
             border-left: 4px solid var(--special-line) !important;
             font-weight: 600;
+            cursor: pointer; /* Pointer biar kelihatan bisa diklik */
         }
 
         /* --- CONTROLS --- */
@@ -215,7 +225,7 @@
         .btn-qr:hover { transform: scale(1.1); background: rgba(207, 162, 88, 0.2); }
         [data-theme="light"] .btn-qr { background: rgba(255, 255, 255, 0.8); }
 
-        /* UNIVERSAL MODAL STYLE (Untuk QR & Verified) */
+        /* MODALS */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999;
             display: flex; justify-content: center; align-items: center;
@@ -231,16 +241,12 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
-        
         .modal-close {
             position: absolute; top: 15px; right: 15px;
             background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #555;
         }
-        
-        /* QR Specific */
         .qr-image { width: 180px; height: 180px; object-fit: contain; margin: 10px 0; }
         
-        /* Verified Modal Specific */
         .verified-avatar {
             width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
             border: 3px solid var(--theme-accent); margin-bottom: 10px;
@@ -302,14 +308,12 @@
     <div id="verified-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAllModals()">×</button>
-            
             <div style="position: relative; display: inline-block;">
                 <img id="verified-modal-img" src="" alt="Profile" class="verified-avatar">
                 <div class="verified-badge-large">
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg>
                 </div>
             </div>
-
             <div class="modal-title">Verified Creator</div>
             <div class="modal-desc">
                 You are viewing the official portfolio of <b>Ravi Yunanto</b>.<br>
@@ -321,7 +325,7 @@
     <div id="toast">Link berhasil disalin! 📋</div>
 
     <main class="card-container">
-        <header class="profile-section">
+        <header id="anim-profile" class="profile-section">
             <img id="profile-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Profile" class="profile-avatar">
             <div id="status-capsule" class="status-capsule">
                 <div class="status-dot"></div>
@@ -329,20 +333,22 @@
             </div>
         </header>
         
-        <div class="profile-header">
+        <div id="anim-name" class="profile-header">
             <h1 id="profile-name" class="profile-name"></h1>
             <span id="btn-verified" class="verified-badge" title="Verified Account">
                 <svg viewBox="0 0 24 24"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" /></svg>
             </span>
         </div>
 
-        <div class="profile-bio">
+        <div id="anim-bio" class="profile-bio">
             <span id="typing-text"></span><span class="cursor">|</span>
         </div>
 
-        <button id="btn-share" class="btn-share">
-            <span>🔗 Share This Profile</span>
-        </button>
+        <div id="anim-share">
+            <button id="btn-share" class="btn-share">
+                <span>🔗 Share This Profile</span>
+            </button>
+        </div>
         
         <nav id="links-wrapper" class="link-list"></nav>
         
@@ -354,10 +360,9 @@
     <script>
         /**
          * RAVI YUNANTO PORTFOLIO ENGINE
-         * Feature: Verified Badge & Modals
+         * Final Update: Staggered Animation & Auto vCard
          */
         
-        // Fungsi Global untuk Close Button di HTML
         function closeAllModals() {
             document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
         }
@@ -377,11 +382,16 @@
                 shareBtn: document.getElementById('btn-share'),
                 toast: document.getElementById('toast'),
                 
-                // Modal Elements
+                // Animation Targets
+                animProfile: document.getElementById('anim-profile'),
+                animName: document.getElementById('anim-name'),
+                animBio: document.getElementById('anim-bio'),
+                animShare: document.getElementById('anim-share'),
+                
+                // Modals
                 btnQr: document.getElementById('btn-qr'),
                 qrModal: document.getElementById('qr-modal'),
                 qrImage: document.getElementById('qr-image'),
-                
                 btnVerified: document.getElementById('btn-verified'),
                 verifiedModal: document.getElementById('verified-modal'),
                 verifiedImg: document.getElementById('verified-modal-img')
@@ -392,7 +402,45 @@
                 setupEventListeners();
                 initParticles();
                 animateParticles();
+                applyStaggeredAnimation(); // Jalankan animasi
                 console.log('%c Designed by Ravi Yunanto ', 'background: #cfa258; color: #000; font-weight: bold; padding: 4px; border-radius: 4px;');
+            }
+
+            // --- ANIMATION LOGIC ---
+            function applyStaggeredAnimation() {
+                // Tambah class dan delay manual untuk elemen statis
+                const elements = [dom.animProfile, dom.animName, dom.animBio, dom.animShare];
+                elements.forEach((el, index) => {
+                    el.classList.add('animate-item');
+                    el.style.animationDelay = `${index * 0.1}s`;
+                });
+
+                // Link elements di-handle di loadConfig saat dibuat
+            }
+
+            // --- AUTO vCARD GENERATOR ---
+            function generateAndDownloadVCard() {
+                // vCard 3.0 Standard Format
+                const vCardData = [
+                    'BEGIN:VCARD',
+                    'VERSION:3.0',
+                    `FN:${CONFIG.name.replace('@', '')}`, // Nama (hapus @)
+                    `TEL;TYPE=CELL:${CONFIG.phone}`,
+                    `EMAIL;TYPE=WORK:${CONFIG.email}`,
+                    `URL:${window.location.href}`,
+                    'END:VCARD'
+                ].join('\n');
+
+                const blob = new Blob([vCardData], { type: 'text/vcard' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'contact.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                showToast('Kontak berhasil diunduh! 📇');
             }
 
             function loadConfig() {
@@ -405,15 +453,11 @@
                 pImg.src = CONFIG.profileImage;
                 pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
-
-                // Load Image ke Modal Verified juga
                 dom.verifiedImg.src = CONFIG.profileImage;
 
-                // QR GENERATOR
                 const currentUrl = window.location.href;
                 dom.qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${currentUrl}`;
 
-                // STATUS CAPSULE
                 const statusCapsule = document.getElementById('status-capsule');
                 const statusText = document.getElementById('status-text');
                 if (CONFIG.isOpenToWork) {
@@ -424,13 +468,27 @@
                     statusText.textContent = "CURRENTLY BUSY";
                 }
 
-                CONFIG.links.forEach(link => {
+                // LINKS GENERATOR + ANIMATION
+                CONFIG.links.forEach((link, index) => {
                     const a = document.createElement('a');
-                    a.href = link.url;
                     a.textContent = link.text;
-                    a.className = `link-card ${link.special ? 'special' : ''}`;
-                    if(link.url.startsWith('http')) a.target = '_blank';
-                    if(link.url.startsWith('http')) a.rel = 'noopener noreferrer'; 
+                    a.className = `link-card ${link.special ? 'special' : ''} animate-item`;
+                    
+                    // Set Animation Delay (start from 0.4s)
+                    a.style.animationDelay = `${0.4 + (index * 0.1)}s`;
+
+                    if (link.special) {
+                        // Jika special link (Save Contact), jalankan script vCard
+                        a.href = "#";
+                        a.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            generateAndDownloadVCard();
+                        });
+                    } else {
+                        a.href = link.url;
+                        if(link.url.startsWith('http')) a.target = '_blank';
+                        if(link.url.startsWith('http')) a.rel = 'noopener noreferrer'; 
+                    }
                     dom.linksWrapper.appendChild(a);
                 });
 
@@ -513,11 +571,9 @@
                 dom.themeSwitch.addEventListener('change', toggleTheme);
                 dom.shareBtn.addEventListener('click', handleShare);
                 
-                // Modal Events
                 dom.btnQr.addEventListener('click', () => dom.qrModal.classList.add('active'));
                 dom.btnVerified.addEventListener('click', () => dom.verifiedModal.classList.add('active'));
                 
-                // Close on Outside Click
                 window.addEventListener('click', (e) => {
                     if (e.target.classList.contains('modal-overlay')) {
                         closeAllModals();
