@@ -1,25 +1,34 @@
 const CONFIG = {
     // === DATA UTAMA ===
-    profileImage: "dp.jpg",     // Foto Profil
-    favicon: "icon.png",        // Icon di Tab Browser
-    name: "@raviyunanto",       // Nama Utama
+    profileImage: "dp.jpg",
+    favicon: "icon.png", 
+    name: "@raviyunanto",
     
-    // === STATUS KETERSEDIAAN ===
-    isOpenToWork: true,         // true = Hijau (Open), false = Merah (Busy)
+    // === STATUS ===
+    isOpenToWork: true,
 
-    // === BIO (EFEK KETIK) ===
+    // === BIO ===
     typingTexts: [
         "Videographer", 
         "Photographer", 
         "Designer"
     ],
 
-    // === DAFTAR LINK ===
+    // === SKILL BADGES (BARU) ===
+    // Isi dengan skill atau tools andalanmu
+    skills: [
+        "Adobe Premiere",
+        "Adobe Photoshop",
+        "CapCut",
+        "Canva"
+    ],
+
+    // === LINKS ===
     links: [
         { 
             text: "📇 Save My Contact", 
             url: "contact.vcf", 
-            special: true  // Tombol ini akan punya border khusus
+            special: true 
         },
         { 
             text: "💬 WhatsApp", 
@@ -35,6 +44,5 @@ const CONFIG = {
         }
     ],
 
-    // === FOOTER ===
     copyright: "© 2026. All Rights Reserved."
 };
