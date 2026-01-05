@@ -44,7 +44,7 @@
             
             /* Special Button (Save Contact) - DARK */
             --special-bg: rgba(255, 255, 255, 0.12);
-            --special-border: #ffffff; /* Border Putih Solid */
+            --special-border: #ffffff;
             --special-line: #ffffff;
             
             --transition-ease: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -63,7 +63,7 @@
             
             /* Special Button (Save Contact) - LIGHT */
             --special-bg: rgba(184, 134, 11, 0.1);
-            --special-border: #8B4513; /* Border Coklat Tua Solid */
+            --special-border: #8B4513; 
             --special-line: #8B4513;
         }
 
@@ -83,16 +83,6 @@
 
         /* --- VISUALS --- */
         #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-
-        /* OVERLAY Z-INDEX TERTINGGI (99999) agar menutupi tombol */
-        #overlay {
-            position: fixed; inset: 0; background-color: #000; z-index: 99999; 
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: opacity 0.8s ease, visibility 0.8s;
-        }
-        .overlay-content { text-align: center; color: var(--theme-accent); animation: pulse 2s infinite; }
-        .overlay-content h2 { font-size: 2rem; margin-bottom: 0.5rem; }
-        .overlay-content p { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; }
 
         /* --- LAYOUT --- */
         main.card-container {
@@ -161,27 +151,10 @@
         }
 
         /* --- CONTROLS --- */
-        .controls-layer { position: fixed; z-index: 5000; } /* Z-index dibawah Overlay */
-        
-        /* KEMBALI KE POSISI ORIGINAL (20px) */
+        .controls-layer { position: fixed; z-index: 5000; }
         .pos-top-right { top: 20px; right: 20px; } 
-        .pos-bottom-right { bottom: 20px; right: 20px; }
 
-        .btn-float {
-            width: 48px; height: 48px; border-radius: 50%;
-            background: rgba(20, 20, 20, 0.8);
-            border: 2px solid var(--theme-accent);
-            color: var(--theme-accent);
-            font-size: 1.2rem; cursor: pointer;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            transition: transform 0.2s cubic-bezier(0.3, 0.7, 0.4, 1.5);
-            backdrop-filter: blur(5px);
-        }
-        .btn-float:active { transform: scale(0.9); }
-        [data-theme="light"] .btn-float { background: rgba(255, 255, 255, 0.8); color: #4a3b22; }
-
-        /* TOGGLE SWITCH */
+        /* TOGGLE SWITCH UI */
         .switch {
             position: relative; display: inline-block; width: 60px; height: 30px;
         }
@@ -224,24 +197,11 @@
 
     <canvas id="particle-canvas"></canvas>
 
-    <div id="overlay" role="button" aria-label="Enter Website">
-        <div class="overlay-content">
-            <h2>HELLO.</h2>
-            <p>Tap anywhere to begin</p>
-        </div>
-    </div>
-
-    <audio id="bg-music" loop preload="auto"></audio>
-
     <div class="controls-layer pos-top-right">
         <label class="switch" title="Switch Theme">
             <input type="checkbox" id="theme-toggle">
             <span class="slider"></span>
         </label>
-    </div>
-
-    <div class="controls-layer pos-bottom-right">
-        <button id="music-btn" class="btn-float" aria-label="Toggle Music">🔊</button>
     </div>
 
     <main class="card-container">
@@ -275,13 +235,10 @@
         (function() {
             'use strict';
 
-            const state = { audioPlaying: false, particles: [], typingIndex: 0, typingCharIndex: 0 };
+            const state = { particles: [], typingIndex: 0, typingCharIndex: 0 };
 
             const dom = {
                 body: document.body,
-                overlay: document.getElementById('overlay'),
-                audio: document.getElementById('bg-music'),
-                musicBtn: document.getElementById('music-btn'),
                 themeSwitch: document.getElementById('theme-toggle'),
                 canvas: document.getElementById('particle-canvas'),
                 ctx: document.getElementById('particle-canvas').getContext('2d'),
@@ -309,9 +266,6 @@
                 pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
 
-                dom.audio.src = CONFIG.musicFile;
-                dom.audio.volume = 0.2; 
-
                 const statusEl = document.getElementById('status-badge');
                 statusEl.className = `status-badge ${CONFIG.isOpenToWork ? 'online' : 'busy'}`;
                 statusEl.title = CONFIG.isOpenToWork ? "Open to Work" : "Currently Busy";
@@ -327,14 +281,6 @@
                 });
 
                 typeWriter();
-            }
-
-            function toggleAudio() {
-                if (dom.audio.paused) {
-                    dom.audio.play().then(() => { dom.musicBtn.textContent = '🔊'; }).catch(err => console.warn('Audio blocked:', err));
-                } else {
-                    dom.audio.pause(); dom.audio.currentTime = 0; dom.musicBtn.textContent = '🔇';
-                }
             }
 
             function toggleTheme(e) {
@@ -400,14 +346,6 @@
             function resizeCanvas() { dom.canvas.width = window.innerWidth; dom.canvas.height = window.innerHeight; }
 
             function setupEventListeners() {
-                dom.overlay.addEventListener('click', () => {
-                    dom.overlay.style.opacity = '0'; dom.overlay.style.visibility = 'hidden';
-                    dom.audio.play().catch(() => {}); 
-                });
-                dom.musicBtn.addEventListener('click', () => {
-                   if(dom.audio.volume > 0) { dom.audio.volume = 0; dom.musicBtn.textContent = '🔇'; } 
-                   else { dom.audio.volume = 0.2; dom.musicBtn.textContent = '🔊'; }
-                });
                 dom.themeSwitch.addEventListener('change', toggleTheme);
                 dom.shareBtn.addEventListener('click', handleShare);
                 window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
