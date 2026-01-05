@@ -26,7 +26,7 @@
     <link id="favicon" rel="icon" type="image/png" href="icon.png"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         /* * DESIGN SYSTEM & VARIABLES */
@@ -42,10 +42,15 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-blur: blur(12px);
             
-            /* Special Button (Save Contact) - DARK */
+            /* Special Button (Save Contact) */
             --special-bg: rgba(255, 255, 255, 0.12);
             --special-border: #ffffff;
             --special-line: #ffffff;
+
+            /* Status Capsule Colors */
+            --status-bg: rgba(20, 20, 20, 0.9);
+            --status-border: rgba(255, 255, 255, 0.2);
+            --status-text: #ffffff;
             
             --transition-ease: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -61,10 +66,15 @@
             
             --glass-border: rgba(74, 59, 34, 0.2);
             
-            /* Special Button (Save Contact) - LIGHT */
+            /* Special Button */
             --special-bg: rgba(184, 134, 11, 0.1);
             --special-border: #8B4513; 
             --special-line: #8B4513;
+
+            /* Status Capsule Light */
+            --status-bg: rgba(255, 255, 255, 0.9);
+            --status-border: rgba(74, 59, 34, 0.2);
+            --status-text: #4a3b22;
         }
 
         /* --- CORE RESET --- */
@@ -96,7 +106,8 @@
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
         /* --- COMPONENTS --- */
-        .profile-section { position: relative; display: inline-block; margin-bottom: 1.25rem; }
+        .profile-section { position: relative; display: inline-block; margin-bottom: 1.5rem; } /* Margin ditambah dikit buat space status */
+        
         .profile-avatar {
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
             border: 3px solid var(--theme-accent);
@@ -104,13 +115,41 @@
         }
         .profile-avatar:hover { transform: scale(1.05) rotate(2deg); }
 
-        .status-badge {
-            position: absolute; bottom: 5px; right: 5px; width: 22px; height: 22px;
-            border: 3px solid #000; border-radius: 50%;
+        /* STATUS CAPSULE (DESAIN BARU) */
+        .status-capsule {
+            position: absolute; 
+            bottom: -12px; left: 50%; 
+            transform: translateX(-50%);
+            
+            background: var(--status-bg);
+            border: 1px solid var(--status-border);
+            padding: 4px 12px;
+            border-radius: 20px;
+            
+            display: flex; align-items: center; gap: 6px;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            transition: var(--transition-ease);
         }
-        .status-badge.online { background-color: #2ecc71; box-shadow: 0 0 10px #2ecc71; animation: pulse-status 2s infinite; }
-        .status-badge.busy { background-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; animation: pulse-busy 2s infinite; }
 
+        .status-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-text {
+            font-size: 0.65rem; font-weight: 600;
+            color: var(--status-text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Warna Status */
+        .status-capsule.online .status-dot { background-color: #2ecc71; box-shadow: 0 0 6px #2ecc71; animation: pulse-status 2s infinite; }
+        .status-capsule.busy .status-dot { background-color: #e74c3c; box-shadow: 0 0 6px #e74c3c; }
+
+        /* Typography */
         h1.profile-name { font-size: 1.5rem; font-weight: 700; color: var(--theme-accent); margin-bottom: 0.25rem; letter-spacing: 1px; }
         .profile-bio { font-size: 0.95rem; color: var(--theme-text-secondary); margin-bottom: 1rem; min-height: 1.5rem; font-weight: 300; }
         .cursor { display: inline-block; width: 2px; animation: blink 1s infinite; }
@@ -142,7 +181,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         
-        /* BORDER SAVE CONTACT - FIXED */
+        /* Special Button (Save Contact) */
         .link-card.special {
             background: var(--special-bg) !important;
             border: 2px solid var(--special-border) !important; 
@@ -187,10 +226,8 @@
 
         footer { margin-top: 3rem; font-size: 0.8rem; color: var(--theme-accent); opacity: 0.6; }
 
-        @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        @keyframes pulse-status { 0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        @keyframes pulse-status { 0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
-        @keyframes pulse-busy { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
     </style>
 </head>
 <body>
@@ -207,7 +244,11 @@
     <main class="card-container">
         <header class="profile-section">
             <img id="profile-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Profile" class="profile-avatar">
-            <div id="status-badge" class="status-badge"></div>
+            
+            <div id="status-capsule" class="status-capsule">
+                <div class="status-dot"></div>
+                <span id="status-text" class="status-text"></span>
+            </div>
         </header>
         
         <h1 id="profile-name" class="profile-name"></h1>
@@ -266,9 +307,17 @@
                 pImg.onload = () => pImg.style.opacity = 1; 
                 document.getElementById('favicon').href = CONFIG.favicon;
 
-                const statusEl = document.getElementById('status-badge');
-                statusEl.className = `status-badge ${CONFIG.isOpenToWork ? 'online' : 'busy'}`;
-                statusEl.title = CONFIG.isOpenToWork ? "Open to Work" : "Currently Busy";
+                // STATUS CAPSULE LOGIC
+                const statusCapsule = document.getElementById('status-capsule');
+                const statusText = document.getElementById('status-text');
+                
+                if (CONFIG.isOpenToWork) {
+                    statusCapsule.className = 'status-capsule online';
+                    statusText.textContent = "OPEN TO WORK";
+                } else {
+                    statusCapsule.className = 'status-capsule busy';
+                    statusText.textContent = "CURRENTLY BUSY";
+                }
 
                 CONFIG.links.forEach(link => {
                     const a = document.createElement('a');
