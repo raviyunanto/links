@@ -6,10 +6,10 @@ const CONFIG = {
     
     // === KONTAK vCARD ===
     phone: "081255655101", 
-    email: "ravi.yunanto@gmail.com",
+    email: "halo@raviyunanto.my.id",
 
     // === STATUS ===
-    isOpenToWork: true,
+    isOpenToWork: false,
 
     // === BIO ===
     typingTexts: [
@@ -29,7 +29,7 @@ const CONFIG = {
         },
         { 
             text: "📩 Email Me", 
-            url: "mailto:ravi.yunanto@gmail.com" 
+            url: "mailto:halo@raviyunanto.my.id" 
         },
 
         // -- KATEGORI 2: SOCIALS --
@@ -41,7 +41,7 @@ const CONFIG = {
         { 
             text: "📸 Instagram", 
             url: "https://instagram.com/raviyunanto",
-            badge: "ACTIVE" // Contoh fitur Badge
+            badge: "ACTIVE" //
         },
         
         // -- KATEGORI 3 (CONTOH LAIN) --
